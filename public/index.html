@@ -234,7 +234,7 @@
               <!-- TWK Row -->
               <div @click="openCategory('TWK')" class="flex items-center justify-between hover: cursor-pointer">
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TWK</div>
+                  <div class="w-8 h-8 flex items-center justify-center font-mono font-bold text-xs">TWK</div>
                   <div>
                     <h3 class="text-xl font-bold">Wawasan Kebangsaan</h3>
                     <p class="text-[11px] font-mono text-gray-500">Cleared: {{ getCategoryCompleted('TWK') }}/7</p>
@@ -248,7 +248,7 @@
               <!-- TIU Row -->
               <div @click="openCategory('TIU')" class="flex items-center justify-between hover: cursor-pointer">
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TIU</div>
+                  <div class="w-8 h-8 flex items-center justify-center font-mono font-bold text-xs">TIU</div>
                   <div>
                     <h3 class="text-xl font-bold">Inteligensia Umum</h3>
                     <p class="text-[11px] font-mono text-gray-500">Cleared: {{ getCategoryCompleted('TIU') }}/8</p>
@@ -262,7 +262,7 @@
               <!-- TKP Row -->
               <div @click="openCategory('TKP')" class="flex items-center justify-between px-3 py-3 hover: cursor-pointer">
                 <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TKP</div>
+                  <div class="w-8 h-8 flex items-center justify-center font-mono font-bold text-xs">TKP</div>
                   <div>
                     <h3 class="text-xl font-bold">Karakteristik Pribadi</h3>
                     <p class="text-[11px] font-mono text-gray-500">Cleared: {{ getCategoryCompleted('TKP') }}/6</p>
@@ -714,7 +714,7 @@
             v-else
             @click="promptFinishQuiz"
             :disabled="!userAnswers[currentQuizIndex]"
-            class="flex-[2] h-12 min-h-[48px] bg-success hover:bg-success/90  rounded-full border-none text-white disabled:opacity-50 text-white font-bold px-4   shadow-emerald-600/30 text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+            class="flex-[2] h-12 min-h-[48px] bg-success hover:bg-success/90 rounded-full text-white disabled:opacity-50 font-bold px-4 text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
           >
             <span>Selesai & Kumpulkan</span>
             <span class="material-symbols-outlined text-[18px]">check</span>
@@ -832,7 +832,7 @@
               </button>
               <button 
                 @click="startQuiz(activeModule)"
-                class="flex-1 h-12 min-h-[48px] bg-danger hover:bg-danger/90  rounded-full border-none text-white text-white font-bold px-4   shadow-rose-600/30 text-xs sm:text-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+                class="flex-1 h-12 min-h-[48px] bg-danger hover:bg-danger/90 rounded-full text-white font-bold px-4 text-xs sm:text-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
               >
                 <span>Coba Kuis Lagi</span>
                 <span class="material-symbols-outlined text-[18px]">replay</span>
@@ -1127,7 +1127,7 @@
             <!-- Next / Finish Button -->
             <button 
               @click="nextCatQuestion"
-              class="flex-1 h-12 min-h-[48px] bg-primary hover:bg-primary-container rounded-full text-whitetext-white font-bold px-4   border border-primary text-xs active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+              class="flex-1 min-h-[48px] bg-primary hover:bg-primary-container rounded-full text-white font-bold px-4 text-xs active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
             >
               <span>{{ catCurrentIndex < catQuestions.length - 1 ? 'Simpan & Lanjut' : 'Selesai & Kumpul' }}</span>
               <span class="material-symbols-outlined text-[18px]">
