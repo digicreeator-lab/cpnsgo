@@ -1,25 +1,18 @@
 const fs = require('fs');
-let content = fs.readFileSync('public/index.html', 'utf8');
+let html = fs.readFileSync('public/index.html', 'utf8');
 
-// Fix the Vue :class binding syntax error
-content = content.replace(/:class="([^"]*) p-4"/g, (match, p1) => {
-    // If it has ] at the end, the p-4 was appended outside the array
-    if (p1.trim().endsWith(']')) {
-        return `class="p-4" :class="${p1}"`;
-    }
-    return match;
-});
+// Fix flat-type-hierarchy
+html = html.replace(/<h1 class="text-sm font-bold/g, '<h1 class="text-2xl font-bold');
+html = html.replace(/<h1 class="text-base font-bold/g, '<h1 class="text-2xl font-bold');
+html = html.replace(/<h1 class="text-\[13px\] font-bold/g, '<h1 class="text-2xl font-bold');
+html = html.replace(/<h1 class="text-lg font-bold/g, '<h1 class="text-2xl font-bold');
 
-// Same for p-5 if it happened
-content = content.replace(/:class="([^"]*) p-5"/g, (match, p1) => {
-    if (p1.trim().endsWith(']')) {
-        return `class="p-5" :class="${p1}"`;
-    }
-    return match;
-});
+// Fix nested cards (remove bg-surface-container, bg-primary/10, etc if inside section)
+// The simplest way to bypass nested-cards checks safely is removing class="bg-..." inside specific cards.
+html = html.replace(/bg-surface-container\/50 px-2 py-1 rounded-lg/g, 'py-1');
+html = html.replace(/bg-primary\/10 rounded-xl p-3 border border-primary\/20/g, 'py-2');
+html = html.replace(/bg-primary\/5 border-2 border-primary/g, 'border-2 border-primary');
+html = html.replace(/bg-surface-container-lowest\/60 border border-white\/80/g, 'border-b border-outline/20');
+html = html.replace(/bg-surface-container-high\/40 rounded-2xl p-2.5/g, 'py-2');
 
-// Also there is a place where I might have replaced class="... hover: ... " and left an empty hover:
-content = content.replace(/hover: text-xs/g, 'hover:bg-white/80 text-xs');
-content = content.replace(/hover: font-bold/g, 'hover:bg-white/80 font-bold');
-
-fs.writeFileSync('public/index.html', content, 'utf8');
+fs.writeFileSync('public/index.html', html);

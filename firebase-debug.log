@@ -1,0 +1,37 @@
+[debug] [2026-10-04T16:31:19.961Z] ----------------------------------------------------------------------
+[debug] [2026-10-04T16:31:19.970Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\UNSTOPABLE\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-10-04T16:31:19.971Z] CLI Version:   15.30.0
+[debug] [2026-10-04T16:31:19.971Z] Platform:      win32
+[debug] [2026-10-04T16:31:19.972Z] Node Version:  v24.14.0
+[debug] [2026-10-04T16:31:19.972Z] Detected Agent: open_code
+[debug] [2026-10-04T16:31:19.973Z] Time:          Sun Oct 04 2026 23:31:19 GMT+0700 (Western Indonesia Time)
+[debug] [2026-10-04T16:31:19.973Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-04T16:32:20.089Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-04T16:32:20.090Z] > authorizing via signed-in user (digicreeator@gmail.com)
+[debug] [2026-10-04T16:32:20.090Z] [iam] checking project montrack for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-10-04T16:32:20.127Z] Checked if tokens are valid: false, expires at: 1791117424943
+[debug] [2026-10-04T16:32:20.127Z] Checked if tokens are valid: false, expires at: 1791117424943
+[debug] [2026-10-04T16:32:20.128Z] > refreshing access token with scopes: []
+[debug] [2026-10-04T16:32:20.133Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-10-04T16:32:20.133Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-04T16:32:20.482Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-10-04T16:32:20.485Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-04T16:32:20.556Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions [none]
+[debug] [2026-10-04T16:32:20.557Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions  x-goog-user-project=montrack
+[debug] [2026-10-04T16:32:20.557Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-10-04T16:32:21.011Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions 400
+[debug] [2026-10-04T16:32:21.012Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions {"error":{"code":400,"message":"Project 'projects/montrack' not found or deleted.","status":"INVALID_ARGUMENT","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"USER_PROJECT_DENIED","domain":"googleapis.com","metadata":{"consumer":"projects/montrack","containerInfo":"projects/montrack","service":"cloudresourcemanager.googleapis.com"}}]}}
+[debug] [2026-10-04T16:32:21.013Z] [iam] error while checking permissions, command may fail: Request to https://cloudresourcemanager.googleapis.com/v1/projects/montrack:testIamPermissions had HTTP Error: 400, Project 'projects/montrack' not found or deleted.
+[debug] [2026-10-04T16:32:21.015Z] Checked if tokens are valid: true, expires at: 1791135139487
+[debug] [2026-10-04T16:32:21.015Z] Checked if tokens are valid: true, expires at: 1791135139487
+[debug] [2026-10-04T16:32:21.015Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/montrack [none]
+[debug] [2026-10-04T16:32:21.898Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/montrack 403
+[debug] [2026-10-04T16:32:21.899Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/montrack {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-10-04T16:32:21.899Z] Request to https://firebase.googleapis.com/v1beta1/projects/montrack had HTTP Error: 403, The caller does not have permission
+[debug] [2026-10-04T16:32:21.903Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/montrack had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\UNSTOPABLE\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\UNSTOPABLE\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to get Firebase project montrack. Please make sure the project exists and your account has permission to access it.
