@@ -232,7 +232,7 @@
               </div>
               
               <!-- TWK Row -->
-              <div @click="openCategory('TWK')" class="flex items-center justify-between px-3 py-3 border-b border-outline-variant hover: cursor-pointer">
+              <div @click="openCategory('TWK')" class="flex items-center justify-between hover: cursor-pointer">
                 <div class="flex items-center gap-3">
                   <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TWK</div>
                   <div>
@@ -246,7 +246,7 @@
               </div>
 
               <!-- TIU Row -->
-              <div @click="openCategory('TIU')" class="flex items-center justify-between px-3 py-3 border-b border-outline-variant hover: cursor-pointer">
+              <div @click="openCategory('TIU')" class="flex items-center justify-between hover: cursor-pointer">
                 <div class="flex items-center gap-3">
                   <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TIU</div>
                   <div>
@@ -303,7 +303,7 @@
               <button 
                 @click.stop="openModule(modules[0])" 
                 aria-label="Pelajari Materi Modul" 
-                class="h-11 min-h-[44px] px-4   text-white font-bold  rounded-full border-none text-xs flex items-center gap-1.5  border border-primary hover:brightness-105 active:scale-95 transition-all flex-shrink-0"
+                class="min-h-[44px] text-white font-bold text-xs flex items-center gap-1.5 hover:brightness-105 active:scale-95 transition-all flex-shrink-0"
               >
                 <span>Pelajari Materi</span>
                 <span class="material-symbols-outlined text-[15px] font-bold">arrow_forward</span>
@@ -317,14 +317,14 @@
             <div class="relative z-10 flex items-center justify-between gap-2">
               <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5 mb-1">
-                  <span class="text-[11px] font-bold tracking-wider uppercase /20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded flex items-center gap-1">
+                  <span class="text-[11px] font-bold tracking-wider uppercase text-amber-300 flex items-center gap-1">
                     <span class="w-1 h-1  "></span>Simulasi Nasional
                   </span>
                 </div>
                 <h3 class="text-xl font-bold leading-tight truncate text-white">Try Out Akbar CAT 2026</h3>
                 <p class="text-[11px] text-white/70 mt-0.5 truncate">110 Soal • 100 Menit • Standar BKN</p>
               </div>
-              <button @click="openCatIntro()" class="h-11 min-h-[44px] bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 hover:brightness-105 px-4  text-xs font-bold  transition-all active:scale-95 flex items-center gap-1 flex-shrink-0">
+              <button @click="openCatIntro()" class="h-11 min-h-[44px] text-gray-900 hover:brightness-105 text-xs font-bold transition-all active:scale-95 flex items-center gap-1 flex-shrink-0">
                 <span>Mulai</span>
                 <span class="material-symbols-outlined text-xs font-bold">arrow_forward</span>
               </button>
@@ -1001,7 +1001,7 @@
               Soal {{ catCurrentIndex + 1 }} dari {{ catQuestions.length }} • {{ currentCatQuestion.category }}
             </span>
           </div>
-          <button @click="promptFinishCatSim" class="h-10 min-h-[40px] px-3.5  bg-primary hover:bg-primary-container rounded-full text-whitetext-white text-xs font-bold  active:scale-95 flex items-center gap-1.5 transition-all flex-shrink-0">
+          <button @click="promptFinishCatSim" class="h-10 min-h-[40px] text-white text-xs font-bold active:scale-95 flex items-center gap-1.5 transition-all flex-shrink-0">
             <span>Selesai</span>
             <span class="material-symbols-outlined text-[16px]">check_circle</span>
           </button>
@@ -1603,7 +1603,7 @@
           <transition name="modal-sheet">
             <div 
               v-if="confirmModal.isOpen"
-              class="w-full max-w-xl bg-white rounded-t-xl sm:rounded-xl p-6 pb-8 relative overflow-hidden"
+              class="w-full max-w-xl rounded-t-xl sm:rounded-xl pb-8 relative overflow-hidden"
             >
               <!-- Drag Handle Bar for Mobile Bottom Sheet -->
               <div class="w-12 h-1.5 bg-outline-variant/60  mx-auto mb-5 sm:hidden"></div>
