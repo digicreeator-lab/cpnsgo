@@ -1,0 +1,34 @@
+name: Deploy to Firebase Hosting on PR and merge
+on:
+  push:
+    branches:
+      - main
+jobs:
+  qc_design:
+    name: QC Design Anti-Patterns (Impeccable)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Impeccable Design Quality Check
+        run: npx -y impeccable@4 detect public/index.html
+
+  build_and_deploy:
+    name: Deploy to Firebase Hosting
+    needs: qc_design
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: montrack

@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+  <title>CPNS GO - Platform Belajar SKD CPNS 2026</title>
+  
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN with forms & container queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Tailwind Config directly from Stitch Design System -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0F172A",
+            "primary-container": "#1E293B",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#F1F5F9",
+            "primary-fixed": "#E2E8F0",
+            "primary-fixed-dim": "#CBD5E1",
+            "on-primary-fixed": "#020617",
+            "on-primary-fixed-variant": "#0F172A",
+            "inverse-primary": "#CBD5E1",
+            
+            "secondary": "#334155",
+            "secondary-container": "#475569",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#F8FAFC",
+            "secondary-fixed": "#F1F5F9",
+            "secondary-fixed-dim": "#E2E8F0",
+            "on-secondary-fixed": "#020617",
+            "on-secondary-fixed-variant": "#0F172A",
+            
+            "tertiary": "#475569",
+            "tertiary-container": "#64748B",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#F8FAFC",
+            "tertiary-fixed": "#F1F5F9",
+            "tertiary-fixed-dim": "#E2E8F0",
+            "on-tertiary-fixed": "#020617",
+            "on-tertiary-fixed-variant": "#0F172A",
+            
+            "surface": "#F8FAFC",
+            "surface-dim": "#E2E8F0",
+            "surface-bright": "#FFFFFF",
+            "surface-variant": "#F1F5F9",
+            "surface-tint": "#0F172A",
+            "surface-container-lowest": "#FFFFFF",
+            "surface-container-low": "#F8FAFC",
+            "surface-container": "#F1F5F9",
+            "surface-container-high": "#E2E8F0",
+            "surface-container-highest": "#CBD5E1",
+            
+            "on-surface": "#020617",
+            "on-surface-variant": "#334155",
+            "inverse-surface": "#0F172A",
+            "inverse-on-surface": "#F8FAFC",
+            "background": "#F8FAFC",
+            "on-background": "#020617",
+            "outline": "#94A3B8",
+            "outline-variant": "#CBD5E1",
+            
+            "error": "#DC2626",
+            "on-error": "#ffffff",
+            "error-container": "#FEE2E2",
+            "on-error-container": "#991B1B",
+            "success": "#16A34A",
+            "warning": "#D97706"
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            display: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      min-height: max(884px, 100dvh);
+      background-color: #F8FAFC;
+    }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; display: inline-block; vertical-align: middle; }
+    
+    /* Strict Fintech Audit Ledger Tokens */
+    .ledger-card {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 4px;
+      
+      padding: 1rem;
+    }
+    .ledger-header {
+      border-bottom: 1px solid #CBD5E1;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .ledger-row {
+      border-bottom: 1px dashed #CBD5E1;
+      padding: 0.5rem 0;
+    }
+    .ledger-row:last-child {
+      border-bottom: none;
+    }
+    .ledger-dock {
+      background: #FFFFFF;
+      border-top: 1px solid #CBD5E1;
+    }
+    .stamp-validated {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border: 2px solid #16A34A;
+      color: #16A34A;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+      transform: rotate(-5deg);
+      font-family: monospace;
+      opacity: 0.9;
+    }
+    .stamp-void {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border: 2px solid #DC2626;
+      color: #DC2626;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 4px;
+      transform: rotate(3deg);
+      font-family: monospace;
+      opacity: 0.9;
+    }
+    .crouwel-grid {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 0;
+      border: 1px solid #CBD5E1;
+    }
+    .crouwel-cell {
+      padding: 0.75rem;
+      border-bottom: 1px solid #CBD5E1;
+      border-right: 1px solid #CBD5E1;
+    }
+    .crouwel-cell:last-child { border-right: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  
+    h1 { font-size: 1.875rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.25rem !important; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen relative overflow-x-hidden selection:bg-primary selection:text-on-primary">
+
+  <div id="app">
+    <!-- Ledger Grid Background -->
+    <div class="fixed inset-0 pointer-events-none -z-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9IiNFMkU4RjAiLz48L3N2Zz4=')]"></div>
+
+    <!-- Main Mobile Enclosure (max-w-xl constrained centered viewport matching iOS layout in Stitch) -->
+    <div class="max-w-xl mx-auto min-h-screen flex flex-col pb-32 relative">
+
+      <!-- ======================================================== -->
+      <!-- VIEW 1: DASHBOARD UTAMA (Screen: b1bcd92fd186428184ffabd38497a44a) -->
+      <!-- ======================================================== -->
+      <div v-if="currentView === 'dashboard'">
+        <!-- SHARED COMPONENT: TopAppBar -->
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <div class="flex items-center space-x-3">
+            <div class="relative active:scale-95 transition-all duration-200 cursor-pointer" @click="currentView = 'profile'">
+              <div class="w-9 h-9 rounded-sm p-0.5 bg-primary text-on-primary">
+                <img alt="User avatar photo" class="w-full h-full rounded-sm object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80">
+              </div>
+              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-sm border-2 border-white"></span>
+            </div>
+            <div>
+              <p class="text-[11px] font-medium text-on-surface-variant flex items-center gap-1 leading-normal mb-0.5">
+                Semangat Pagi! <span class="material-symbols-outlined text-[13px] text-amber-500">wb_sunny</span>
+              </p>
+              <h1 class="text-3xl font-bold text-on-surface leading-tight">Vikram CPNS Aspirant</h1>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1.5 bg-primary/10 px-2.5 py-1 rounded-sm flex-shrink-0">
+            <span class="w-1.5 h-1.5 rounded-sm bg-primary"></span>
+            <span class="text-[11px] font-semibold text-primary">Target 2026</span>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="px-4 flex flex-col space-y-4 mt-2">
+          
+          <!-- LEDGER DASHBOARD HERO -->
+          <section @click="openModule(modules[0])" class="  p-4  cursor-pointer group">
+            <div class="ledger-header flex justify-between items-end">
+              <div>
+                <span class="text-[10px] font-mono font-bold text-on-surface-variant uppercase tracking-widest">ID: AUDIT-2026</span>
+                <h2 class="text-2xl font-bold text-on-surface leading-none mt-1">CPNS GO LEDGER</h2>
+              </div>
+              <span class="stamp-validated text-[10px]">VERIFIED</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mt-2">
+              <div class="border-l-2 border-primary pl-3">
+                <p class="text-[10px] font-mono text-on-surface-variant uppercase">Target SKD</p>
+                <p class="text-2xl font-bold font-mono tracking-tight text-on-surface mt-1">420<span class="text-xs text-outline">pts</span></p>
+              </div>
+              <div class="border-l-2 border-primary pl-3">
+                <p class="text-[10px] font-mono text-on-surface-variant uppercase">Clearance</p>
+                <p class="text-2xl font-bold font-mono tracking-tight text-success mt-1">{{ Math.round((totalCompletedCount/totalModulesCount)*100) || 0 }}<span class="text-xs text-outline">%</span></p>
+              </div>
+            </div>
+            
+            <div class="mt-5 pt-3 border-t border-outline-variant flex items-center justify-between">
+              <span class="text-[11px] font-mono text-on-surface">STATUS: <strong class="text-primary">ACTIVE AUDIT</strong></span>
+              <button class="bg-primary text-white px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider group-hover:bg-primary-container transition-colors">
+                RESUME &rarr;
+              </button>
+            </div>
+          </section>
+
+          <!-- KATEGORI UJIAN UTAMA (TWK, TIU, TKP Breakdown) -->
+          <section class="space-y-3">
+            <div class="flex justify-between items-center px-0.5">
+              <h2 class="text-2xl font-bold text-on-surface">Kategori Ujian Utama</h2>
+              <span @click="showToast('Ambang Batas SKD: TWK 65, TIU 80, TKP 166')" class="text-[11px] font-semibold text-primary flex items-center gap-0.5 cursor-pointer">
+                Ambang Batas SKD <span class="material-symbols-outlined text-xs">info</span>
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-2.5">
+              <!-- LEDGER CATEGORY ROWS -->
+            <div class="rounded-sm">
+              <div class="p-3   flex justify-between items-center">
+                <span class="text-xs font-bold uppercase tracking-widest">Compliance Status</span>
+                <span @click="showToast('Ambang Batas SKD: TWK 65, TIU 80, TKP 166')" class="text-[10px] font-mono text-primary cursor-pointer border-b border-primary border-dashed">Thresholds</span>
+              </div>
+              
+              <!-- TWK Row -->
+              <div @click="openCategory('TWK')" class="flex items-center justify-between p-3  hover: cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TWK</div>
+                  <div>
+                    <h3 class="text-xl font-bold">Wawasan Kebangsaan</h3>
+                    <p class="text-[10px] font-mono text-on-surface-variant">Cleared: {{ getCategoryCompleted('TWK') }}/7</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-xs font-bold" :class="getCategoryCompleted('TWK') >= 7 ? 'text-success' : 'text-on-surface'">{{ Math.round((getCategoryCompleted('TWK')/7)*100) }}%</span>
+                </div>
+              </div>
+
+              <!-- TIU Row -->
+              <div @click="openCategory('TIU')" class="flex items-center justify-between p-3  hover: cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TIU</div>
+                  <div>
+                    <h3 class="text-xl font-bold">Inteligensia Umum</h3>
+                    <p class="text-[10px] font-mono text-on-surface-variant">Cleared: {{ getCategoryCompleted('TIU') }}/8</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-xs font-bold" :class="getCategoryCompleted('TIU') >= 8 ? 'text-success' : 'text-on-surface'">{{ Math.round((getCategoryCompleted('TIU')/8)*100) }}%</span>
+                </div>
+              </div>
+
+              <!-- TKP Row -->
+              <div @click="openCategory('TKP')" class="flex items-center justify-between p-3 hover: cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 -container flex items-center justify-center font-mono font-bold text-xs">TKP</div>
+                  <div>
+                    <h3 class="text-xl font-bold">Karakteristik Pribadi</h3>
+                    <p class="text-[10px] font-mono text-on-surface-variant">Cleared: {{ getCategoryCompleted('TKP') }}/6</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono text-xs font-bold" :class="getCategoryCompleted('TKP') >= 6 ? 'text-success' : 'text-on-surface'">{{ Math.round((getCategoryCompleted('TKP')/6)*100) }}%</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- UPCOMING / RECENT MODULE LIST -->
+          <section class="space-y-2 pt-1">
+            <div class="flex justify-between items-center px-0.5">
+              <h2 class="text-2xl font-bold text-on-surface">Lanjutkan Belajar</h2>
+              <button @click="openCategory('TWK')" class="text-[11px] font-semibold text-primary flex items-center gap-0.5 bg-primary/10 px-2 py-0.5 rounded-sm active:scale-95 transition-transform">
+                <span>Semua</span>
+                <span class="material-symbols-outlined text-xs">chevron_right</span>
+              </button>
+            </div>
+            
+            <div class="rounded-sm p-3 flex items-center justify-between  active:scale-[0.99] transition-transform shadow-sm">
+              <div @click="openModule(modules[0])" class="flex items-center space-x-2.5 min-w-0 pr-2 cursor-pointer flex-1">
+                <div class="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center text-white flex-shrink-0">
+                  <span class="material-symbols-outlined text-base">play_lesson</span>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center space-x-1.5 mb-0.5">
+                      <span class="text-[9px] font-bold text-primary bg-primary-fixed px-1.5 py-0.5 rounded uppercase">Target</span>
+                      <span class="text-[11px] text-on-surface-variant font-medium truncate">TWK Modul 1.1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface leading-tight truncate">Pengamalan Butir Pancasila & Sila Radar</h3>
+                    <p class="text-[11px] text-outline mt-0.5 truncate">5 Soal HOTS • Est. 15 Menit</p>
+                </div>
+              </div>
+              <button 
+                @click.stop="openModule(modules[0])" 
+                aria-label="Pelajari Materi Modul" 
+                class="h-11 min-h-[44px] px-4 rounded-sm bg-primary text-on-primary font-bold text-xs flex items-center gap-1.5 shadow-sm  hover:brightness-105 active:scale-95 transition-all flex-shrink-0"
+              >
+                <span>Pelajari Materi</span>
+                <span class="material-symbols-outlined text-[15px] font-bold">arrow_forward</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- SIMULATION BANNER / CALL TO ACTION -->
+          <section class="relative rounded-sm p-3.5 overflow-hidden bg-primary text-on-primary shadow-sm ">
+            
+            <div class="relative z-10 flex items-center justify-between gap-2">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-1.5 mb-1">
+                  <span class="text-[9px] font-bold tracking-wider uppercase bg-amber-500/20 text-amber-300  border-amber-500/30 px-1.5 py-0.5 rounded flex items-center gap-1">
+                    <span class="w-1 h-1 rounded-sm bg-amber-400"></span>Simulasi Nasional
+                  </span>
+                </div>
+                <h3 class="text-xl font-bold leading-tight truncate text-white">Try Out Akbar CAT 2026</h3>
+                <p class="text-[11px] text-white/70 mt-0.5 truncate">110 Soal • 100 Menit • Standar BKN</p>
+              </div>
+              <button @click="openCatIntro()" class="h-11 min-h-[44px] bg-gradient-to-r from-amber-400 to-amber-500 text-on-surface hover:brightness-105 px-4 rounded-sm text-xs font-bold shadow-md transition-all active:scale-95 flex items-center gap-1 flex-shrink-0">
+                <span>Mulai</span>
+                <span class="material-symbols-outlined text-xs font-bold">arrow_forward</span>
+              </button>
+            </div>
+          </section>
+
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 2: DAFTAR MODUL BELAJAR (Screen: 30351027a4464e65bce526e446d7aca1) -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'module-list'">
+        <!-- Top App Navigation Bar -->
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Modul {{ activeCategoryCode }}</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">{{ getCategoryTitle(activeCategoryCode) }}</span>
+          </div>
+
+          <!-- Category Quick Switcher in Header -->
+          <div class="flex items-center gap-1  p-1 rounded-sm  flex-shrink-0">
+            <button 
+              v-for="code in ['TWK', 'TIU', 'TKP']" 
+              :key="code"
+              @click="activeCategoryCode = code"
+              class="h-8 min-h-[32px] px-2.5 rounded-sm text-[11px] font-bold transition-all flex items-center justify-center"
+              :class="activeCategoryCode === code ? 'bg-primary text-white shadow-xs' : 'text-on-surface-variant hover:text-primary'"
+            >
+              {{ code }}
+            </button>
+          </div>
+        </header>
+
+        <main class="px-4 pt-4 flex flex-col space-y-4">
+          <!-- PROGRES Overview Card -->
+          <section class="  p-4  rounded-sm p-5  relative overflow-hidden">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 rounded-sm bg-primary/10 text-primary text-[10px] font-bold tracking-wider">
+                  PROGRES {{ activeCategoryCode }}
+                </span>
+                <span class="px-2 py-0.5 rounded-sm bg-emerald-100 text-emerald-700 text-[10px] font-semibold">
+                  Passing Grade: {{ getCategoryPG(activeCategoryCode) }}
+                </span>
+              </div>
+              <div class="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4 py-2 border-y border-surface-container">
+              <div>
+                <span class="text-[10px] text-on-surface-variant block mb-1">Status Pembelajaran</span>
+                <div class="flex items-baseline space-x-1">
+                  <span class="text-2xl font-bold text-on-surface">{{ getCategoryCompleted(activeCategoryCode) }}</span>
+                  <span class="text-xs text-on-surface-variant">/ {{ getCategoryTotal(activeCategoryCode) }} Modul Terbuka</span>
+                </div>
+              </div>
+              <div class="border-l border-surface-container pl-4">
+                <span class="text-[10px] text-on-surface-variant block mb-1">Tingkat Kelulusan</span>
+                <div class="flex items-baseline space-x-1">
+                  <span class="text-2xl font-bold text-primary">{{ Math.round((getCategoryCompleted(activeCategoryCode)/getCategoryTotal(activeCategoryCode))*100) }}%</span>
+                  <span class="text-[10px] text-emerald-600 font-semibold">Aman</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-on-surface-variant font-medium">Penguasaan Materi</span>
+                <span class="text-primary font-bold">{{ Math.round((getCategoryCompleted(activeCategoryCode)/getCategoryTotal(activeCategoryCode))*100) }}%</span>
+              </div>
+              <div class="h-2.5 w-full bg-primary/10 rounded-sm overflow-hidden p-[1px]">
+                <div class="h-full bg-primary text-on-primary rounded-sm transition-all duration-500" :style="{ width: (getCategoryCompleted(activeCategoryCode)/getCategoryTotal(activeCategoryCode)*100) + '%' }"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Search Input Bar -->
+          <section class="relative">
+            <span class="material-symbols-outlined absolute left-4 top-3.5 text-on-surface-variant text-[20px] pointer-events-none">search</span>
+            <input 
+              v-model="searchQuery"
+              class="w-full   rounded-sm py-3 pl-11 pr-4 text-xs text-on-surface placeholder:text-outline  focus:outline-none focus:ring-2 focus:ring-primary/25 transition-all" 
+              placeholder="Cari materi, pasal, atau butir sila..." 
+              type="text"
+            >
+          </section>
+
+          <!-- Module List Section -->
+          <section class="space-y-3 pt-1">
+            <div class="flex justify-between items-center px-1">
+              <h2 class="text-2xl font-bold text-on-surface">Daftar Modul Belajar</h2>
+              <span class="text-xs text-primary font-semibold">{{ filteredModules.length }} Pembahasan</span>
+            </div>
+
+            <div class="space-y-2.5">
+              <div 
+                v-for="mod in filteredModules" 
+                :key="mod.id"
+                class="  p-4  rounded-sm p-3.5 flex items-center justify-between  transition-all"
+                :class="mod.unlocked ? 'hover:border-primary/50' : 'opacity-60 '"
+              >
+                <div @click="mod.unlocked ? openModule(mod) : showLockedNotice(mod)" class="flex items-center space-x-3 min-w-0 pr-2 flex-1 cursor-pointer">
+                  <div 
+                    class="w-10 h-10 rounded-sm flex items-center justify-center text-sm font-bold flex-shrink-0"
+                    :class="mod.completed ? 'bg-emerald-100 text-emerald-700' : mod.unlocked ? 'bg-primary-fixed text-primary' : 'bg-gray-100 text-gray-400'"
+                  >
+                    <span v-if="mod.completed" class="material-symbols-outlined text-[20px]">check_circle</span>
+                    <span v-else-if="mod.unlocked">{{ mod.order }}</span>
+                    <span v-else class="material-symbols-outlined text-[18px]">lock</span>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center space-x-1.5 mb-0.5">
+                      <span class="text-[9px] font-bold px-1.5 py-0.5 rounded" :class="mod.unlocked ? 'bg-primary/10 text-primary' : 'bg-gray-200 text-gray-600'">
+                        Modul {{ mod.code }}
+                      </span>
+                      <span v-if="mod.score !== null" class="text-[10px] font-bold text-emerald-600">Skor: {{ mod.score }}/5</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface leading-tight truncate">{{ mod.title }}</h3>
+                    <p class="text-[11px] text-outline mt-0.5 truncate">{{ mod.subtitle }}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                  <button 
+                    v-if="mod.unlocked"
+                    @click.stop="openModule(mod)"
+                    class="h-11 min-h-[44px] px-3.5 rounded-sm bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold shadow-sm active:scale-95 transition-all flex items-center gap-1.5"
+                  >
+                    <span>{{ mod.completed ? 'Pelajari Lagi' : 'Pelajari' }}</span>
+                    <span class="material-symbols-outlined text-[15px] font-bold">menu_book</span>
+                  </button>
+                  <span v-else @click.stop="showLockedNotice(mod)" class="h-11 min-h-[44px] cursor-pointer text-xs font-bold text-gray-400 bg-gray-100 px-3 rounded-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">lock</span> Kunci
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 3: DETAIL MATERI & APS (Screen: 129f8fd89c804b2cb710b3367431ad81) -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'module-detail'">
+        <!-- Navigation Bar -->
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="currentView = 'module-list'" aria-label="Kembali" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Modul {{ activeModule?.code }}</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">{{ activeModule?.category }} • Pilar Negara</span>
+          </div>
+          <div class="w-11 flex items-center justify-end flex-shrink-0">
+            <button @click="showToast('Modul disimpan ke bookmark')" aria-label="Simpan Modul" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-[20px]">bookmark</span>
+            </button>
+          </div>
+        </header>
+
+        <main class="px-4 space-y-4 pt-2 pb-24">
+          <!-- Hero Header Card -->
+          <section class="  p-4  rounded-sm p-5 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-primary/10 text-primary">
+                <span class="w-2 h-2 rounded-sm bg-primary"></span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">{{ activeModule?.category }} - MATERI UTAMA</span>
+              </div>
+              <div class="inline-flex items-center gap-1 text-on-surface-variant text-[11px]">
+                <span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+                <span>8 Menit Baca</span>
+              </div>
+            </div>
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight mb-2">
+              {{ activeModule?.title }}
+            </h1>
+            <p class="text-xs text-on-surface-variant leading-relaxed">
+              {{ activeModule?.subtitle }}
+            </p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+                <span class="text-xs font-medium text-on-surface">Target Passing Grade: {{ getCategoryPG(activeModule?.category) }}</span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-sm -container text-[10px] text-primary font-bold">5 Soal Ujian</span>
+            </div>
+          </section>
+
+          <!-- Section 1: Tujuan Pembelajaran -->
+          <section class="  p-4  rounded-sm p-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">checklist</span>
+              </div>
+              <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Tujuan Pembelajaran</h2>
+            </div>
+            <div class="space-y-2.5">
+              <div v-for="(obj, i) in activeModule?.objectives" :key="i" class="flex items-start space-x-3 p-2.5 rounded-sm ">
+                <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                <p class="text-xs text-on-surface">{{ obj }}</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 2: Tips & Trik Bedah Soal -->
+          <section class="  p-4  rounded-sm p-4 bg-gradient-to-br from-amber-50/50 via-white/80 to-white/70 border-amber-200/60">
+            <div class="flex items-center space-x-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
+                <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+              </div>
+              <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Tips Hacking Soal</h2>
+            </div>
+            <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+              {{ activeModule?.tips }}
+            </p>
+            <div class="p-2.5 rounded-sm  flex items-center gap-2">
+              <span class="text-amber-600 font-extrabold text-xs">Rule:</span>
+              <span class="text-[11px] font-medium text-gray-700">Eliminasi 3 opsi salah dalam 15 detik dengan identifikasi kata kunci "tindakan langsung".</span>
+            </div>
+          </section>
+
+          <!-- Section 3: Bedah Soal APS -->
+          <section class="  p-4  rounded-sm p-4">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2">
+                <div class="w-7 h-7 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined text-[18px]">analytics</span>
+                </div>
+                <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Bedah Soal APS</h2>
+              </div>
+              <span class="px-2 py-0.5 rounded-sm bg-primary/10 text-primary text-[10px] font-bold">HOTS CPNS</span>
+            </div>
+
+            <div class="p-3 rounded-sm  mb-3 text-xs text-on-surface leading-relaxed">
+              {{ activeModule?.sampleQuestion.question }}
+            </div>
+
+            <div class="space-y-2">
+              <div class="p-2.5 rounded-sm  text-xs">
+                <span class="font-bold text-emerald-800">Kunci Jawaban: {{ activeModule?.sampleQuestion.correctKey }}</span>
+                <span class="text-emerald-700 block text-[11px] mt-0.5">{{ activeModule?.sampleQuestion.correctText }}</span>
+              </div>
+
+              <div class="p-3 rounded-sm  flex flex-col gap-2 text-xs">
+                <span class="text-[10px] font-extrabold text-primary uppercase">Metode APS (Action - Point - Solution)</span>
+                <div class="text-[11px] text-on-surface">
+                  <strong class="text-primary font-bold">A (Action):</strong> {{ activeModule?.sampleQuestion.aps.action }}
+                </div>
+                <div class="text-[11px] text-on-surface">
+                  <strong class="text-primary font-bold">P (Point):</strong> {{ activeModule?.sampleQuestion.aps.point }}
+                </div>
+                <div class="text-[11px] text-on-surface">
+                  <strong class="text-primary font-bold">S (Solution):</strong> {{ activeModule?.sampleQuestion.aps.solution }}
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- Sticky Floating Bottom CTA Button (Full Rounded) -->
+        <div class="fixed bottom-4 left-0 right-0 max-w-xl mx-auto px-4 z-50">
+          <button 
+            @click="startQuiz(activeModule)"
+            class="w-full h-13 min-h-[52px] bg-primary text-on-primary font-bold py-3.5 px-6 rounded-sm shadow-sm shadow-primary/40  flex items-center justify-center gap-2 active:scale-95 transition-all text-sm tracking-wide"
+          >
+            <span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+            <span>Mulai Kerjakan Tugas (5 Soal)</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 4: QUIZ WIZARD (Screen: 055e9567f5034472b88c0124a1615126) -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'quiz'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="confirmExitQuiz" aria-label="Tutup kuis" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0" type="button">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Kuis Modul {{ activeModule?.code }}</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">{{ activeModule?.category }} • 5 Soal</span>
+          </div>
+          <div class="h-9 px-3 rounded-sm bg-indigo-50  border-indigo-100 flex items-center gap-1.5 text-xs font-semibold text-indigo-700 shadow-sm flex-shrink-0">
+            <span class="material-symbols-outlined text-[16px] text-indigo-600">timer</span>
+            <span class="font-bold tracking-tight">{{ formatTime(quizTimer) }}</span>
+          </div>
+        </header>
+
+          <!-- Progress Section -->
+          <section aria-label="Indikator Kemajuan Kuis" class="mt-3 px-4">
+            <div class="flex justify-between items-center mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-on-surface font-bold">Soal {{ currentQuizIndex + 1 }} dari 5</span>
+                <span class="px-2 py-0.5 rounded-sm bg-secondary-fixed text-on-secondary-fixed-variant text-[10px] font-bold">Bobot: 1 Poin</span>
+              </div>
+              <span class="text-[10px] text-primary font-bold">{{ (currentQuizIndex + 1) * 20 }}% Selesai</span>
+            </div>
+
+            <!-- Progress Bar Track -->
+            <div class="w-full h-2 rounded-sm bg-primary/10 overflow-hidden p-[1px]">
+              <div class="h-full rounded-sm bg-primary text-on-primary transition-all duration-500 shadow-sm" :style="{ width: ((currentQuizIndex + 1) * 20) + '%' }"></div>
+            </div>
+
+            <!-- Quick Jump Question Node Grid -->
+            <div class="flex justify-between items-center mt-3 px-1">
+              <button 
+                v-for="(q, idx) in quizQuestions" 
+                :key="idx"
+                @click="currentQuizIndex = idx"
+                class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-sm text-xs font-bold flex items-center justify-center transition-all"
+                :class="[
+                  currentQuizIndex === idx ? 'bg-primary-container text-white ring-2 ring-primary ring-offset-2 ring-offset-surface' : 
+                  userAnswers[idx] ? 'bg-primary text-white' : '-container-high text-on-surface-variant'
+                ]"
+              >
+                <span v-if="userAnswers[idx] && currentQuizIndex !== idx" class="material-symbols-outlined text-[16px]">check</span>
+                <span v-else>{{ idx + 1 }}</span>
+              </button>
+            </div>
+          </section>
+
+        <!-- Question Card -->
+        <main class="px-4 pt-3 flex-1 flex flex-col space-y-4">
+          <section class="  p-4  rounded-sm p-5 ">
+            <div class="flex items-center justify-between pb-3 mb-3 ">
+              <span class="text-[11px] font-bold text-primary px-2.5 py-0.5 rounded-sm bg-primary-fixed">Pertanyaan #{{ currentQuizIndex + 1 }}</span>
+              <span class="text-[11px] text-on-surface-variant">Pilih 1 Opsi Tepat</span>
+            </div>
+            <p class="text-sm font-medium text-on-surface leading-relaxed">
+              {{ currentQuestion.question }}
+            </p>
+          </section>
+
+          <!-- Options Section -->
+          <div class="space-y-2.5">
+            <div 
+              v-for="(opt, optKey) in currentQuestion.options" 
+              :key="optKey"
+              @click="selectAnswer(optKey)"
+              class="group min-h-[56px] flex items-start p-3.5 rounded-sm  cursor-pointer select-none active:scale-[0.99] transition-all"
+              :class="userAnswers[currentQuizIndex] === optKey ? 'border-outline-variant hover:-container-active ring-2 ring-primary/30 shadow-sm' : 'border-outline-variant hover:-container hover:-container-low'"
+            >
+              <div 
+                class="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm font-bold text-xs flex items-center justify-center mr-3 mt-0.5 transition-colors"
+                :class="userAnswers[currentQuizIndex] === optKey ? 'bg-primary text-white shadow-xs' : ' text-on-surface-variant bg-white'"
+              >
+                {{ optKey }}
+              </div>
+              <div class="text-xs text-on-surface flex-1 leading-normal pt-1">
+                {{ opt }}
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- Bottom Action Bar -->
+        <div class="fixed bottom-6 left-0 right-0 max-w-xl mx-auto px-4 z-40 flex items-center gap-3">
+          <button 
+            v-if="currentQuizIndex > 0"
+            @click="currentQuizIndex--"
+            class="flex-1 h-12 min-h-[48px]  bg-white hover: font-bold px-4 rounded-sm text-sm text-on-surface active:scale-95 transition-all text-center flex items-center justify-center"
+          >
+            Sebelumnya
+          </button>
+
+          <button 
+            v-if="currentQuizIndex < 4"
+            @click="currentQuizIndex++"
+            :disabled="!userAnswers[currentQuizIndex]"
+            class="flex-[2] h-12 min-h-[48px] bg-primary disabled:opacity-50 text-white font-bold px-4 rounded-sm shadow-sm shadow-primary/30 text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+          >
+            <span>Berikutnya</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </button>
+
+          <button 
+            v-else
+            @click="promptFinishQuiz"
+            :disabled="!userAnswers[currentQuizIndex]"
+            class="flex-[2] h-12 min-h-[48px] bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold px-4 rounded-sm shadow-sm shadow-emerald-600/30 text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+          >
+            <span>Selesai & Kumpulkan</span>
+            <span class="material-symbols-outlined text-[18px]">check</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 5: HASIL KUIS & UNLOCK (Screen: 1b70ef2bd60c46df86fa18f53b14810d) -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'quiz-result'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="currentView = 'module-list'" aria-label="Kembali" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Hasil Evaluasi</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">Kuis Modul {{ activeModule?.code }}</span>
+          </div>
+          <div class="w-11 flex-shrink-0" aria-hidden="true"></div>
+        </header>
+
+        <main class="px-4 space-y-4 pt-3">
+          <!-- Result Card -->
+          <section 
+            class="  p-4  rounded-sm p-6 text-center  relative overflow-hidden"
+            :class="quizScore >= 3 ? 'border-emerald-300' : 'border-rose-300'"
+          >
+            
+            <div class="mb-6 mt-2 flex justify-center">
+              <span v-if="quizScore >= 3" class="stamp-validated text-2xl px-6 py-2 border-4">PASSED</span>
+              <span v-else class="stamp-void text-2xl px-6 py-2 border-4">FAILED</span>
+            </div>
+            <h2 class="text-2xl font-bold uppercase tracking-widest mb-1" :class="quizScore >= 3 ? 'text-success' : 'text-error'">
+              {{ quizScore >= 3 ? 'Audit Cleared' : 'Audit Failed' }}
+            </h2>
+            
+            <p class="text-xs text-on-surface-variant mb-4 px-2">
+              {{ quizScore >= 3 ? 'Anda berhasil meraih skor minimal &ge; 3/5. Modul berikutnya otomatis TERBUKA!' : 'Syarat kelulusan minimal 3 dari 5 soal benar. Silakan ulangi kuis setelah memahami tips materi.' }}
+            </p>
+
+            <div class="inline-flex items-baseline gap-1  px-6 py-2 rounded-sm">
+              <span class="text-3xl font-extrabold text-on-surface">{{ quizScore }}</span>
+              <span class="text-xs font-bold text-on-surface-variant">/ 5 Soal Benar</span>
+            </div>
+          </section>
+
+          <!-- Bedah Jawaban APS Title -->
+          <div class="flex items-center justify-between px-1">
+            <h3 class="text-xl font-bold text-on-surface uppercase tracking-wider">Bedah Soal & Jawaban (APS)</h3>
+            <span class="text-xs text-primary font-semibold">5 Soal Pembahasan</span>
+          </div>
+
+          <!-- Question Review List with APS -->
+          <div class="space-y-3">
+            <div 
+              v-for="(q, idx) in quizQuestions" 
+              :key="idx" 
+              class="  p-4  rounded-sm p-4 text-xs"
+            >
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-on-surface">Soal {{ idx + 1 }}</span>
+                <span 
+                  class="px-2 py-0.5 rounded-sm font-bold text-[10px]"
+                  :class="userAnswers[idx] === q.correct ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                >
+                  {{ userAnswers[idx] === q.correct ? 'Benar (+1)' : 'Salah (0)' }}
+                </span>
+              </div>
+
+              <p class="text-on-surface mb-2.5 leading-relaxed">{{ q.question }}</p>
+
+              <div class="flex items-center gap-2 mb-2 p-2 rounded-sm  text-[11px]">
+                <span>Pilihan Anda: <strong :class="userAnswers[idx] === q.correct ? 'text-emerald-700' : 'text-rose-700'">{{ userAnswers[idx] }}. {{ q.options[userAnswers[idx]] }}</strong></span>
+              </div>
+
+              <div class="mt-3 crouwel-grid text-[10px] font-mono">
+                <div class="crouwel-cell font-bold  flex items-center justify-center border-r border-outline-variant">A</div>
+                <div class="crouwel-cell text-on-surface">{{ q.apsExplanation.match(/A \(Action\): (.*?)(?= P \(Point\):)/)?.[1] || q.apsExplanation }}</div>
+                
+                <div class="crouwel-cell font-bold  flex items-center justify-center border-r border-outline-variant">P</div>
+                <div class="crouwel-cell text-on-surface">{{ q.apsExplanation.match(/P \(Point\): (.*?)(?= S \(Solution\):)/)?.[1] || '-' }}</div>
+                
+                <div class="crouwel-cell font-bold  flex items-center justify-center border-r border-outline-variant text-primary border-b-0">S</div>
+                <div class="crouwel-cell font-bold text-primary border-b-0">{{ q.apsExplanation.match(/S \(Solution\): (.*)/)?.[1] || '-' }}</div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="flex items-center gap-3 pt-2 mb-6">
+            <template v-if="quizScore >= 3">
+              <button 
+                @click="startQuiz(activeModule)"
+                class="flex-1 h-12 min-h-[48px]  bg-white hover: font-bold px-4 rounded-sm text-xs sm:text-sm text-on-surface active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[18px]">replay</span>
+                <span>Ulangi Kuis</span>
+              </button>
+              <button 
+                @click="openCategory(activeModule?.category)"
+                class="flex-1 h-12 min-h-[48px] bg-primary text-white font-bold px-4 rounded-sm shadow-sm  text-xs sm:text-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <span>Buka Modul Baru</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </template>
+            <template v-else>
+              <button 
+                @click="openModule(activeModule)"
+                class="flex-1 h-12 min-h-[48px]  bg-white hover: font-bold px-4 rounded-sm text-xs sm:text-sm text-on-surface active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                <span>Baca Ulang Materi</span>
+              </button>
+              <button 
+                @click="startQuiz(activeModule)"
+                class="flex-1 h-12 min-h-[48px] bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 rounded-sm shadow-md shadow-rose-600/30 text-xs sm:text-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+              >
+                <span>Coba Kuis Lagi</span>
+                <span class="material-symbols-outlined text-[18px]">replay</span>
+              </button>
+            </template>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 6: BRIEFING / INTRO SIMULASI CAT SKD                -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'cat-intro'">
+        <!-- Top App Bar -->
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Simulasi CAT SKD</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">Standar Resmi BKN 2026</span>
+          </div>
+          <div class="w-11 flex items-center justify-end flex-shrink-0">
+            <div class="w-8 h-8 rounded-sm bg-primary/10 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="px-4 space-y-4 pt-2 pb-28">
+          <!-- Hero Header Card -->
+          <section class="  p-4  rounded-sm p-5 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-primary/10 text-primary">
+                <span class="w-2 h-2 rounded-sm bg-primary"></span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">SIMULASI NASIONAL SKD</span>
+              </div>
+              <div class="inline-flex items-center gap-1 text-on-surface-variant text-[11px]">
+                <span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+                <span>15 Menit Ujian</span>
+              </div>
+            </div>
+            <h2 class="text-2xl font-bold text-on-surface tracking-tight mb-2">
+              Try Out Akbar CAT SKD 2026
+            </h2>
+            <p class="text-xs text-on-surface-variant leading-relaxed">
+              Simulasi komprehensif menguji kesiapan Anda menghadapi Seleksi Kompetensi Dasar dengan sistem timer, pembagian subtes, dan penilaian proporsional sesuai standar resmi BKN.
+            </p>
+            <div class="mt-4 pt-3 border-t border-surface-container flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+                <span class="text-xs font-medium text-on-surface">Target Passing Grade: 311 / 550</span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-sm -container text-[10px] text-primary font-bold">15 Soal Standar BKN</span>
+            </div>
+          </section>
+
+          <!-- Section 1: Komposisi Soal & Ambang Batas -->
+          <section class="  p-4  rounded-sm p-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">pie_chart</span>
+              </div>
+              <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Komposisi Soal & Ambang Batas</h2>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-xs font-bold text-primary block">TWK</span>
+                <span class="text-[11px] font-bold text-on-surface block mt-0.5">5 Soal</span>
+                <span class="text-[10px] text-on-surface-variant block mt-1">PG: 65</span>
+                <span class="text-[9px] text-outline block">Maks: 150</span>
+              </div>
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-xs font-bold text-secondary block">TIU</span>
+                <span class="text-[11px] font-bold text-on-surface block mt-0.5">5 Soal</span>
+                <span class="text-[10px] text-on-surface-variant block mt-1">PG: 80</span>
+                <span class="text-[9px] text-outline block">Maks: 175</span>
+              </div>
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-xs font-bold text-tertiary block">TKP</span>
+                <span class="text-[11px] font-bold text-on-surface block mt-0.5">5 Soal</span>
+                <span class="text-[10px] text-on-surface-variant block mt-1">PG: 166</span>
+                <span class="text-[9px] text-outline block">Maks: 225</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 2: Petunjuk & Aturan Ujian -->
+          <section class="  p-4  rounded-sm p-4">
+            <div class="flex items-center space-x-2 mb-3">
+              <div class="w-7 h-7 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">rule</span>
+              </div>
+              <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Petunjuk & Aturan Ujian</h2>
+            </div>
+            <div class="space-y-2.5">
+              <div class="flex items-start space-x-3 p-2.5 rounded-sm ">
+                <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">check_circle</span>
+                <p class="text-xs text-on-surface leading-relaxed">
+                  <strong>Sistem Penilaian:</strong> TWK &amp; TIU benar bernilai +5 (salah/kosong 0). TKP berbobot 1 sampai 5 poin untuk setiap opsi pilihan.
+                </p>
+              </div>
+              <div class="flex items-start space-x-3 p-2.5 rounded-sm ">
+                <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">timer</span>
+                <p class="text-xs text-on-surface leading-relaxed">
+                  <strong>Manajemen Waktu:</strong> Total waktu simulasi 15 menit berjalan mundur. Jawaban otomatis dikumpulkan jika waktu ujian habis.
+                </p>
+              </div>
+              <div class="flex items-start space-x-3 p-2.5 rounded-sm ">
+                <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">flag</span>
+                <p class="text-xs text-on-surface leading-relaxed">
+                  <strong>Navigasi &amp; Ragu-ragu:</strong> Gunakan palet nomor dan tombol ragu-ragu untuk menandai soal yang ingin ditinjau kembali sebelum selesai.
+                </p>
+              </div>
+              <div class="flex items-start space-x-3 p-2.5 rounded-sm ">
+                <span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">verified</span>
+                <p class="text-xs text-on-surface leading-relaxed">
+                  <strong>Syarat Kelulusan:</strong> Peserta wajib melampaui nilai ambang batas pada ketiga subtes (TWK &ge; 65, TIU &ge; 80, TKP &ge; 166).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 3: Strategi Pengerjaan -->
+          <section class="  p-4  rounded-sm p-4 bg-gradient-to-br from-amber-50/50 via-white/80 to-white/70 border-amber-200/60">
+            <div class="flex items-center space-x-2 mb-2.5">
+              <div class="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
+                <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+              </div>
+              <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface">Strategi Pengerjaan CAT</h2>
+            </div>
+            <p class="text-xs text-on-surface-variant leading-relaxed mb-3">
+              Awali dengan subtes yang paling Anda kuasai menggunakan filter tab di lembar ujian. Kerjakan soal yang membutuhkan waktu singkat terlebih dahulu dan hindari membiarkan soal kosong karena tidak ada pengurangan nilai.
+            </p>
+            <div class="p-2.5 rounded-sm  flex items-center gap-2">
+              <span class="text-amber-600 font-extrabold text-xs">Penting:</span>
+              <span class="text-[11px] font-medium text-gray-700">Pastikan koneksi stabil sebelum menekan tombol mulai ujian di bawah.</span>
+            </div>
+          </section>
+        </main>
+
+        <!-- Sticky Floating Bottom CTA Button (Full Rounded) -->
+        <div class="fixed bottom-4 left-0 right-0 max-w-xl mx-auto px-4 z-50">
+          <button 
+            @click="startCatSimulation()"
+            class="w-full h-13 min-h-[52px] bg-primary text-on-primary font-bold py-3.5 px-6 rounded-sm shadow-sm shadow-primary/40  flex items-center justify-center gap-2 active:scale-95 transition-all text-sm tracking-wide"
+          >
+            <span class="material-symbols-outlined text-[20px]">play_circle</span>
+            <span>Mulai Simulasi Ujian CAT (15 Soal)</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 7: SIMULASI CAT SKD (BKN Standar)                   -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'cat-sim'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="confirmExitCatSim" aria-label="Keluar" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Simulasi CAT SKD</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">
+              Soal {{ catCurrentIndex + 1 }} dari {{ catQuestions.length }} • {{ currentCatQuestion.category }}
+            </span>
+          </div>
+          <button @click="promptFinishCatSim" class="h-10 min-h-[40px] px-3.5 rounded-sm bg-primary hover:bg-primary-dark text-white text-xs font-bold shadow-sm active:scale-95 flex items-center gap-1.5 transition-all flex-shrink-0">
+            <span>Selesai</span>
+            <span class="material-symbols-outlined text-[16px]">check_circle</span>
+          </button>
+        </header>
+
+        <!-- Live Countdown Floating Banner -->
+        <div class="px-4 py-2.5">
+          <div class="flex items-center justify-between -container-lowest/90 rounded-sm px-3.5 py-2 shadow-xs ">
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-2.5 rounded-sm" :class="catTimer <= 60 ? 'bg-error ' : '0 animate-pulse'"></span>
+              <span class="text-xs font-semibold text-on-surface">Sisa Waktu</span>
+            </div>
+            <div class="flex items-center space-x-1.5 font-bold text-sm tracking-wider" :class="catTimer <= 60 ? 'text-error ' : 'text-primary'">
+              <span class="material-symbols-outlined text-[18px]">alarm</span>
+              <span>{{ formatCatTimer(catTimer) }}</span>
+            </div>
+            <div class="text-[11px] font-bold text-on-surface-variant -container px-2 py-0.5 rounded-sm">
+              {{ catAnsweredCount }}/{{ catQuestions.length }} Terisi
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="px-4 pb-2">
+          <div class="flex items-center gap-1.5 p-1   rounded-sm ">
+            <button 
+              v-for="tab in ['ALL', 'TWK', 'TIU', 'TKP']"
+              :key="tab"
+              @click="setCatCategory(tab)"
+              class="flex-1 h-9 min-h-[36px] flex items-center justify-center rounded-sm text-xs font-bold transition-all"
+              :class="catActiveCategory === tab ? 'bg-primary text-white shadow-xs' : ' text-on-surface-variant hover:text-primary'"
+            >
+              {{ tab === 'ALL' ? 'Semua (15)' : tab + ' (5)' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Number Palette (Grid Chips) -->
+        <div class="px-4 pb-2">
+          <div class="rounded-sm p-2.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <button
+              v-for="(q, idx) in catQuestions"
+              :key="idx"
+              v-show="catActiveCategory === 'ALL' || q.category === catActiveCategory"
+              @click="jumpToCatQuestion(idx)"
+              class="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm text-xs font-bold flex items-center justify-center transition-all flex-shrink-0"
+              :class="[
+                catCurrentIndex === idx ? 'ring-2 ring-primary ring-offset-1' : '',
+                catDoubtful[idx] ? 'bg-amber-400 text-white shadow-xs' :
+                catAnswers[idx] ? 'bg-emerald-600 text-white shadow-xs' :
+                ' /60 text-on-surface-variant'
+              ]"
+            >
+              {{ idx + 1 }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Card -->
+        <main class="px-4 pt-1 flex-1 flex flex-col space-y-4">
+          <section class="  p-4  rounded-sm p-5 shadow-sm">
+            <div class="flex items-center justify-between gap-2 pb-3 mb-4 ">
+              <div class="flex items-center gap-1.5 px-2.5 py-1 bg-primary text-on-primary rounded-lg text-xs font-bold">
+                <span class="material-symbols-outlined text-[14px]">help</span>
+                <span>Soal {{ catCurrentIndex + 1 }} dari {{ catQuestions.length }}</span>
+              </div>
+              <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold"
+                :class="currentCatQuestion.category === 'TWK' ? 'bg-primary/10 text-primary /20' : currentCatQuestion.category === 'TIU' ? 'bg-secondary/10 text-secondary  border-secondary/20' : 'bg-tertiary/10 text-tertiary  border-tertiary/20'"
+              >
+                <span class="w-1.5 h-1.5 rounded-sm" :class="currentCatQuestion.category === 'TWK' ? 'bg-primary' : currentCatQuestion.category === 'TIU' ? 'bg-secondary' : 'bg-tertiary'"></span>
+                <span>{{ currentCatQuestion.category }} • {{ currentCatQuestion.topic }}</span>
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs sm:text-sm font-medium text-on-surface leading-relaxed">
+                {{ currentCatQuestion.question }}
+              </p>
+            </div>
+          </section>
+
+          <!-- Options List -->
+          <div class="space-y-2.5">
+            <div 
+              v-for="(text, key) in currentCatQuestion.options" 
+              :key="key"
+              @click="selectCatAnswer(key)"
+              class="min-h-[56px] flex items-start p-3.5 rounded-sm  transition-all cursor-pointer active:scale-[0.99]"
+              :class="catAnswers[catCurrentIndex] === key ? 'border-primary bg-primary/10 shadow-sm font-semibold ring-2 ring-primary/30' : 'border-outline-variant  hover:-container-low'"
+            >
+              <div 
+                class="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm text-xs font-bold flex items-center justify-center mr-3 mt-0.5 transition-colors"
+                :class="catAnswers[catCurrentIndex] === key ? 'bg-primary text-white shadow-xs' : ' text-on-surface-variant bg-white'"
+              >
+                {{ key }}
+              </div>
+              <div class="text-xs text-on-surface flex-1 leading-normal pt-1">{{ text }}</div>
+            </div>
+          </div>
+
+          <!-- CAT Bottom Control Buttons -->
+          <div class="flex items-center gap-2.5 pt-1 mb-6">
+            <!-- Ragu-ragu Button -->
+            <button 
+              @click="toggleCatDoubtful" 
+              class="h-12 min-h-[48px] px-4 rounded-sm text-xs font-bold active:scale-95 transition-all text-center flex items-center justify-center gap-1 flex-shrink-0"
+              :class="catDoubtful[catCurrentIndex] ? 'bg-amber-500 text-white shadow-sm' : 'bg-amber-100 text-amber-900  border-amber-200'"
+            >
+              <span class="material-symbols-outlined text-[16px]">flag</span>
+              <span>{{ catDoubtful[catCurrentIndex] ? 'Batal Ragu' : 'Ragu-ragu' }}</span>
+            </button>
+
+            <!-- Previous Button -->
+            <button 
+              @click="prevCatQuestion"
+              :disabled="catCurrentIndex === 0"
+              class="h-12 min-h-[48px] px-4 rounded-sm  bg-white hover: text-xs font-bold text-on-surface active:scale-95 transition-all text-center flex items-center justify-center gap-1 disabled:opacity-40 disabled:pointer-events-none"
+            >
+              <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+              <span>Sebelumnya</span>
+            </button>
+
+            <!-- Next / Finish Button -->
+            <button 
+              @click="nextCatQuestion"
+              class="flex-1 h-12 min-h-[48px] bg-primary hover:bg-primary-dark text-white font-bold px-4 rounded-sm shadow-sm  text-xs active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              <span>{{ catCurrentIndex < catQuestions.length - 1 ? 'Simpan & Lanjut' : 'Selesai & Kumpul' }}</span>
+              <span class="material-symbols-outlined text-[18px]">
+                {{ catCurrentIndex < catQuestions.length - 1 ? 'arrow_forward' : 'check' }}
+              </span>
+            </button>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 6B: HASIL SIMULASI CAT SKD                          -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'cat-result'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-sm  shadow-sm  flex items-center justify-center text-slate-700 hover:bg-white active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight leading-tight truncate">Hasil Simulasi CAT</h1>
+            <span class="text-[11px] font-medium text-primary leading-tight mt-0.5 truncate">Laporan Nilai Standar BKN</span>
+          </div>
+          <div class="w-11 flex-shrink-0" aria-hidden="true"></div>
+        </header>
+
+        <main class="px-4 space-y-4 pt-3 pb-24">
+          <!-- Main Result Card -->
+          <section 
+            class="  p-4  rounded-sm p-6 text-center  relative overflow-hidden"
+            :class="catResult?.isPassed ? 'border-emerald-300' : 'border-rose-300'"
+          >
+            <div 
+              class="w-16 h-16 rounded-sm mx-auto flex items-center justify-center mb-3"
+              :class="catResult?.isPassed ? 'bg-emerald-100 text-emerald-600' : 'bg-rose-100 text-rose-600'"
+            >
+              <span class="material-symbols-outlined text-[32px]">
+                {{ catResult?.isPassed ? 'verified' : 'priority_high' }}
+              </span>
+            </div>
+
+            <div 
+              class="inline-block px-3 py-1 rounded-sm text-xs font-bold mb-2"
+              :class="catResult?.isPassed ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'"
+            >
+              {{ catResult?.isPassed ? 'MEMENUHI PASSING GRADE NASIONAL' : 'BELUM MEMENUHI PASSING GRADE' }}
+            </div>
+
+            <h2 class="text-2xl font-bold uppercase tracking-wider text-on-surface-variant mb-1">Total Nilai CAT SKD</h2>
+            <div class="flex items-baseline justify-center gap-1.5 mb-2">
+              <span class="text-5xl font-black text-primary">{{ catResult?.totalScore }}</span>
+              <span class="text-sm font-bold text-on-surface-variant">/ 550</span>
+            </div>
+            <p class="text-xs text-on-surface-variant max-w-xs mx-auto mb-4">
+              {{ catResult?.isPassed 
+                ? 'Selamat! Seluruh sub-tes (TWK, TIU, TKP) berhasil melampaui batas nilai kelulusan BKN.' 
+                : 'Ada sub-tes yang belum mencapai batas minimal. Periksa pembahasan di bawah untuk evaluasi materi.' }}
+            </p>
+
+            <!-- 3 Category Breakdown inside Card -->
+            <div class="grid grid-cols-3 gap-2 pt-3 border-t border-surface-container">
+              <!-- TWK -->
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] font-bold text-primary block">TWK</span>
+                <span class="text-lg font-black text-on-surface block">{{ catResult?.twkScore }}</span>
+                <span class="text-[9px] text-outline block mb-1">PG: 65</span>
+                <span 
+                  class="text-[9px] font-bold px-1.5 py-0.5 rounded-sm"
+                  :class="catResult?.twkScore >= 65 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                >
+                  {{ catResult?.twkScore >= 65 ? 'Lolos' : 'Gagal' }}
+                </span>
+              </div>
+
+              <!-- TIU -->
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] font-bold text-secondary block">TIU</span>
+                <span class="text-lg font-black text-on-surface block">{{ catResult?.tiuScore }}</span>
+                <span class="text-[9px] text-outline block mb-1">PG: 80</span>
+                <span 
+                  class="text-[9px] font-bold px-1.5 py-0.5 rounded-sm"
+                  :class="catResult?.tiuScore >= 80 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                >
+                  {{ catResult?.tiuScore >= 80 ? 'Lolos' : 'Gagal' }}
+                </span>
+              </div>
+
+              <!-- TKP -->
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] font-bold text-tertiary block">TKP</span>
+                <span class="text-lg font-black text-on-surface block">{{ catResult?.tkpScore }}</span>
+                <span class="text-[9px] text-outline block mb-1">PG: 166</span>
+                <span 
+                  class="text-[9px] font-bold px-1.5 py-0.5 rounded-sm"
+                  :class="catResult?.tkpScore >= 166 ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                >
+                  {{ catResult?.tkpScore >= 166 ? 'Lolos' : 'Gagal' }}
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Review Pembahasan Section -->
+          <div class="flex items-center justify-between px-1">
+            <h3 class="text-xl font-bold text-on-surface uppercase tracking-wider">Review & Pembahasan Soal</h3>
+            <span class="text-xs text-primary font-semibold">{{ catQuestions.length }} Soal Standar BKN</span>
+          </div>
+
+          <div class="space-y-3">
+            <div 
+              v-for="(q, idx) in catQuestions" 
+              :key="idx"
+              class="rounded-sm p-4 text-xs space-y-2"
+            >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-on-surface">Soal {{ idx + 1 }}</span>
+                  <span 
+                    class="px-2 py-0.5 rounded-md text-[10px] font-bold"
+                    :class="q.category === 'TWK' ? 'bg-primary/10 text-primary' : q.category === 'TIU' ? 'bg-secondary/10 text-secondary' : 'bg-tertiary/10 text-tertiary'"
+                  >
+                    {{ q.category }} • {{ q.topic }}
+                  </span>
+                </div>
+                <span 
+                  v-if="q.category !== 'TKP'"
+                  class="px-2 py-0.5 rounded-sm font-bold text-[10px]"
+                  :class="catAnswers[idx] === q.correct ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'"
+                >
+                  {{ catAnswers[idx] === q.correct ? 'Benar (+5)' : 'Salah (0)' }}
+                </span>
+                <span 
+                  v-else
+                  class="px-2 py-0.5 rounded-sm font-bold text-[10px] bg-emerald-100 text-emerald-700"
+                >
+                  Poin: +{{ q.scores[catAnswers[idx]] || 0 }} / 5
+                </span>
+              </div>
+
+              <p class="text-on-surface leading-relaxed">{{ q.question }}</p>
+
+              <!-- User Answer -->
+              <div class="p-2 rounded-sm  text-[11px]">
+                <span>Jawaban Anda: 
+                  <strong :class="q.category === 'TKP' || catAnswers[idx] === q.correct ? 'text-emerald-700' : 'text-rose-700'">
+                    {{ catAnswers[idx] ? `${catAnswers[idx]}. ${q.options[catAnswers[idx]]}` : 'Tidak dijawab' }}
+                  </strong>
+                </span>
+              </div>
+
+              <!-- Explanation / Key -->
+              <div class=" p-3 rounded-sm text-[11px] space-y-1">
+                <div v-if="q.category !== 'TKP'" class="font-bold text-primary">
+                  Kunci Jawaban: {{ q.correct }} ({{ q.options[q.correct] }})
+                </div>
+                <div v-else class="font-bold text-primary">
+                  Bobot Tertinggi (Poin 5): Opsi {{ Object.keys(q.scores).find(k => q.scores[k] === 5) }}
+                </div>
+                <p class="text-on-surface-variant leading-relaxed">{{ q.explanation }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-3 pt-2 mb-6">
+            <button 
+              @click="openCatIntro()"
+              class="flex-1 h-12 min-h-[48px]  bg-white hover: font-bold px-4 rounded-sm text-xs sm:text-sm text-on-surface active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              <span class="material-symbols-outlined text-[18px]">replay</span>
+              <span>Ulangi Simulasi</span>
+            </button>
+            <button 
+              @click="currentView = 'dashboard'"
+              class="flex-1 h-12 min-h-[48px] bg-primary text-white font-bold px-4 rounded-sm shadow-sm  text-xs sm:text-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+            >
+              <span>Ke Dashboard</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 7: STATISTIK & EVALUASI BELAJAR (Tab Menu Utama)    -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'statistik'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 rounded-sm bg-primary/10 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">bar_chart</span>
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold text-on-surface leading-tight">Statistik Belajar</h1>
+              <span class="text-[11px] font-medium text-emerald-600 leading-tight">Analisis Kesiapan SKD 2026</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1.5 bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-sm">
+            <span class="w-1.5 h-1.5 rounded-sm 0"></span>
+            <span class="text-[10px] font-bold">Passing Ready</span>
+          </div>
+        </header>
+
+        <main class="px-4 space-y-3 pt-3 pb-24">
+          <!-- Card 1: Ringkasan Skor CAT (Compact Glass Card) -->
+          <section class="  p-4  rounded-sm p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h2 class="text-2xl font-bold text-on-surface uppercase tracking-wider">Prediksi Skor CAT</h2>
+              <span class="text-[11px] font-bold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-sm">Lolos Passing Grade</span>
+            </div>
+
+            <div class="flex items-baseline justify-between mb-2">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-3xl font-extrabold text-primary">{{ 350 + (totalCompletedCount * 5) }}</span>
+                <span class="text-xs text-on-surface-variant font-medium">/ 550</span>
+              </div>
+              <span class="text-xs text-outline font-medium">Ambang Batas: <strong>311</strong></span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-2 bg-primary/10 rounded-sm overflow-hidden">
+              <div 
+                class="h-full bg-primary text-on-primary rounded-sm transition-all duration-500"
+                :style="{ width: Math.min(100, Math.round(((350 + (totalCompletedCount * 5)) / 550) * 100)) + '%' }"
+              ></div>
+            </div>
+          </section>
+
+          <!-- Card 2: 3 Kategori Ambang Batas (Compact 3 Columns, tanpa  atas) -->
+          <section class="grid grid-cols-3 gap-2.5">
+            <!-- TWK -->
+            <div 
+              @click="openCategory('TWK')" 
+              class="rounded-sm p-3 text-center cursor-pointer hover: active:scale-95 transition-all"
+            >
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-primary">TWK</span>
+                <span class="text-[9px] font-bold text-emerald-600 bg-emerald-100 px-1 rounded-sm">Lulus</span>
+              </div>
+              <span class="text-xl font-bold text-on-surface block">95</span>
+              <span class="text-[10px] text-outline block mb-1.5">PG: 65</span>
+              <div class="w-full h-1 bg-primary/10 rounded-sm overflow-hidden">
+                <div class="h-full bg-primary rounded-sm" :style="{ width: (getCategoryCompleted('TWK')/7*100) + '%' }"></div>
+              </div>
+              <span class="text-[9px] text-on-surface-variant mt-1 block">{{ getCategoryCompleted('TWK') }}/7 Modul</span>
+            </div>
+
+            <!-- TIU -->
+            <div 
+              @click="openCategory('TIU')" 
+              class="rounded-sm p-3 text-center cursor-pointer hover: active:scale-95 transition-all"
+            >
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-secondary">TIU</span>
+                <span class="text-[9px] font-bold text-emerald-600 bg-emerald-100 px-1 rounded-sm">Lulus</span>
+              </div>
+              <span class="text-xl font-bold text-on-surface block">115</span>
+              <span class="text-[10px] text-outline block mb-1.5">PG: 80</span>
+              <div class="w-full h-1 bg-secondary/10 rounded-sm overflow-hidden">
+                <div class="h-full bg-secondary rounded-sm" :style="{ width: (getCategoryCompleted('TIU')/8*100) + '%' }"></div>
+              </div>
+              <span class="text-[9px] text-on-surface-variant mt-1 block">{{ getCategoryCompleted('TIU') }}/8 Modul</span>
+            </div>
+
+            <!-- TKP -->
+            <div 
+              @click="openCategory('TKP')" 
+              class="rounded-sm p-3 text-center cursor-pointer hover: active:scale-95 transition-all"
+            >
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-tertiary">TKP</span>
+                <span class="text-[9px] font-bold text-emerald-600 bg-emerald-100 px-1 rounded-sm">Lulus</span>
+              </div>
+              <span class="text-xl font-bold text-on-surface block">185</span>
+              <span class="text-[10px] text-outline block mb-1.5">PG: 166</span>
+              <div class="w-full h-1 bg-tertiary/10 rounded-sm overflow-hidden">
+                <div class="h-full bg-tertiary rounded-sm" :style="{ width: (getCategoryCompleted('TKP')/6*100) + '%' }"></div>
+              </div>
+              <span class="text-[9px] text-on-surface-variant mt-1 block">{{ getCategoryCompleted('TKP') }}/6 Modul</span>
+            </div>
+          </section>
+
+          <!-- Card 3: Ringkasan Belajar & Akurasi (Compact Grid) -->
+          <section class="  p-4  rounded-sm p-4 space-y-3">
+            <h2 class="text-2xl font-bold text-on-surface uppercase tracking-wider">Akurasi & Performa</h2>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] text-on-surface-variant block">Modul Tuntas</span>
+                <span class="text-sm font-bold text-primary">{{ totalCompletedCount }} / {{ totalModulesCount }}</span>
+              </div>
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] text-on-surface-variant block">Rata-rata Skor</span>
+                <span class="text-sm font-bold text-emerald-600">{{ averageQuizScore }} / 5</span>
+              </div>
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] text-on-surface-variant block">Sila Radar (TWK)</span>
+                <span class="text-sm font-bold text-on-surface">85% Akurat</span>
+              </div>
+              <div class="p-2.5 rounded-sm ">
+                <span class="text-[10px] text-on-surface-variant block">Kecepatan Rata-rata</span>
+                <span class="text-sm font-bold text-on-surface">38 dtk / soal</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Card 4: Action Button Compact -->
+          <button 
+            @click="openCatIntro()"
+            class="w-full h-12 rounded-sm bg-primary hover:bg-primary-container text-white font-bold text-xs shadow-md shadow-primary/25 flex items-center justify-center gap-2 active:scale-95 transition-all"
+          >
+            <span class="material-symbols-outlined text-[18px]">play_circle</span>
+            <span>Uji Kemampuan di Simulasi CAT</span>
+          </button>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 8: PROFIL PENGGUNA (Tab Menu Utama)                 -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'profile'">
+        <header class="w-full max-w-xl mx-auto px-4 h-14 flex items-center justify-between bg-white   sticky top-0 z-40">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-9 h-9 rounded-sm bg-primary/10 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[22px]">person</span>
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold text-on-surface leading-tight">Profil Aspirant</h1>
+              <span class="text-[11px] font-medium text-on-surface-variant leading-tight">Data Peserta & Instansi</span>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-primary bg-primary-fixed px-2.5 py-1 rounded-sm">Member PRO</span>
+        </header>
+
+        <main class="px-4 space-y-4 pt-3">
+          <!-- User Profile Card -->
+          <section class="  p-4  rounded-sm p-5 text-center relative overflow-hidden">
+            <div class="relative w-20 h-20 mx-auto mb-3">
+              <div class="w-full h-full rounded-sm p-0.5 bg-primary text-on-primary">
+                <img alt="User avatar" class="w-full h-full rounded-sm object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80">
+              </div>
+              <span class="absolute bottom-1 right-1 w-4 h-4 0 rounded-sm border-2 border-white"></span>
+            </div>
+
+            <h2 class="text-2xl font-bold text-on-surface">Vikram Raditya, S.Kom</h2>
+            <p class="text-xs text-on-surface-variant mb-1">vikram.raditya@gmail.com</p>
+            <span class="inline-block text-[11px] font-semibold text-primary bg-primary/10 px-3 py-0.5 rounded-sm mb-4">
+              Target Instansi: Kementerian Hukum & HAM RI
+            </span>
+
+            <div class="grid grid-cols-2 gap-3 text-center border-t border-surface-container pt-3">
+              <div class="p-2">
+                <span class="text-[10px] text-on-surface-variant block">Total Modul Terbuka</span>
+                <span class="text-lg font-bold text-primary">{{ unlockedModulesCount }} Modul</span>
+              </div>
+              <div class="p-2 border-l border-surface-container">
+                <span class="text-[10px] text-on-surface-variant block">Rata-rata Skor Kuis</span>
+                <span class="text-lg font-bold text-emerald-600">{{ averageQuizScore }} / 5</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Detail Akun & Target Formasi -->
+          <section class="  p-4  rounded-sm p-4 space-y-3">
+            <h3 class="text-xl font-bold text-on-surface uppercase tracking-wider">Target Ujian CPNS 2026</h3>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between py-1.5 ">
+                <span class="text-on-surface-variant">Formasi Jabatan</span>
+                <span class="font-semibold text-on-surface">Analis Kebijakan Ahli Pertama</span>
+              </div>
+              <div class="flex justify-between py-1.5 ">
+                <span class="text-on-surface-variant">Target Skor SKD</span>
+                <span class="font-bold text-primary">420+ Poin</span>
+              </div>
+              <div class="flex justify-between py-1.5 ">
+                <span class="text-on-surface-variant">Sinkronisasi Database</span>
+                <span class="font-semibold text-emerald-600 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-sm 0"></span> Google Sheets API
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Pengaturan Akun & Reset Data -->
+          <section class="  p-4  rounded-sm p-4 flex flex-col gap-2.5">
+            <h3 class="text-xl font-bold text-on-surface uppercase tracking-wider">Pengaturan Data</h3>
+            <button @click="resetProgress" class="h-12 min-h-[48px] text-rose-600 font-bold px-4 text-center rounded-sm bg-rose-500/10 hover:bg-rose-500/20 transition-colors text-xs active:scale-98 flex items-center justify-center">
+              Reset Seluruh Progres Belajar (Uji Ulang)
+            </button>
+            <button @click="showToast('Sesi belajar berhasil disimpan')" class="h-12 min-h-[48px] text-on-surface-variant font-semibold px-4 text-center rounded-sm  hover:-container transition-colors text-xs active:scale-98 flex items-center justify-center">
+              Simpan Data Belajar
+            </button>
+          </section>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- SHARED COMPONENT: BottomNavBar (Strictly implemented per Stitch) -->
+      <!-- Destination count: 5 | Labels: Home, Modul, Simulasi, Statistik, Profil -->
+      <!-- ======================================================== -->
+      <nav v-if="currentView === 'dashboard' || currentView === 'module-list' || currentView === 'profile' || currentView === 'statistik' || currentView === 'cat-result'" class="fixed bottom-4 left-4 right-4 max-w-xl mx-auto z-50 flex justify-around items-center px-2 py-2 ledger-dock rounded-sm shadow-sm ">
+        
+        <!-- Home -->
+        <button 
+          @click="currentView = 'dashboard'"
+          class="min-h-[48px] min-w-[52px] flex flex-col items-center justify-center py-1 px-1.5 active:scale-95 transition-transform duration-150"
+          :class="currentView === 'dashboard' ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
+        >
+          <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">home</span>
+          <span class="text-[10px] font-bold mt-0.5">Home</span>
+          <span class="w-1.5 h-1.5 rounded-sm mt-0.5" :class="currentView === 'dashboard' ? 'bg-primary' : 'bg-transparent'"></span>
+        </button>
+
+        <!-- Modul -->
+        <button 
+          @click="openCategory('TWK')"
+          class="min-h-[48px] min-w-[52px] flex flex-col items-center justify-center py-1 px-1.5 active:scale-95 transition-transform duration-150"
+          :class="currentView === 'module-list' ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
+        >
+          <span class="material-symbols-outlined text-xl">menu_book</span>
+          <span class="text-[10px] font-medium mt-0.5">Modul</span>
+          <span class="w-1.5 h-1.5 rounded-sm mt-0.5" :class="currentView === 'module-list' ? 'bg-primary' : 'bg-transparent'"></span>
+        </button>
+
+        <!-- Simulasi Center Circle Button -->
+        <button 
+          @click="openCatIntro()"
+          class="relative -top-3.5 flex flex-col items-center justify-center group active:scale-95 transition-transform duration-150 min-w-[56px]"
+        >
+          <div class="w-12 h-12 min-w-[48px] min-h-[48px] rounded-sm bg-primary text-on-primary flex items-center justify-center shadow-sm shadow-primary/35 group-hover:shadow-primary/50 transition-shadow">
+            <span class="material-symbols-outlined text-2xl">play_circle</span>
+          </div>
+          <span class="text-[10px] font-bold text-primary mt-0.5">Simulasi</span>
+        </button>
+
+        <!-- Statistik -->
+        <button 
+          @click="currentView = 'statistik'"
+          class="min-h-[48px] min-w-[52px] flex flex-col items-center justify-center py-1 px-1.5 active:scale-95 transition-transform duration-150"
+          :class="currentView === 'statistik' ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
+        >
+          <span class="material-symbols-outlined text-xl">bar_chart</span>
+          <span class="text-[10px] font-medium mt-0.5">Statistik</span>
+          <span class="w-1.5 h-1.5 rounded-sm mt-0.5" :class="currentView === 'statistik' ? 'bg-primary' : 'bg-transparent'"></span>
+        </button>
+
+        <!-- Profil -->
+        <button 
+          @click="currentView = 'profile'"
+          class="min-h-[48px] min-w-[52px] flex flex-col items-center justify-center py-1 px-1.5 active:scale-95 transition-transform duration-150"
+          :class="currentView === 'profile' ? 'text-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
+        >
+          <span class="material-symbols-outlined text-xl">person</span>
+          <span class="text-[10px] font-medium mt-0.5">Profil</span>
+          <span class="w-1.5 h-1.5 rounded-sm mt-0.5" :class="currentView === 'profile' ? 'bg-primary' : 'bg-transparent'"></span>
+        </button>
+
+      </nav>
+
+      <!-- Toast Notification -->
+      <div 
+        v-if="toastMessage" 
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface/90 text-inverse-on-surface text-xs font-semibold px-4 py-2 rounded-sm shadow-sm  transition-all pointer-events-none"
+      >
+        {{ toastMessage }}
+      </div>
+
+      <!-- Modern Mobile Bottom Sheet / Modal Confirmation -->
+      <transition name="modal-backdrop">
+        <div 
+          v-if="confirmModal.isOpen" 
+          @click.self="confirmModal.onCancel"
+          class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/50  px-0 sm:px-4"
+        >
+          <transition name="modal-sheet">
+            <div 
+              v-if="confirmModal.isOpen"
+              class="w-full max-w-xl -container-lowest/95 backdrop-blur-2xl border-t sm: rounded-t-[32px] sm:rounded-[32px] p-6 pb-8 shadow-sm relative overflow-hidden"
+            >
+              <!-- Drag Handle Bar for Mobile Bottom Sheet -->
+              <div class="w-12 h-1.5 bg-outline-variant/60 rounded-sm mx-auto mb-5 sm:hidden"></div>
+
+              <!-- Content Container -->
+              <div class="flex flex-col items-center text-center">
+                <!-- Icon Badge in Soft Color Ring -->
+                <div 
+                  class="w-14 h-14 rounded-sm flex items-center justify-center mb-3.5"
+                  :class="[
+                    confirmModal.type === 'danger' ? 'bg-rose-100 text-rose-600  border-rose-200' :
+                    confirmModal.type === 'warning' ? 'bg-amber-100 text-amber-700  border-amber-200' :
+                    'bg-primary/10 text-primary /20'
+                  ]"
+                >
+                  <span class="material-symbols-outlined text-[32px]">{{ confirmModal.icon }}</span>
+                </div>
+
+                <h3 class="text-xl sm:text-lg font-bold text-on-surface leading-tight mb-2">
+                  {{ confirmModal.title }}
+                </h3>
+
+                <p class="text-xs sm:text-sm text-on-surface-variant leading-relaxed mb-6 max-w-xs">
+                  {{ confirmModal.message }}
+                </p>
+
+                <!-- Dual Action Buttons -->
+                <div class="w-full flex items-center gap-3">
+                  <button 
+                    @click="confirmModal.onCancel"
+                    class="flex-1 h-12 min-h-[48px] -container/70 hover:-container rounded-sm font-bold text-xs sm:text-sm text-on-surface active:scale-95 transition-all text-center flex items-center justify-center"
+                  >
+                    {{ confirmModal.cancelText }}
+                  </button>
+
+                  <button 
+                    @click="confirmModal.onConfirm"
+                    class="flex-1 h-12 min-h-[48px] rounded-sm font-bold text-xs sm:text-sm text-white shadow-sm active:scale-95 transition-all text-center flex items-center justify-center gap-1.5"
+                    :class="[
+                      confirmModal.type === 'danger' ? 'bg-rose-600 hover:bg-rose-700 shadow-rose-600/30' :
+                      confirmModal.type === 'warning' ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30' :
+                      'bg-primary hover:bg-primary-dark shadow-primary/30'
+                    ]"
+                  >
+                    <span>{{ confirmModal.confirmText }}</span>
+                    <span v-if="confirmModal.type === 'primary'" class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+      </transition>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- VUE 3 APPLICATION LOGIC                                  -->
+  <!-- ======================================================== -->
+  <script>
+    const { createApp, ref, computed, watch, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        const currentView = ref('dashboard');
+        const activeCategoryCode = ref('TWK');
+        const activeModule = ref(null);
+        const searchQuery = ref('');
+        const toastMessage = ref('');
+        let toastTimeout = null;
+
+        // Modern Confirmation Modal / Bottom Sheet State
+        const confirmModal = ref({
+          isOpen: false,
+          title: '',
+          message: '',
+          confirmText: 'Konfirmasi',
+          cancelText: 'Batal',
+          type: 'primary',
+          icon: 'help',
+          onConfirm: () => {},
+          onCancel: () => {}
+        });
+
+        const showConfirm = ({
+          title,
+          message,
+          confirmText = 'Ya, Lanjutkan',
+          cancelText = 'Batal',
+          type = 'primary',
+          icon = 'help',
+          onConfirm,
+          onCancel
+        }) => {
+          confirmModal.value = {
+            isOpen: true,
+            title,
+            message,
+            confirmText,
+            cancelText,
+            type,
+            icon,
+            onConfirm: () => {
+              confirmModal.value.isOpen = false;
+              if (onConfirm) onConfirm();
+            },
+            onCancel: () => {
+              confirmModal.value.isOpen = false;
+              if (onCancel) onCancel();
+            }
+          };
+        };
+
+        // Quiz State
+        const currentQuizIndex = ref(0);
+        const userAnswers = ref({});
+        const quizTimer = ref(300); // 5 minutes
+        let timerInterval = null;
+        const quizScore = ref(0);
+
+        // CAT Simulation State & Data Bank (Standar 15 Soal BKN)
+        const catQuestionsBank = [
+          // TWK (5 Soal)
+          {
+            id: 'cat-twk-1',
+            category: 'TWK',
+            topic: 'Pengamalan Pancasila',
+            question: 'Seorang kepala desa memprioritaskan alokasi dana desa untuk pembangunan jembatan penghubung antar-dusun yang terisolasi agar anak-anak sekolah dan petani dapat beraktivitas dengan aman dan merata. Kebijakan kepala desa tersebut paling selaras dengan butir Pancasila...',
+            options: {
+              A: 'Sila Pertama, sebagai wujud rasa syukur atas nikmat Tuhan YME.',
+              B: 'Sila Kedua, karena menghargai hak asasi individu secara personal.',
+              C: 'Sila Ketiga, demi menjaga ketertiban pertahanan wilayah desa.',
+              D: 'Sila Keempat, karena diputuskan melalui pemungutan suara.',
+              E: 'Sila Kelima, karena mewujudkan keadilan sosial dan pemerataan sarana publik bagi seluruh warga.'
+            },
+            correct: 'E',
+            explanation: 'Sila ke-5 menekankan keadilan distributif dan pemerataan infrastruktur pelayanan publik bagi kemaslahatan masyarakat luas.'
+          },
+          {
+            id: 'cat-twk-2',
+            category: 'TWK',
+            topic: 'UUD 1945 & Konstitusi',
+            question: 'Berdasarkan ketentuan Pasal 23A Undang-Undang Dasar Negara Republik Indonesia Tahun 1945, pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan...',
+            options: {
+              A: 'Peraturan Presiden',
+              B: 'Peraturan Pemerintah Pengganti Undang-Undang',
+              C: 'Undang-Undang',
+              D: 'Keputusan Bersama Menteri',
+              E: 'Peraturan Daerah'
+            },
+            correct: 'C',
+            explanation: 'Pasal 23A UUD 1945 secara tegas menyatakan bahwa segala pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan undang-undang.'
+          },
+          {
+            id: 'cat-twk-3',
+            category: 'TWK',
+            topic: 'Integritas & Anti-Korupsi',
+            question: 'Ketika seorang ASN bagian pengadaan barang dan jasa ditawari sejumlah uang tanda terima kasih dari pihak rekanan penyedia tender setelah proyek selesai, tindakan berintegritas yang wajib diambil adalah...',
+            options: {
+              A: 'Menerima uang tersebut selama tidak mempengaruhi harga kontrak proyek.',
+              B: 'Menolak dengan santun dan melaporkan upaya gratifikasi tersebut ke Unit Pengendalian Gratifikasi (UPG) / KPK.',
+              C: 'Menerima dan membagikannya secara merata kepada rekan-rekan satu divisi.',
+              D: 'Menerima lalu menyumbangkannya ke panti asuhan atas nama pribadi.',
+              E: 'Menolak secara lisan tanpa membuat catatan laporan resmi.'
+            },
+            correct: 'B',
+            explanation: 'Pemberian uang terkait jabatan tergolong gratifikasi yang dilarang. ASN berintegritas wajib menolak dan melaporkan sesuai regulasi KPK dan UU Tipikor.'
+          },
+          {
+            id: 'cat-twk-4',
+            category: 'TWK',
+            topic: 'Bela Negara & Wawasan Kebangsaan',
+            question: 'Partisipasi warga negara dalam upaya bela negara di era kemajuan teknologi informasi saat ini diwujudkan secara efektif dengan cara...',
+            options: {
+              A: 'Membatasi akses internet hanya untuk kebutuhan kedinasan.',
+              B: 'Memfilter informasi, menangkal hoaks radikalisme, serta menjaga ketahanan kedaulatan data di ruang siber.',
+              C: 'Menutup diri dari pertukaran informasi dan teknologi global.',
+              D: 'Menghindari diskusi publik mengenai isu-isu kebangsaan.',
+              E: 'Menyerahkan pengawasan ruang siber sepenuhnya kepada aparat militer.'
+            },
+            correct: 'B',
+            explanation: 'Bela negara nirmiliter menuntut ketahanan ideologi, literasi digital yang sehat, serta perlindungan ruang siber dari disinformasi yang mengancam persatuan.'
+          },
+          {
+            id: 'cat-twk-5',
+            category: 'TWK',
+            topic: 'Sejarah & Kedaulatan Negara',
+            question: 'Penyerahan dan pengakuan kedaulatan Republik Indonesia oleh pemerintah Kerajaan Belanda sebagai tindak lanjut Konferensi Meja Bundar (KMB) dilaksanakan pada...',
+            options: {
+              A: '17 Agustus 1945',
+              B: '10 November 1945',
+              C: '25 Maret 1947',
+              D: '27 Desember 1949',
+              E: '17 Agustus 1950'
+            },
+            correct: 'D',
+            explanation: 'Pengakuan kedaulatan secara formal dari Belanda kepada Republik Indonesia Serikat (RIS) ditandatangani pada 27 Desember 1949.'
+          },
+
+          // TIU (5 Soal)
+          {
+            id: 'cat-tiu-1',
+            category: 'TIU',
+            topic: 'Silogisme Logis',
+            question: 'Semua aparatur sipil negara yang berprestasi memperoleh tunjangan kinerja optimal. Sebagian pegawai di Balai Riset tidak memperoleh tunjangan kinerja optimal. Kesimpulan yang sah dan logis adalah...',
+            options: {
+              A: 'Semua pegawai di Balai Riset bukan aparatur sipil negara.',
+              B: 'Sebagian pegawai di Balai Riset bukan aparatur sipil negara yang berprestasi.',
+              C: 'Tidak ada pegawai Balai Riset yang berprestasi.',
+              D: 'Sebagian aparatur sipil negara yang berprestasi bekerja di Balai Riset.',
+              E: 'Semua pegawai di Balai Riset berprestasi namun belum mendapat tunjangan.'
+            },
+            correct: 'B',
+            explanation: 'Premis 1: Berprestasi -> Tunjangan Optimal. Premis 2: Sebagian pegawai Balai Riset tidak dapat tunjangan optimal. Maka sebagian pegawai Balai Riset tidak berprestasi (Modus Tollens).'
+          },
+          {
+            id: 'cat-tiu-2',
+            category: 'TIU',
+            topic: 'Deret Angka & Pola Bilangan',
+            question: 'Perhatikan pola barisan angka berikut: 4, 7, 13, 25, 49, ... Angka berikutnya adalah...',
+            options: {
+              A: '73',
+              B: '85',
+              C: '97',
+              D: '103',
+              E: '108'
+            },
+            correct: 'C',
+            explanation: 'Pola selisih: +3, +6, +12, +24, maka selisih berikutnya adalah +48. 49 + 48 = 97 (atau rumus n * 2 - 1).'
+          },
+          {
+            id: 'cat-tiu-3',
+            category: 'TIU',
+            topic: 'Analogi Kata Hubungan',
+            question: 'DOKTER : STETOSKOP = ... : ...',
+            options: {
+              A: 'Guru : Sekolah',
+              B: 'Pelukis : Kuas',
+              C: 'Petani : Padi',
+              D: 'Masinis : Kereta',
+              E: 'Penulis : Buku'
+            },
+            correct: 'B',
+            explanation: 'Profesi dan alat utama kerjanya. Dokter menggunakan stetoskop; Pelukis menggunakan kuas.'
+          },
+          {
+            id: 'cat-tiu-4',
+            category: 'TIU',
+            topic: 'Aritmatika Sosial & Perbandingan',
+            question: 'Suatu pekerjaan pendataan sensus dapat diselesaikan oleh 15 orang petugas dalam waktu 12 hari. Jika pekerjaan tersebut dituntut selesai dalam waktu 9 hari, berapakah tambahan petugas yang harus dikerahkan?',
+            options: {
+              A: '3 orang',
+              B: '5 orang',
+              C: '7 orang',
+              D: '9 orang',
+              E: '12 orang'
+            },
+            correct: 'B',
+            explanation: 'Perbandingan berbalik nilai: 15 * 12 = x * 9 -> 180 = 9x -> x = 20 orang. Tambahan petugas = 20 - 15 = 5 orang.'
+          },
+          {
+            id: 'cat-tiu-5',
+            category: 'TIU',
+            topic: 'Penalaran Analitis',
+            question: 'Dalam suatu seleksi jabatan: Nilai Dina lebih tinggi dari Eko. Nilai Fani lebih rendah dari Eko. Nilai Gilang lebih tinggi dari Dina. Siapakah yang memperoleh nilai tertinggi kedua?',
+            options: {
+              A: 'Gilang',
+              B: 'Dina',
+              C: 'Eko',
+              D: 'Fani',
+              E: 'Tidak dapat disimpulkan'
+            },
+            correct: 'B',
+            explanation: 'Urutan peringkat dari yang tertinggi: Gilang > Dina > Eko > Fani. Nilai tertinggi kedua diraih oleh Dina.'
+          },
+
+          // TKP (5 Soal Berbobot 1-5)
+          {
+            id: 'cat-tkp-1',
+            category: 'TKP',
+            topic: 'Pelayanan Publik Prima',
+            question: 'Ketika Anda sedang melayani antrean warga di loket dinas pada sore hari, sistem server aplikasi pelayanan tiba-tiba mengalami kelambatan respon (lagging). Antrean warga mulai mengeluh resah. Sikap Anda adalah...',
+            options: {
+              A: 'Menutup loket dan meminta warga datang kembali besok saat server normal.',
+              B: 'Menyuruh warga untuk bersabar dan diam agar tidak mengganggu konsentrasi Anda.',
+              C: 'Menjelaskan situasi server dengan sopan, segera mencatat berkas warga secara manual sementara, dan berkoordinasi cepat dengan tim IT agar antrean tetap terlayani.',
+              D: 'Meninggalkan loket untuk mencari pimpinan guna meminta arahan tertulis.',
+              E: 'Menyalahkan tim IT di hadapan warga agar warga memaklumi kendala teknis tersebut.'
+            },
+            scores: { A: 1, B: 2, C: 5, D: 3, E: 1 },
+            explanation: 'Pilihan C bernilai 5 poin: Menunjukkan tanggung jawab solutif, komunikasi empati, dan menjaga kelancaran pelayanan masyarakat.'
+          },
+          {
+            id: 'cat-tkp-2',
+            category: 'TKP',
+            topic: 'Jejaring Kerja & Kolaborasi',
+            question: 'Instansi Anda membentuk tim kerja lintas bidang untuk menyusun program strategis. Salah satu anggota tim dari divisi lain bersikap pasif dan jarang hadir dalam diskusi tim. Sikap Anda sebagai rekan satu tim adalah...',
+            options: {
+              A: 'Melaporkan kepada pimpinan agar anggota tersebut segera dicoret dari tim.',
+              B: 'Mengajaknya berdiskusi secara personal untuk memahami kendala yang dihadapinya, serta membagi porsi tugas yang jelas sesuai keahliannya.',
+              C: 'Membiarkannya saja dan mengerjakan bagian tugasnya bersama anggota lain.',
+              D: 'Menegurnya dengan keras di grup koordinasi agar merasa malu dan aktif.',
+              E: 'Menyindir perilakunya di depan rekan kerja lainnya.'
+            },
+            scores: { A: 2, B: 5, C: 3, D: 1, E: 1 },
+            explanation: 'Pilihan B bernilai 5 poin: Pendekatan interpersonal yang konstruktif dan membangun sinergi kerja tim yang solid.'
+          },
+          {
+            id: 'cat-tkp-3',
+            category: 'TKP',
+            topic: 'Sosial Budaya & Toleransi',
+            question: 'Anda ditugaskan memimpin upacara dan kegiatan sosial di lingkungan kantor yang memiliki rekan kerja dari beragam latar belakang agama dan suku. Sikap terbaik yang Anda ambil adalah...',
+            options: {
+              A: 'Menerapkan tradisi dari suku mayoritas agar tidak menimbulkan banyak perdebatan.',
+              B: 'Mengakomodasi dan menghargai keberagaman tradisi serta merancang kegiatan yang bersifat inklusif dan mempererat kerukunan bersama.',
+              C: 'Menyerahkan kepemimpinan kegiatan kepada rekan lain yang lebih senior.',
+              D: 'Menghindari kegiatan sosial dan hanya fokus pada pekerjaan formal kantor.',
+              E: 'Membuat aturan ketat tanpa mendengarkan aspirasi rekan kerja.'
+            },
+            scores: { A: 2, B: 5, C: 2, D: 1, E: 1 },
+            explanation: 'Pilihan B bernilai 5 poin: Memperlihatkan kepemimpinan inklusif yang menjunjung tinggi toleransi dan Bhinneka Tunggal Ika.'
+          },
+          {
+            id: 'cat-tkp-4',
+            category: 'TKP',
+            topic: 'Profesionalisme & Integritas Kerja',
+            question: 'Anda diberi tugas penting oleh atasan dengan tenggat waktu yang sangat ketat, sementara di saat bersamaan ada urusan keluarga mendadak yang tidak darurat (bukan musibah). Tindakan yang Anda pilih adalah...',
+            options: {
+              A: 'Meninggalkan tugas kantor demi menyelesaikan urusan keluarga terlebih dahulu.',
+              B: 'Mengatur waktu dengan bijak, menyelesaikan tugas kedinasan sesuai komitmen tenggat waktu, lalu mengurus urusan keluarga setelah jam kantor.',
+              C: 'Meminta rekan kerja lain menyelesaikan tugas Anda tanpa izin atasan.',
+              D: 'Mengerjakan tugas seadanya asal selesai sebelum tenggat waktu.',
+              E: 'Mengabaikan instruksi atasan dan berpura-pura sakit.'
+            },
+            scores: { A: 2, B: 5, C: 2, D: 3, E: 1 },
+            explanation: 'Pilihan B bernilai 5 poin: Menunjukkan komitmen integritas, kedisiplinan kerja tinggi, dan kemampuan manajemen prioritas.'
+          },
+          {
+            id: 'cat-tkp-5',
+            category: 'TKP',
+            topic: 'Pemanfaatan TIK & Adaptasi Digital',
+            question: 'Kementerian Anda menerapkan platform digital baru untuk sistem pelaporan kerja, namun beberapa rekan kerja senior kesulitan mengoperasikannya dan meminta kembali ke laporan manual. Tindakan Anda adalah...',
+            options: {
+              A: 'Menghiraukan mereka karena setiap pegawai harus belajar mandiri.',
+              B: 'Mendampingi rekan senior dengan sabar, membuatkan panduan langkah demi langkah yang praktis, serta menunjukkan manfaat efisiensi dari aplikasi baru.',
+              C: 'Mendukung usulan rekan senior untuk kembali menggunakan formulir manual kertas.',
+              D: 'Mengerjakan seluruh laporan milik rekan senior agar tidak merepotkan.',
+              E: 'Mengeluhkan lambatnya adaptasi rekan senior kepada pimpinan unit.'
+            },
+            scores: { A: 2, B: 5, C: 1, D: 3, E: 1 },
+            explanation: 'Pilihan B bernilai 5 poin: Mendorong transformasi digital instansi dengan sikap suportif, kolaboratif, dan edukatif.'
+          }
+        ];
+
+        const catQuestions = ref([]);
+        const catCurrentIndex = ref(0);
+        const catAnswers = ref({});
+        const catDoubtful = ref({});
+        const catTimer = ref(900); // 15 menit
+        let catTimerInterval = null;
+        const catActiveCategory = ref('ALL');
+        const catResult = ref(null);
+
+        const currentCatQuestion = computed(() => {
+          return catQuestions.value[catCurrentIndex.value] || {};
+        });
+
+        const catAnsweredCount = computed(() => {
+          return Object.keys(catAnswers.value).length;
+        });
+
+        const catDoubtfulCount = computed(() => {
+          return Object.values(catDoubtful.value).filter(Boolean).length;
+        });
+
+        // Kategori Details
+        const categoryData = {
+          TWK: { title: 'Tes Wawasan Kebangsaan', pg: 65, total: 7 },
+          TIU: { title: 'Tes Inteligensia Umum', pg: 80, total: 8 },
+          TKP: { title: 'Tes Karakteristik Pribadi', pg: 166, total: 6 }
+        };
+
+        const getCategoryTitle = (code) => categoryData[code]?.title || code;
+        const getCategoryPG = (code) => categoryData[code]?.pg || 65;
+        const getCategoryTotal = (code) => categoryData[code]?.total || 7;
+
+        // Default Modules matching Stitch Specification & PRD
+        const defaultModules = [
+          // TWK Modules
+          {
+            id: 'twk-1',
+            category: 'TWK',
+            code: '1.1',
+            order: 1,
+            title: 'Pengamalan Butir Pancasila & Sila Radar',
+            subtitle: 'Trik eliminasi cepat batas abu-abu Sila 2 vs Sila 5',
+            unlocked: true,
+            completed: false,
+            score: null,
+            objectives: [
+              'Mengenali 45 butir pengamalan TAP MPR No. I/MPR/2003 secara kontekstual berbasis studi kasus.',
+              'Membedakan tindakan kemanusiaan personal (Sila 2) vs keadilan struktural publik (Sila 5).',
+              'Mengeliminasi 3 pilihan pengecoh dalam tempo kurang dari 20 detik.'
+            ],
+            tips: 'Gunakan The Sila Radar: Jika fokus tindakan adalah empati individu atau hak asasi manusia murni -> Sila 2. Jika fokusnya pemerataan fasilitas, gotong royong, atau hak publik -> Sila 5.',
+            sampleQuestion: {
+              question: 'Ketika seorang pengusaha dermawan membangun jembatan gantung di pedalaman agar anak-anak desa tidak perlu menyeberangi sungai berarus deras untuk berangkat sekolah, tindakan tersebut merupakan wujud konkret pengamalan Pancasila, khususnya...',
+              correctKey: 'C',
+              correctText: 'Sila Ke-5, karena menyediakan sarana keadilan sosial dan fasilitas umum demi kemajuan bersama.',
+              aps: {
+                action: 'Menganalisis pembuatan jembatan untuk kepentingan akses pendidikan publik.',
+                point: 'Bukan sekadar santunan karitatif personal, melainkan pemerataan fasilitas sosial.',
+                solution: 'Pilihan paling komprehensif adalah Keadilan Sosial (Sila ke-5).'
+              }
+            }
+          },
+          {
+            id: 'twk-2', category: 'TWK', code: '1.2', order: 2, title: 'Hacking & Analisis Pasal UUD 1945', subtitle: 'Struktur ketatanegaraan pasca amandemen & HAM', unlocked: false, completed: false, score: null,
+            objectives: ['Memahami pasal 27, 28, 30, dan 33', 'Wewenang MK, MA, dan KY'], tips: 'Kaitkan setiap pasal dengan isu aktual kenegaraan.',
+            sampleQuestion: { question: 'Wewenang Mahkamah Konstitusi dalam menguji undang-undang terhadap UUD tercantum pada pasal...', correctKey: 'A', correctText: 'Pasal 24C ayat 1', aps: { action: 'Hafal pasal peradilan.', point: 'Wewenang MK.', solution: 'A.' } }
+          },
+          {
+            id: 'twk-3', category: 'TWK', code: '1.3', order: 3, title: 'Integritas & Anti-Korupsi Penyelenggara', subtitle: '9 Nilai integritas KPK & gratifikasi birokrasi', unlocked: false, completed: false, score: null,
+            objectives: ['Identifikasi benturan kepentingan', 'Pelaporan UPG 30 hari kerja'], tips: 'Tolak parsel atau hadiah dinas sekecil apapun dan laporkan ke UPG.',
+            sampleQuestion: { question: 'Tindakan yang wajib diambil ASN saat menerima cendera mata rekanan adalah...', correctKey: 'B', correctText: 'Melaporkan ke Unit Pengendalian Gratifikasi (UPG).', aps: { action: 'Cegah suap.', point: 'Kewajiban regulasi.', solution: 'B.' } }
+          },
+          {
+            id: 'twk-4', category: 'TWK', code: '1.4', order: 4, title: 'Bela Negara & Kedaulatan Teritorial', subtitle: '5 Nilai dasar bela negara non-militer', unlocked: false, completed: false, score: null,
+            objectives: ['Pengabdian sesuai profesi', 'Pertahanan siber dan digital'], tips: 'Bela negara tidak selalu wajib militer, melainkan dedikasi tugas prima.',
+            sampleQuestion: { question: 'Inovasi tenaga medis di pedalaman adalah wujud bela negara berupa...', correctKey: 'A', correctText: 'Rela berkorban demi bangsa dan negara.', aps: { action: 'Dedikasi profesi.', point: 'Bela negara sipil.', solution: 'A.' } }
+          },
+          {
+            id: 'twk-5', category: 'TWK', code: '1.5', order: 5, title: 'Nasionalisme & Bhinneka Tunggal Ika', subtitle: 'Integrasi nasional dan resolusi konflik horizontal', unlocked: false, completed: false, score: null,
+            objectives: ['Mencegah etnosentrisme & chauvinisme', 'Prinsip gotong royong'], tips: 'Pilih opsi yang merajut persatuan tanpa merendahkan golongan manapun.',
+            sampleQuestion: { question: 'Makna semboyan Tan Hana Dharma Mangrwa adalah...', correctKey: 'D', correctText: 'Tidak ada kebenaran yang mendua.', aps: { action: 'Sejarah semboyan.', point: 'Kakawin Sutasoma.', solution: 'D.' } }
+          },
+          {
+            id: 'twk-6', category: 'TWK', code: '1.6', order: 6, title: 'Bahasa Indonesia: EBI & Nalar Paragraf', subtitle: 'Kalimat efektif dan ide pokok wacana panjang', unlocked: false, completed: false, score: null,
+            objectives: ['Menghilangkan pemborosan kata', 'Pola penalaran deduktif induktif'], tips: 'Pastikan subjek dan predikat tidak kabur oleh anak kalimat.',
+            sampleQuestion: { question: 'Pilihlah kalimat yang hemat dan efektif:', correctKey: 'B', correctText: 'Rapat koordinasi membahas peningkatan mutu pelayanan.', aps: { action: 'Uji hemat kata.', point: 'SPOK baku.', solution: 'B.' } }
+          },
+          {
+            id: 'twk-7', category: 'TWK', code: '1.7', order: 7, title: 'Sejarah Perjuangan & Kedaulatan Diplomasi', subtitle: 'Perjanjian Linggarjati, Renville, Roem-Royen, KMB', unlocked: false, completed: false, score: null,
+            objectives: ['Garis batas Van Mook', 'Pengakuan kedaulatan 1949'], tips: 'Urutkan kronologi perjanjian dari 1946 hingga KMB 1949.',
+            sampleQuestion: { question: 'Tokoh delegasi Indonesia pada KMB Den Haag adalah...', correctKey: 'A', correctText: 'Drs. Mohammad Hatta', aps: { action: 'Kilas balik KMB.', point: 'Delegasi RI.', solution: 'A.' } }
+          },
+
+          // TIU Modules
+          {
+            id: 'tiu-1', category: 'TIU', code: '2.1', order: 1, title: 'Silogisme Logis & Penarikan Kesimpulan', subtitle: 'Kaidah modus ponens, tollens, dan kuantor', unlocked: true, completed: false, score: null,
+            objectives: ['Uji irisan himpunan', 'Hindari penambahan asumsi di luar teks'], tips: 'Hanya tarik kesimpulan dari apa yang tertulis dalam premis resmi.',
+            sampleQuestion: { question: 'Semua mahasiswa rajin membaca. Sebagian atlet adalah mahasiswa. Maka:', correctKey: 'B', correctText: 'Sebagian atlet rajin membaca.', aps: { action: 'Irisan himpunan.', point: 'Subjek yang beririsan.', solution: 'B.' } }
+          },
+          {
+            id: 'tiu-2', category: 'TIU', code: '2.2', order: 2, title: 'Pola Bilangan & Deret Bertingkat', subtitle: 'Aritmetika, geometri, dan selang dua larik', unlocked: false, completed: false, score: null,
+            objectives: ['Mengidentifikasi deret selang', 'Deret bertingkat 2 dan 3'], tips: 'Jika lompatan angka naik-turun, curigai deret dua pola berseling.',
+            sampleQuestion: { question: '4, 9, 8, 18, 16, 36, ... berikutnya adalah:', correctKey: 'A', correctText: '32 (Pola: x2 pada urutan ganjil)', aps: { action: 'Pola selang.', point: '4, 8, 16 -> 32.', solution: 'A.' } }
+          },
+
+          // TKP Modules
+          {
+            id: 'tkp-1', category: 'TKP', code: '3.1', order: 1, title: 'Pelayanan Publik Prima (Skor 5)', subtitle: 'Orientasi kebutuhan pengguna dan kepuasan warga', unlocked: true, completed: false, score: null,
+            objectives: ['Prinsip responsif dan empati', 'Solutif tanpa melanggar regulasi'], tips: 'Nilai 5 di TKP Pelayanan Publik selalu mengutamakan keramahan, kecepatan, dan solusi tuntas.',
+            sampleQuestion: { question: 'Masyarakat mengeluhkan antrean loket yang lambat. Sebagai petugas loket:', correctKey: 'E', correctText: 'Mempercepat verifikasi berkas dan memandu warga yang kebingungan dengan santun.', aps: { action: 'Respon cepat.', point: 'Empati publik.', solution: 'E (Poin 5).' } }
+          },
+          {
+            id: 'tkp-2', category: 'TKP', code: '3.2', order: 2, title: 'Jejaring Kerja & Komunikasi Kolaboratif', subtitle: 'Sinergi tim lintas unit dan resolusi friksi', unlocked: false, completed: false, score: null,
+            objectives: ['Membangun aliansi kerja sehat', 'Menyikapi perbedaan pendapat'], tips: 'Pilihlah tindakan yang merangkul rekan dan mencari titik temu yang produktif.',
+            sampleQuestion: { question: 'Rekan kerja berbeda divisi enggan membagikan data yang dibutuhkan proyek Anda:', correctKey: 'C', correctText: 'Menghubunginya dengan sopan, menjelaskan urgensi proyek bagi instansi, dan menawarkan bantuan.', aps: { action: 'Komunikasi asertif.', point: 'Kolaborasi.', solution: 'C (Poin 5).' } }
+          }
+        ];
+
+        const modules = ref([]);
+
+        // Bank Soal Kuis 5 Soal Per Modul
+        const quizBank = {
+          '1.1': [
+            {
+              question: 'Ketika sebuah perusahaan swasta memberikan beasiswa pendidikan tinggi secara merata kepada anak-anak petani miskin di pelosok daerah tanpa memandang suku atau agama, nilai Pancasila yang paling dominan tercermin adalah...',
+              options: {
+                A: 'Sila Pertama, sebagai wujud syukur atas nikmat Tuhan YME.',
+                B: 'Sila Kedua, karena menghormati harkat dan martabat kemanusiaan.',
+                C: 'Sila Ketiga, demi menjaga ketertiban umum wilayah sekitar.',
+                D: 'Sila Keempat, berdasarkan hasil musyawarah warga desa.',
+                E: 'Sila Kelima, karena mewujudkan keadilan sosial dan pemerataan akses pendidikan publik.'
+              },
+              correct: 'E',
+              apsExplanation: 'A (Action): Analisis bantuan pendidikan fasilitas umum. P (Point): Mengarah pada kesejahteraan dan keadilan sosial bagi kelompok rentan. S (Solution): Sila ke-5 adalah pilihan paling tepat.'
+            },
+            {
+              question: 'Perbedaan mendasar antara penerapan Sila Ke-2 (Kemanusiaan) dan Sila Ke-5 (Keadilan Sosial) pada soal studi kasus SKD CPNS terletak pada...',
+              options: {
+                A: 'Sila 2 hanya berlaku di dalam negeri, Sila 5 berlaku internasional.',
+                B: 'Sila 2 berfokus pada empati personal & perlindungan HAM, sedangkan Sila 5 berfokus pada pemerataan sumber daya publik.',
+                C: 'Sila 2 berorientasi pada hukum pidana, Sila 5 berorientasi pada hukum perdata.',
+                D: 'Sila 2 menuntut pengorbanan jiwa, Sila 5 menuntut sumbangan uang.',
+                E: 'Tidak ada perbedaan sama sekali.'
+              },
+              correct: 'B',
+              apsExplanation: 'The Sila Radar: Sila 2 menitikberatkan pada martabat manusia secara individu (HAM), sedangkan Sila 5 berorientasi pada keadilan sistemik/sosial masyarakat luas.'
+            },
+            {
+              question: 'Seorang ASN mendapati tetangganya yang sakit parah tidak mampu membayar ambulans, lalu ia secara pribadi membiayai dan menemani ke IGD. Tindakan ASN ini mencerminkan Sila...',
+              options: {
+                A: 'Sila Pertama',
+                B: 'Sila Kedua',
+                C: 'Sila Ketiga',
+                D: 'Sila Keempat',
+                E: 'Sila Kelima'
+              },
+              correct: 'B',
+              apsExplanation: 'Pertolongan langsung atas dasar empati kemanusiaan individual terhadap sesama adalah perwujudan luhur Sila ke-2 (Kemanusiaan yang Adil dan Beradab).'
+            },
+            {
+              question: 'Pembangunan fasilitas umum ramah disabilitas di kantor pelayanan instansi pemerintah merupakan implementasi dari Sila...',
+              options: {
+                A: 'Sila Pertama',
+                B: 'Sila Kedua',
+                C: 'Sila Ketiga',
+                D: 'Sila Keempat',
+                E: 'Sila Kelima'
+              },
+              correct: 'E',
+              apsExplanation: 'Penyediaan sarana publik inklusif tanpa diskriminasi menjamin hak akses yang sama bagi seluruh warga negara sesuai Sila ke-5.'
+            },
+            {
+              question: 'Di dalam kehidupan bermasyarakat yang majemuk, sikap saling menghargai perbedaan keyakinan tanpa memaksakan kehendak selaras dengan butir Pancasila Sila...',
+              options: {
+                A: 'Sila Pertama',
+                B: 'Sila Kedua',
+                C: 'Sila Ketiga',
+                D: 'Sila Keempat',
+                E: 'Sila Kelima'
+              },
+              correct: 'A',
+              apsExplanation: 'Toleransi antarumat beragama dan tidak memaksakan suatu agama kepada orang lain merupakan butir utama Sila Pertama Pancasila.'
+            }
+          ]
+        };
+
+        const generateQuestionsForModule = (modCode) => {
+          if (quizBank[modCode]) return quizBank[modCode];
+          return [
+            {
+              question: `[Soal 1 Modul ${modCode}] Manakah tindakan berikut yang paling tepat mencerminkan integritas dan profesionalitas ASN?`,
+              options: {
+                A: 'Mengutamakan kepentingan umum dan menolak segala bentuk gratifikasi secara tegas.',
+                B: 'Menerima hadiah kecil karena dianggap sekadar tanda terima kasih.',
+                C: 'Menunda penyelesaian tugas hingga ada perintah berulang dari atasan.',
+                D: 'Menyerahkan keputusan rumit kepada staf bawahan tanpa bimbingan.',
+                E: 'Menghindari pertemuan koordinasi lintas bagian.'
+              },
+              correct: 'A',
+              apsExplanation: 'Opsi A menjunjung tinggi regulasi ASN dan nilai antikorupsi.'
+            },
+            {
+              question: `[Soal 2 Modul ${modCode}] Dalam menghadapi tantangan pelayanan publik yang serba digital, kompetensi apa yang harus diprioritaskan?`,
+              options: {
+                A: 'Menolak pembaruan aplikasi birokrasi.',
+                B: 'Kemampuan beradaptasi secara lincah dan memanfaatkan teknologi secara efisien.',
+                C: 'Mempertahankan sistem manual konvensional.',
+                D: 'Menunggu instruksi tertulis dari kementerian pusat.',
+                E: 'Mengurangi jam operasional loket.'
+              },
+              correct: 'B',
+              apsExplanation: 'Nilai Adaptif (BerAKHLAK) menuntut ASN terus berinovasi dan antusias menghadapi perubahan zaman.'
+            },
+            {
+              question: `[Soal 3 Modul ${modCode}] Jika rekan satu unit kerja melakukan pelanggaran SOP, tindakan paling bijaksana adalah...`,
+              options: {
+                A: 'Mendiamkan agar tidak merusak pertemanan.',
+                B: 'Mengingatkannya dengan santun dan berkoordinasi dengan atasan apabila berdampak risiko.',
+                C: 'Menyebarkan kabar pelanggaran tersebut ke media sosial.',
+                D: 'Ikut serta melakukan pelanggaran yang sama.',
+                E: 'Memusuhi rekan kerja tersebut.'
+              },
+              correct: 'B',
+              apsExplanation: 'Integritas kerja ditegakkan lewat pendekatan konstruktif dan pelaporan berjenjang sesuai prosedur.'
+            },
+            {
+              question: `[Soal 4 Modul ${modCode}] Indikator keberhasilan dari akuntabilitas birokrasi adalah...`,
+              options: {
+                A: 'Birokrasi yang transparan, dapat dipertanggungjawabkan, dan berorientasi hasil nyata bagi rakyat.',
+                B: 'Tingkat penyerapan anggaran tanpa melihat manfaat program.',
+                C: 'Banyaknya berkas laporan fisik yang ditumpuk.',
+                D: 'Tertutupnya informasi pengadaan dari masyarakat.',
+                E: 'Minimnya komunikasi dengan publik.'
+              },
+              correct: 'A',
+              apsExplanation: 'Akuntabilitas bermakna pertanggungjawaban amanah publik dengan kinerja yang terukur.'
+            },
+            {
+              question: `[Soal 5 Modul ${modCode}] Mengapa pemahaman konsensus kebangsaan menjadi syarat mutlak kelulusan SKD CPNS?`,
+              options: {
+                A: 'Hanya sebagai formalitas ujian tertulis.',
+                B: 'Karena ASN adalah perekat dan pemersatu bangsa yang menjaga keutuhan NKRI.',
+                C: 'Untuk menambah hafalan peserta ujian.',
+                D: 'Karena soal TWK paling sedikit jumlahnya.',
+                E: 'Tidak memiliki dampak di dunia kerja nyata.'
+              },
+              correct: 'B',
+              apsExplanation: 'Sesuai UU ASN, salah satu fungsi pokok aparatur adalah sebagai perekat dan pemersatu bangsa.'
+            }
+          ];
+        };
+
+        const quizQuestions = ref([]);
+
+        // Persistence in LocalStorage
+        const loadProgress = () => {
+          try {
+            const saved = localStorage.getItem('cpns_go_modules_stitch');
+            if (saved) {
+              modules.value = JSON.parse(saved);
+            } else {
+              modules.value = defaultModules;
+              saveProgress();
+            }
+          } catch (e) {
+            modules.value = defaultModules;
+          }
+        };
+
+        const saveProgress = () => {
+          try {
+            localStorage.setItem('cpns_go_modules_stitch', JSON.stringify(modules.value));
+          } catch (e) {
+            console.error('Save failed:', e);
+          }
+        };
+
+        const resetProgress = () => {
+          showConfirm({
+            title: 'Reset Seluruh Progres?',
+            message: 'Semua progres modul, riwayat skor kuis, dan data belajar Anda akan dihapus dan dikembalikan ke awal. Tindakan ini tidak dapat dibatalkan.',
+            confirmText: 'Ya, Reset Data',
+            cancelText: 'Batal',
+            type: 'danger',
+            icon: 'delete_forever',
+            onConfirm: () => {
+              localStorage.removeItem('cpns_go_modules_stitch');
+              modules.value = JSON.parse(JSON.stringify(defaultModules));
+              saveProgress();
+              showToast('Progres belajar telah direset!');
+              currentView.value = 'dashboard';
+            }
+          });
+        };
+
+        // Computed properties
+        const totalModulesCount = computed(() => modules.value.length);
+        const totalCompletedCount = computed(() => modules.value.filter(m => m.completed).length);
+        const totalProgress = computed(() => {
+          if (!modules.value.length) return 0;
+          return Math.round((totalCompletedCount.value / modules.value.length) * 100);
+        });
+
+        const unlockedModulesCount = computed(() => modules.value.filter(m => m.unlocked).length);
+        const averageQuizScore = computed(() => {
+          const completed = modules.value.filter(m => m.score !== null);
+          if (!completed.length) return '0';
+          const total = completed.reduce((sum, m) => sum + m.score, 0);
+          return (total / completed.length).toFixed(1);
+        });
+
+        const filteredModules = computed(() => {
+          return modules.value.filter(m => {
+            const matchCategory = m.category === activeCategoryCode.value;
+            const matchSearch = !searchQuery.value || 
+              m.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
+              m.subtitle.toLowerCase().includes(searchQuery.value.toLowerCase());
+            return matchCategory && matchSearch;
+          });
+        });
+
+        const currentQuestion = computed(() => {
+          return quizQuestions.value[currentQuizIndex.value] || {};
+        });
+
+        const getCategoryCompleted = (code) => {
+          return modules.value.filter(m => m.category === code && m.completed).length;
+        };
+
+        // Navigation Methods
+        const openCategory = (code) => {
+          activeCategoryCode.value = code;
+          searchQuery.value = '';
+          currentView.value = 'module-list';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const openModule = (mod) => {
+          activeModule.value = mod;
+          currentView.value = 'module-detail';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const showLockedNotice = (mod) => {
+          showToast(`Modul ${mod.code} terkunci! Raih skor minimal 3/5 pada modul sebelumnya untuk membuka.`);
+        };
+
+        const showToast = (msg) => {
+          toastMessage.value = msg;
+          if (toastTimeout) clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            toastMessage.value = '';
+          }, 3000);
+        };
+
+        // Quiz Mechanics
+        const startQuiz = (mod) => {
+          if (!mod && activeModule.value) {
+            mod = activeModule.value;
+          }
+          if (!mod) {
+            mod = modules.value[0];
+          }
+          activeModule.value = mod;
+          quizQuestions.value = generateQuestionsForModule(mod.code);
+          currentQuizIndex.value = 0;
+          userAnswers.value = {};
+          quizScore.value = 0;
+          quizTimer.value = 300;
+
+          if (timerInterval) clearInterval(timerInterval);
+          timerInterval = setInterval(() => {
+            if (quizTimer.value > 0) {
+              quizTimer.value--;
+            } else {
+              finishQuiz();
+            }
+          }, 1000);
+
+          currentView.value = 'quiz';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const formatTime = (secs) => {
+          const m = Math.floor(secs / 60);
+          const s = secs % 60;
+          return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        };
+
+        const selectAnswer = (key) => {
+          userAnswers.value[currentQuizIndex.value] = key;
+        };
+
+        const confirmExitQuiz = () => {
+          showConfirm({
+            title: 'Keluar dari Kuis?',
+            message: 'Jawaban yang sudah Anda pilih pada kuis ini belum disimpan. Apakah Anda yakin ingin membatalkan kuis?',
+            confirmText: 'Ya, Keluar',
+            cancelText: 'Lanjutkan Kuis',
+            type: 'warning',
+            icon: 'logout',
+            onConfirm: () => {
+              if (timerInterval) clearInterval(timerInterval);
+              currentView.value = 'module-detail';
+            }
+          });
+        };
+
+        // ==========================================
+        // CAT SIMULATION WORKFLOW & LOGIC
+        // ==========================================
+        const openCatIntro = () => {
+          currentView.value = 'cat-intro';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const startCatSimulation = () => {
+          if (catTimerInterval) {
+            clearInterval(catTimerInterval);
+            catTimerInterval = null;
+          }
+
+          catQuestions.value = JSON.parse(JSON.stringify(catQuestionsBank));
+          catCurrentIndex.value = 0;
+          catAnswers.value = {};
+          catDoubtful.value = {};
+          catTimer.value = 900; // 15 menit
+          catActiveCategory.value = 'ALL';
+          catResult.value = null;
+
+          catTimerInterval = setInterval(() => {
+            if (catTimer.value > 0) {
+              catTimer.value--;
+            } else {
+              clearInterval(catTimerInterval);
+              catTimerInterval = null;
+              executeFinishCatSim(true);
+            }
+          }, 1000);
+
+          currentView.value = 'cat-sim';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          showToast('Simulasi CAT dimulai! Waktu: 15 menit.');
+        };
+
+        const selectCatAnswer = (key) => {
+          catAnswers.value[catCurrentIndex.value] = key;
+        };
+
+        const toggleCatDoubtful = () => {
+          catDoubtful.value[catCurrentIndex.value] = !catDoubtful.value[catCurrentIndex.value];
+        };
+
+        const jumpToCatQuestion = (idx) => {
+          if (idx >= 0 && idx < catQuestions.value.length) {
+            catCurrentIndex.value = idx;
+          }
+        };
+
+        const nextCatQuestion = () => {
+          if (catCurrentIndex.value < catQuestions.value.length - 1) {
+            catCurrentIndex.value++;
+          } else {
+            promptFinishCatSim();
+          }
+        };
+
+        const prevCatQuestion = () => {
+          if (catCurrentIndex.value > 0) {
+            catCurrentIndex.value--;
+          }
+        };
+
+        const setCatCategory = (cat) => {
+          catActiveCategory.value = cat;
+          if (cat !== 'ALL') {
+            const firstIdx = catQuestions.value.findIndex(q => q.category === cat);
+            if (firstIdx !== -1) {
+              catCurrentIndex.value = firstIdx;
+            }
+          }
+        };
+
+        const promptFinishCatSim = () => {
+          const total = catQuestions.value.length;
+          const answered = Object.keys(catAnswers.value).length;
+          const doubtful = Object.values(catDoubtful.value).filter(Boolean).length;
+          const unanswered = total - answered;
+
+          showConfirm({
+            title: 'Kumpulkan Ujian CAT?',
+            message: `Terjawab: ${answered}/${total} soal (${doubtful} ragu-ragu, ${unanswered} belum dijawab). Anda yakin ingin mengakhiri sesi dan melihat evaluasi skor?`,
+            confirmText: 'Kumpulkan Sekarang',
+            cancelText: 'Periksa Lagi',
+            type: 'primary',
+            icon: 'task_alt',
+            onConfirm: () => {
+              executeFinishCatSim(false);
+            }
+          });
+        };
+
+        const executeFinishCatSim = (isTimeOut = false) => {
+          if (catTimerInterval) {
+            clearInterval(catTimerInterval);
+            catTimerInterval = null;
+          }
+
+          let twkRaw = 0;
+          let tiuRaw = 0;
+          let tkpRaw = 0;
+
+          catQuestions.value.forEach((q, idx) => {
+            const ans = catAnswers.value[idx];
+            if (q.category === 'TWK') {
+              if (ans === q.correct) twkRaw += 5;
+            } else if (q.category === 'TIU') {
+              if (ans === q.correct) tiuRaw += 5;
+            } else if (q.category === 'TKP') {
+              const pts = q.scores && ans ? (q.scores[ans] || 0) : 0;
+              tkpRaw += pts;
+            }
+          });
+
+          // Scale to BKN standards:
+          // TWK max 25 scaled to 150 (TWK PG = 65)
+          const twkScaled = Math.round((twkRaw / 25) * 150);
+          // TIU max 25 scaled to 175 (TIU PG = 80)
+          const tiuScaled = Math.round((tiuRaw / 25) * 175);
+          // TKP max 25 scaled to 225 (TKP PG = 166)
+          const tkpScaled = Math.round((tkpRaw / 25) * 225);
+
+          const totalScore = twkScaled + tiuScaled + tkpScaled;
+          const isPassed = twkScaled >= 65 && tiuScaled >= 80 && tkpScaled >= 166;
+
+          catResult.value = {
+            totalScore,
+            twkRaw,
+            twkScore: twkScaled,
+            tiuRaw,
+            tiuScore: tiuScaled,
+            tkpRaw,
+            tkpScore: tkpScaled,
+            isPassed,
+            answeredCount: Object.keys(catAnswers.value).length,
+            totalCount: catQuestions.value.length
+          };
+
+          currentView.value = 'cat-result';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          if (isTimeOut) {
+            showToast('Waktu simulasi CAT habis! Lembar jawaban dikumpulkan otomatis.');
+          } else {
+            showToast('Simulasi CAT berhasil diselesaikan!');
+          }
+        };
+
+        const confirmExitCatSim = () => {
+          showConfirm({
+            title: 'Batalkan Simulasi CAT?',
+            message: 'Jika keluar sekarang, sesi ujian akan dibatalkan dan progres jawaban tidak disimpan. Yakin ingin membatalkan?',
+            confirmText: 'Ya, Keluar',
+            cancelText: 'Lanjutkan Ujian',
+            type: 'danger',
+            icon: 'timer_off',
+            onConfirm: () => {
+              if (catTimerInterval) {
+                clearInterval(catTimerInterval);
+                catTimerInterval = null;
+              }
+              currentView.value = 'cat-intro';
+              showToast('Simulasi CAT dibatalkan.');
+            }
+          });
+        };
+
+        const formatCatTimer = (sec) => {
+          const m = Math.floor(sec / 60).toString().padStart(2, '0');
+          const s = (sec % 60).toString().padStart(2, '0');
+          return `${m}:${s}`;
+        };
+
+        watch(currentView, (newView) => {
+          if (newView === 'cat-sim' && (!catQuestions.value || catQuestions.value.length === 0)) {
+            startCatSimulation();
+          }
+        });
+
+        const promptFinishQuiz = () => {
+          showConfirm({
+            title: 'Kumpulkan Jawaban Kuis?',
+            message: 'Pastikan Anda telah memeriksa kembali seluruh 5 jawaban. Hasil evaluasi dan analisis APS akan langsung ditampilkan.',
+            confirmText: 'Kumpulkan Sekarang',
+            cancelText: 'Periksa Lagi',
+            type: 'primary',
+            icon: 'task_alt',
+            onConfirm: () => {
+              executeFinishQuiz();
+            }
+          });
+        };
+
+        const executeFinishQuiz = () => {
+          if (timerInterval) clearInterval(timerInterval);
+
+          let score = 0;
+          quizQuestions.value.forEach((q, idx) => {
+            if (userAnswers.value[idx] === q.correct) {
+              score++;
+            }
+          });
+          quizScore.value = score;
+
+          // Progression Lock Rules: score >= 3 unlocks next module!
+          const targetMod = modules.value.find(m => m.id === activeModule.value.id);
+          if (targetMod) {
+            targetMod.score = score;
+            if (score >= 3) {
+              targetMod.completed = true;
+
+              const currentIndex = modules.value.findIndex(m => m.id === targetMod.id);
+              if (currentIndex !== -1 && currentIndex + 1 < modules.value.length) {
+                const nextMod = modules.value[currentIndex + 1];
+                if (nextMod.category === targetMod.category) {
+                  nextMod.unlocked = true;
+                }
+              }
+            }
+            saveProgress();
+          }
+
+          currentView.value = 'quiz-result';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        const finishQuiz = executeFinishQuiz;
+
+        onMounted(() => {
+          loadProgress();
+        });
+
+        return {
+          currentView,
+          activeCategoryCode,
+          activeModule,
+          searchQuery,
+          toastMessage,
+          modules,
+          filteredModules,
+          totalModulesCount,
+          totalCompletedCount,
+          totalProgress,
+          unlockedModulesCount,
+          averageQuizScore,
+          getCategoryTitle,
+          getCategoryPG,
+          getCategoryTotal,
+          getCategoryCompleted,
+          openCategory,
+          openModule,
+          showLockedNotice,
+          showToast,
+          // Quiz
+          currentQuizIndex,
+          quizQuestions,
+          currentQuestion,
+          userAnswers,
+          quizTimer,
+          quizScore,
+          startQuiz,
+          formatTime,
+          selectAnswer,
+          confirmExitQuiz,
+          finishQuiz,
+          promptFinishQuiz,
+          resetProgress,
+          // CAT Simulation
+          openCatIntro,
+          catQuestions,
+          catCurrentIndex,
+          currentCatQuestion,
+          catAnswers,
+          catDoubtful,
+          catTimer,
+          catActiveCategory,
+          catResult,
+          catAnsweredCount,
+          catDoubtfulCount,
+          startCatSimulation,
+          selectCatAnswer,
+          toggleCatDoubtful,
+          jumpToCatQuestion,
+          nextCatQuestion,
+          prevCatQuestion,
+          setCatCategory,
+          promptFinishCatSim,
+          executeFinishCatSim,
+          confirmExitCatSim,
+          formatCatTimer,
+          // Modern Confirm Modal
+          confirmModal,
+          showConfirm
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

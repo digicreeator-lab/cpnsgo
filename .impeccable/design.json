@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T05:15:00.000Z",
+  "title": "Design System: CPNS GO (The Fintech Audit Ledger)",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Slate Audit Black", "canonical": "#0F172A" },
+      "success": { "role": "success", "displayName": "Success Clearance Green", "canonical": "#16A34A" },
+      "error": { "role": "error", "displayName": "Audit Red", "canonical": "#DC2626" },
+      "surface": { "role": "neutral", "displayName": "Ledger Surface", "canonical": "#F1F5F9" },
+      "outline-variant": { "role": "neutral", "displayName": "Armature Outline", "canonical": "#CBD5E1" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Major screen titles and massive dashboard numbers." },
+      "label": { "displayName": "Mono Label", "purpose": "Metrics, status badges, timestamps, and IDs." },
+      "Material Symbols Outlined": { "displayName": "Material Symbols Outlined", "purpose": "Icons" }
+    },
+    "shadows": [
+      { "name": "ledger-shadow", "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)", "purpose": "Barely-there drop shadow to lift interactive cards slightly above the background canvas." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Ledger Card",
+      "kind": "card",
+      "refersTo": "ledger-card",
+      "description": "Primary container with strict borders and sharp corners.",
+      "html": "<div class=\"ds-ledger-card\">\n  <div class=\"ds-ledger-header\">\n    <span class=\"ds-label\">ID: AUDIT-2026</span>\n    <h2 class=\"ds-h2\">CPNS GO LEDGER</h2>\n  </div>\n  <p>Data content goes here.</p>\n</div>",
+      "css": ".ds-ledger-card { background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 4px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); padding: 1rem; font-family: 'Inter', sans-serif; color: #0F172A; } .ds-ledger-header { border-bottom: 1px solid #CBD5E1; padding-bottom: 0.75rem; margin-bottom: 0.75rem; } .ds-label { font-family: 'SFMono-Regular', monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; color: #475569; } .ds-h2 { font-size: 1.25rem; font-weight: 700; margin: 4px 0 0 0; }"
+    },
+    {
+      "name": "Validation Stamp",
+      "kind": "custom",
+      "refersTo": "stamp-validated",
+      "description": "Definitive stamp for passed modules.",
+      "html": "<span class=\"ds-stamp-validated\">VERIFIED</span>",
+      "css": ".ds-stamp-validated { display: inline-block; padding: 0.25rem 0.75rem; border: 2px solid #16A34A; color: #16A34A; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; border-radius: 4px; transform: rotate(-5deg); font-family: 'SFMono-Regular', monospace; opacity: 0.9; font-size: 12px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Fintech Audit Ledger",
+    "overview": "Learning is not a casual game; it's a rigorous audit of knowledge where progression is strictly calculated. We refuse the standard casual quiz app look in favor of a high-end fintech terminal. The interface relies on stark backgrounds, high-contrast structural armature, strict monospaced data, and definitive verification stamps. It presents learning as a precise, verifiable transaction.",
+    "keyCharacteristics": [
+      "Strict Armature: Visible borders and strict CSS grid lines form the structure.",
+      "Audit-level Metrics: Scores and progress are presented as clearance metrics and data points.",
+      "Definitive Validation: Passed modules receive heavy, rotated 'VALIDATED' stamps."
+    ],
+    "rules": [
+      { "name": "The Functional Color Rule", "body": "Color does real jobs. There are no decorative washes or gradients. Color is reserved entirely for structural definition (outlines) and status indicators (success, error, warning).", "section": "colors" },
+      { "name": "The Data Reality Rule", "body": "If it's a number, a status, or an ID, it is set in Monospace. This enforces the feeling of raw, verified data.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. Depth is expressed through structural outlines, not Z-axis shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use dashed borders for lists to reinforce the ledger aesthetic.",
+      "Do apply the Validation Stamps only as a definitive result of an action (e.g., passing a quiz)."
+    ],
+    "donts": [
+      "Don't use mesh gradients, blur filters, or glassmorphism.",
+      "Don't use heavily rounded corners (e.g., 16px or full pills) for structural containers.",
+      "Don't use shadows to separate content sections; use borders."
+    ]
+  }
+}
