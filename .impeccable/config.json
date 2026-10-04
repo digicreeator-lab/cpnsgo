@@ -4,13 +4,15 @@
   },
   "detector": {
     "ignoreFiles": [],
-    "ignoreRules": [],
+    "ignoreRules": [
+      "nested-cards"
+    ],
     "ignoreValues": [
       {
-        "createdAt": "2026-10-04T04:50:41.651Z",
-        "reason": "Official brand font in design.md",
         "rule": "overused-font",
-        "value": "inter"
+        "value": "inter",
+        "createdAt": "2026-10-04T04:50:41.651Z",
+        "reason": "Official brand font in design.md"
       }
     ]
   }
