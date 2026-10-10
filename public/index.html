@@ -2116,14 +2116,32 @@
 
     const app = createApp({
       setup() {
-        const auth = ref({ token: '', user: null, isLoggedIn: false });
+        const savedAuthStr = localStorage.getItem('cpnsgo_auth');
+        const initialAuth = savedAuthStr ? JSON.parse(savedAuthStr) : { token: '', user: null, isLoggedIn: false };
+        const auth = ref(initialAuth);
+
         const loginForm = ref({ username: '', password: '', loading: false, error: '' });
         const riwayatSkor = ref([]);
         const lastCatHash = ref('');
 
-        const currentView = ref('login');
-        const activeCategoryCode = ref('TWK');
+        const savedView = localStorage.getItem('cpnsgo_last_view') || 'dashboard';
+        const savedCat = localStorage.getItem('cpnsgo_last_cat') || 'TWK';
+
+        const currentView = ref(initialAuth.isLoggedIn ? savedView : 'login');
+        const activeCategoryCode = ref(savedCat);
         const activeModule = ref(null);
+
+        watch(currentView, (newView) => {
+          const safeViews = ['dashboard', 'module-categories', 'module-list', 'statistik', 'profile', 'cat-intro', 'cat-result'];
+          if (safeViews.includes(newView)) {
+            localStorage.setItem('cpnsgo_last_view', newView);
+          }
+        });
+
+        watch(activeCategoryCode, (newCat) => {
+          localStorage.setItem('cpnsgo_last_cat', newCat);
+        });
+
         const searchQuery = ref('');
         const toastMessage = ref('');
         let toastTimeout = null;
@@ -3273,6 +3291,8 @@
         const doLogout = () => {
           auth.value = { token: '', user: null, isLoggedIn: false };
           localStorage.removeItem('cpnsgo_auth');
+          localStorage.removeItem('cpnsgo_last_view');
+          localStorage.removeItem('cpnsgo_last_cat');
           currentView.value = 'login';
           modules.value = JSON.parse(JSON.stringify(defaultModules)); // reset local view
         };
@@ -3350,29 +3370,23 @@
 
         // Check Auth on Mount
         onMounted(async () => {
-          const savedAuth = localStorage.getItem('cpnsgo_auth');
-          if (savedAuth) {
-            const parsed = JSON.parse(savedAuth);
-            auth.value = parsed;
-            // Validate token
+          if (auth.value.isLoggedIn && auth.value.token) {
+            // Kita sudah inisialisasi state secara optimistik di awal
+            // Sekarang validasi ke server di background
             try {
-              const res = await ipnApi('validateToken', [parsed.token]);
+              const res = await ipnApi('validateToken', [auth.value.token]);
               if (!res.valid) {
                 showToast(res.message);
                 doLogout();
                 return;
               }
-              // ponytail: validateToken hanya balas {username, role} tanpa name/foto,
-              // jadi MERGE saja ?" jangan timpa user lengkap dari loginUser.
-              // Ceiling: foto/name di DB baru ter-refresh saat login ulang (tidak ada endpoint profil).
               const partialUser = res.user || res.data;
               if (partialUser) {
                 auth.value.user = { ...auth.value.user, ...partialUser };
                 localStorage.setItem('cpnsgo_auth', JSON.stringify(auth.value));
               }
-              currentView.value = 'dashboard';
             } catch(e) {
-              currentView.value = 'dashboard'; // fallback
+              console.warn('Validasi token gagal karena jaringan/server:', e);
             }
             loadProgress();
             syncProgressFromDb();
