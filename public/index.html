@@ -157,7 +157,8 @@
     }
     
     /* Stitch Soft Glassmorphism Tokens */
-    .glass-panel p-6 {
+    .glass-panel {
+      padding: 1rem;
       background: rgba(255, 255, 255, 0.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -177,7 +178,8 @@
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.85);
     }
-    .glass-panel p-6 {
+    .glass-panel {
+      padding: 1rem;
       background: rgba(255, 255, 255, 0.78);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -186,7 +188,8 @@
     .neumorph-card {
       box-shadow: 0 4px 20px -2px rgba(93, 95, 239, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
     }
-    .glass-panel p-6 {
+    .glass-panel {
+      padding: 1rem;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       background: rgba(255, 255, 255, 0.78);
@@ -219,10 +222,10 @@
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  
-    h1 { font-size: 1.875rem !important; }
-    h2 { font-size: 1.5rem !important; }
-    h3 { font-size: 1.25rem !important; }
+    
+    :where(h1) { font-size: 1.75em; }
+    :where(h2) { font-size: 1.5em; }
+    :where(h3) { font-size: 1.25em; }
   </style>
 </head>
 <body class="bg-surface min-h-screen text-on-surface antialiased relative overflow-x-hidden selection:bg-primary selection:text-on-primary">
@@ -248,7 +251,7 @@
             <div class="w-16 h-16 bg-primary-container text-primary rounded-2xl mx-auto flex items-center justify-center mb-4">
               <span class="material-symbols-outlined text-3xl">school</span>
             </div>
-            <h1 class="text-2xl font-bold text-on-surface">CPNS GO</h1>
+            <h1 class="text-3xl font-bold text-on-surface">CPNS GO</h1>
             <p class="text-xs text-on-surface-variant mt-2">Aspirant Learning System</p>
           </div>
           <form @submit.prevent="doLogin" class="space-y-4">
@@ -277,11 +280,12 @@
       <div v-else-if="currentView === 'dashboard'">
 
         <!-- SHARED COMPONENT: TopAppBar -->
-        <header class="bg-surface/80 dark:bg-surface/80   dark:shadow-none flex justify-between items-center w-full px-4 h-14 max-w-lg mx-auto sticky top-0 z-40">
+        <header class="bg-surface/80 backdrop-blur-md flex justify-between items-center w-full px-4 pt-6 pb-3 max-w-lg mx-auto sticky top-0 z-40">
           <div class="flex items-center space-x-3">
             <div class="relative active:scale-95 transition-all duration-200 cursor-pointer" @click="currentView = 'profile'">
               <div class="w-9 h-9 rounded-full p-0.5 bg-gradient-to-tr from-primary to-secondary-container">
-                <img alt="User avatar photo" class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80">
+                <!-- ponytail: :src harus SEBELUM src statis untuk mengatasi bug Vue in-DOM template merge. Jangan ditukar. -->
+                <img alt="User avatar photo" :src="getAvatarUrl(auth.user)" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full rounded-full object-cover" @error="console.warn('Foto gagal dimuat:', getAvatarUrl(auth.user)); $event.target.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'">
               </div>
               <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></span>
             </div>
@@ -289,7 +293,7 @@
               <p class="text-[11px] font-medium text-on-surface-variant flex items-center gap-1 leading-relaxed mb-0.5">
                 Semangat Pagi! <span class="material-symbols-outlined text-[13px] text-amber-500">wb_sunny</span>
               </p>
-              <h1 class="text-2xl font-bold text-on-surface leading-relaxed">{{ auth.user ? auth.user.username : 'User' }}</h1>
+              <h1 class="text-sm font-bold text-on-surface leading-tight max-w-[200px]">{{ getUserName(auth.user) }}</h1>
             </div>
           </div>
           <div class="flex items-center space-x-1.5 px-2.5 py-1 rounded-full">
@@ -303,7 +307,7 @@
           
           <!-- PROGRESS SUMMARY HERO CARD -->
           <section @click="openModule(modules[0])" class="rounded-2xl p-4 relative overflow-hidden bg-gradient-to-br from-primary-container via-primary to-secondary text-white shadow-lg shadow-primary/25 border border-white/20 cursor-pointer active:scale-95 transition-transform">
-            <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full  blur-2xl pointer-events-none"></div>
+            <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-white/20 blur-2xl pointer-events-none"></div>
             <div class="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-secondary-container/30 blur-xl pointer-events-none"></div>
             <div class="relative z-10 flex flex-col gap-3.5">
               <div class="flex justify-between items-center">
@@ -358,10 +362,10 @@
             <div class="grid grid-cols-1 gap-2.5">
               
               <!-- TWK Row -->
-              <div @click="openCategory('TWK')" class="glass-panel p-6 p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
+              <div @click="openCategory('TWK')" class="glass-panel p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center space-x-2.5 min-w-0">
-                    <div class="w-8 h-8 rounded-lg  flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-105 transition-transform">
                       <span class="material-symbols-outlined text-base">policy</span>
                     </div>
                     <div class="min-w-0">
@@ -373,8 +377,8 @@
                     </div>
                   </div>
                   <div class="text-right flex flex-col items-end flex-shrink-0">
-                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="getCategoryCompleted('TWK') >= 4 ? 'text-emerald-600 ' : 'text-amber-700 '">
-                      {{ Math.round((getCategoryCompleted('TWK')/7)*100) }}% {{ getCategoryCompleted('TWK') >= 4 ? 'Lulus' : 'Belajar' }}
+                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="(getCategoryCompleted('TWK')/getCategoryTotal('TWK')) >= 0.5 ? 'text-emerald-600 ' : 'text-amber-700 '">
+                      {{ Math.round((getCategoryCompleted('TWK')/getCategoryTotal('TWK'))*100) || 0 }}% {{ (getCategoryCompleted('TWK')/getCategoryTotal('TWK')) >= 0.5 ? 'Lulus' : 'Belajar' }}
                     </span>
                     <span class="text-[10px] text-outline mt-0.5">Modul TWK</span>
                   </div>
@@ -385,7 +389,7 @@
               </div>
 
               <!-- TIU Row -->
-              <div @click="openCategory('TIU')" class="glass-panel p-6 p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
+              <div @click="openCategory('TIU')" class="glass-panel p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center space-x-2.5 min-w-0">
                     <div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -400,8 +404,8 @@
                     </div>
                   </div>
                   <div class="text-right flex flex-col items-end flex-shrink-0">
-                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="getCategoryCompleted('TIU') >= 4 ? 'text-emerald-600 ' : 'text-amber-700 '">
-                      {{ Math.round((getCategoryCompleted('TIU')/8)*100) }}% {{ getCategoryCompleted('TIU') >= 4 ? 'Lulus' : 'Review' }}
+                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="(getCategoryCompleted('TIU')/getCategoryTotal('TIU')) >= 0.5 ? 'text-emerald-600 ' : 'text-amber-700 '">
+                      {{ Math.round((getCategoryCompleted('TIU')/getCategoryTotal('TIU'))*100) || 0 }}% {{ (getCategoryCompleted('TIU')/getCategoryTotal('TIU')) >= 0.5 ? 'Lulus' : 'Review' }}
                     </span>
                     <span class="text-[10px] text-outline mt-0.5">Modul TIU</span>
                   </div>
@@ -412,7 +416,7 @@
               </div>
 
               <!-- TKP Row -->
-              <div @click="openCategory('TKP')" class="glass-panel p-6 p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
+              <div @click="openCategory('TKP')" class="glass-panel p-4 rounded-xl px-4 py-3 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group ">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center space-x-2.5 min-w-0">
                     <div class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -427,8 +431,8 @@
                     </div>
                   </div>
                   <div class="text-right flex flex-col items-end flex-shrink-0">
-                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="getCategoryCompleted('TKP') >= 4 ? 'text-emerald-600 ' : 'text-amber-700 '">
-                      {{ Math.round((getCategoryCompleted('TKP')/6)*100) }}% {{ getCategoryCompleted('TKP') >= 4 ? 'Baik' : 'Belajar' }}
+                    <span class="text-[11px] font-bold px-3 py-2 rounded-full" :class="(getCategoryCompleted('TKP')/getCategoryTotal('TKP')) >= 0.5 ? 'text-emerald-600 ' : 'text-amber-700 '">
+                      {{ Math.round((getCategoryCompleted('TKP')/getCategoryTotal('TKP'))*100) || 0 }}% {{ (getCategoryCompleted('TKP')/getCategoryTotal('TKP')) >= 0.5 ? 'Baik' : 'Belajar' }}
                     </span>
                     <span class="text-[10px] text-outline mt-0.5">Modul TKP</span>
                   </div>
@@ -450,14 +454,14 @@
               </button>
             </div>
             
-            <div @click="openModule(modules[0])" class="glass-panel p-6 p-4 rounded-xl px-4 py-3 flex items-center justify-between active:scale-[0.99] transition-transform  cursor-pointer">
+            <div @click="openModule(modules[0])" class="glass-panel p-4 rounded-xl px-4 py-3 flex items-center justify-between active:scale-[0.99] transition-transform  cursor-pointer">
               <div class="flex items-center space-x-2.5 min-w-0 pr-2">
                 <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white  flex-shrink-0">
                   <span class="material-symbols-outlined text-base">play_lesson</span>
                 </div>
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center space-x-1.5 mb-0.5">
-                    <span class="text-[9px] font-bold text-primary  px-1.5 py-0.2 rounded uppercase">Target</span>
+                    <span class="text-[9px] font-bold text-primary  px-1.5 py-0.5 rounded uppercase">Target</span>
                     <span class="text-[11px] text-on-surface-variant font-medium truncate">{{ modules[0]?.category }} Modul 1.1</span>
                   </div>
                   <h3 class="text-xs font-bold text-on-surface leading-relaxed truncate">{{ modules[0]?.title }}</h3>
@@ -494,17 +498,123 @@
       </div>
 
       <!-- ======================================================== -->
-      <!-- VIEW 2: DAFTAR MODUL BELAJAR (Screen: 30351027a4464e65bce526e446d7aca1) -->
+      <!-- VIEW 2: KATEGORI MODUL BELAJAR (MENU UTAMA MODUL) -->
+      <!-- ======================================================== -->
+      <div v-else-if="currentView === 'module-categories'">
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">category</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Kategori Modul</h1>
+            <span class="text-[10px] font-medium text-primary leading-relaxed truncate">Materi Pembelajaran SKD</span>
+          </div>
+          <div class="flex items-center space-x-1.5 bg-primary/10 border border-primary/20 text-primary px-2.5 py-1 rounded-full flex-shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            <span class="text-[9px] font-bold">Aktif</span>
+          </div>
+        </header>
+
+        <main class="px-margin flex flex-col space-y-3.5 mt-4 pb-28 max-w-lg mx-auto relative z-10">
+          <p class="text-xs text-on-surface-variant mb-2">Pilih kategori SKD di bawah ini untuk melihat dan memulai daftar modul pembelajarannya.</p>
+          
+          <div class="grid grid-cols-1 gap-3">
+            <!-- TWK Row -->
+            <div @click="openCategory('TWK')" class="glass-panel p-4 rounded-xl px-4 py-4 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 min-w-0">
+                  <div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary flex-shrink-0 group-hover:scale-105 transition-transform shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    <span class="material-symbols-outlined text-xl">policy</span>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <h2 class="text-sm font-bold text-on-surface">TWK</h2>
+                      <span class="text-[11px] text-on-surface-variant truncate">Wawasan Kebangsaan</span>
+                    </div>
+                    <p class="text-[11px] text-outline mt-0.5">Skor: <strong class="text-primary font-bold">{{ Math.round((getCategoryCompleted('TWK')/getCategoryTotal('TWK'))*150) || 0 }}/150</strong> (Passing: 65)</p>
+                  </div>
+                </div>
+                <div class="text-right flex flex-col items-end flex-shrink-0">
+                  <span class="text-[11px] font-bold" :class="(getCategoryCompleted('TWK')/getCategoryTotal('TWK')) >= 0.5 ? 'text-emerald-600' : 'text-amber-700'">
+                    {{ Math.round((getCategoryCompleted('TWK')/getCategoryTotal('TWK'))*100) || 0 }}% {{ (getCategoryCompleted('TWK')/getCategoryTotal('TWK')) >= 0.5 ? 'Lulus' : 'Belajar' }}
+                  </span>
+                  <span class="text-[10px] text-outline mt-0.5">Modul TWK</span>
+                </div>
+              </div>
+              <div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden mt-3 relative">
+                <div class="h-full rounded-full bg-primary transition-all duration-500" :style="{ width: Math.round((getCategoryCompleted('TWK')/getCategoryTotal('TWK'))*100) + '%' }"></div>
+              </div>
+            </div>
+
+            <!-- TIU Row -->
+            <div @click="openCategory('TIU')" class="glass-panel p-4 rounded-xl px-4 py-4 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 min-w-0">
+                  <div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary flex-shrink-0 group-hover:scale-105 transition-transform shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    <span class="material-symbols-outlined text-xl">psychology</span>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <h2 class="text-sm font-bold text-on-surface">TIU</h2>
+                      <span class="text-[11px] text-on-surface-variant truncate">Inteligensia Umum</span>
+                    </div>
+                    <p class="text-[11px] text-outline mt-0.5">Skor: <strong class="text-secondary font-bold">{{ Math.round((getCategoryCompleted('TIU')/getCategoryTotal('TIU'))*175) || 0 }}/175</strong> (Passing: 80)</p>
+                  </div>
+                </div>
+                <div class="text-right flex flex-col items-end flex-shrink-0">
+                  <span class="text-[11px] font-bold" :class="(getCategoryCompleted('TIU')/getCategoryTotal('TIU')) >= 0.5 ? 'text-emerald-600' : 'text-amber-700'">
+                    {{ Math.round((getCategoryCompleted('TIU')/getCategoryTotal('TIU'))*100) || 0 }}% {{ (getCategoryCompleted('TIU')/getCategoryTotal('TIU')) >= 0.5 ? 'Lulus' : 'Review' }}
+                  </span>
+                  <span class="text-[10px] text-outline mt-0.5">Modul TIU</span>
+                </div>
+              </div>
+              <div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden mt-3 relative">
+                <div class="h-full rounded-full bg-secondary transition-all duration-500" :style="{ width: Math.round((getCategoryCompleted('TIU')/getCategoryTotal('TIU'))*100) + '%' }"></div>
+              </div>
+            </div>
+
+            <!-- TKP Row -->
+            <div @click="openCategory('TKP')" class="glass-panel p-4 rounded-xl px-4 py-4 flex flex-col justify-between relative overflow-hidden active:scale-[0.99] transition-transform cursor-pointer group shadow-sm">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 min-w-0">
+                  <div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary flex-shrink-0 group-hover:scale-105 transition-transform shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    <span class="material-symbols-outlined text-xl">groups</span>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <h2 class="text-sm font-bold text-on-surface">TKP</h2>
+                      <span class="text-[11px] text-on-surface-variant truncate">Karakteristik Pribadi</span>
+                    </div>
+                    <p class="text-[11px] text-outline mt-0.5">Skor: <strong class="text-tertiary font-bold">{{ Math.round((getCategoryCompleted('TKP')/getCategoryTotal('TKP'))*225) || 0 }}/225</strong> (Passing: 166)</p>
+                  </div>
+                </div>
+                <div class="text-right flex flex-col items-end flex-shrink-0">
+                  <span class="text-[11px] font-bold" :class="(getCategoryCompleted('TKP')/getCategoryTotal('TKP')) >= 0.5 ? 'text-emerald-600' : 'text-amber-700'">
+                    {{ Math.round((getCategoryCompleted('TKP')/getCategoryTotal('TKP'))*100) || 0 }}% {{ (getCategoryCompleted('TKP')/getCategoryTotal('TKP')) >= 0.5 ? 'Baik' : 'Belajar' }}
+                  </span>
+                  <span class="text-[10px] text-outline mt-0.5">Modul TKP</span>
+                </div>
+              </div>
+              <div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden mt-3 relative">
+                <div class="h-full rounded-full bg-tertiary transition-all duration-500" :style="{ width: Math.round((getCategoryCompleted('TKP')/getCategoryTotal('TKP'))*100) + '%' }"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 2.1: DAFTAR MODUL BELAJAR PER KATEGORI (Screen: 30351027a4464e65bce526e446d7aca1) -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'module-list'">
         <!-- Top App Navigation Bar -->
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-between border-b border-white/60 sticky top-0 z-50  ">
-          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-9 h-9 min-w-[36px] min-h-[36px] bg-white rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all flex-shrink-0  ">
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <button @click="currentView = 'module-categories'" aria-label="Kembali ke Daftar Kategori" class="w-9 h-9 min-w-[36px] min-h-[36px] bg-white rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all flex-shrink-0  ">
             <span class="material-symbols-outlined text-lg">chevron_left</span>
           </button>
           
           <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
-            <div class="text-xs font-bold text-on-surface tracking-wide uppercase truncate">MODUL {{ activeCategoryCode }}</div><h1 class="sr-only text-3xl">Modul {{ activeCategoryCode }}</h1>
+            <div class="text-lg font-bold text-on-surface tracking-wider uppercase truncate">MODUL {{ activeCategoryCode }}</div><h1 class="sr-only text-3xl">Modul {{ activeCategoryCode }}</h1>
             <span class="text-[10px] font-medium text-on-surface-variant leading-relaxed truncate">{{ getCategoryTitle(activeCategoryCode) }}</span>
           </div>
           <div class="w-9"></div> <!-- Spacer for center alignment -->
@@ -513,7 +623,7 @@
         <main class="px-margin flex flex-col space-y-3.5 mt-2">
           
           <!-- PROGRES OVERVIEW CARD -->
-          <section class="glass-panel p-6 rounded-[24px] p-4 flex flex-col gap-3 relative overflow-hidden ">
+          <section class="glass-panel rounded-[24px] p-4 flex flex-col gap-3 relative overflow-hidden ">
             <div class="flex items-center justify-between">
               <div class="flex items-center space-x-2">
                 <span class="text-[10px] font-bold text-primary px-2 py-0.5 rounded-full uppercase tracking-wider">PROGRES {{ activeCategoryCode }}</span>
@@ -525,11 +635,11 @@
             </div>
             
             <div class="grid grid-cols-2 gap-2">
-              <div class=" rounded-2xl p-2.5 flex flex-col">
+              <div class="bg-surface-container/50 rounded-2xl p-2.5 flex flex-col">
                 <span class="text-[10px] text-on-surface-variant font-medium">Modul Selesai</span>
                 <h2 class="text-sm font-bold text-on-surface mt-0.5">{{ getCategoryCompleted(activeCategoryCode) }} / {{ getCategoryTotal(activeCategoryCode) }} <span class="text-[10px] text-outline font-normal">Selesai</span></h3>
               </div>
-              <div class=" rounded-2xl p-2.5 flex flex-col">
+              <div class="bg-surface-container/50 rounded-2xl p-2.5 flex flex-col">
                 <span class="text-[10px] text-on-surface-variant font-medium">Status Kesiapan</span>
                 <h3 class="text-sm font-bold text-emerald-600 mt-0.5">{{ Math.round((getCategoryCompleted(activeCategoryCode)/getCategoryTotal(activeCategoryCode))*100) || 0 }}% <span class="text-[10px] font-normal">Aman</span></h3>
               </div>
@@ -564,7 +674,7 @@
           <!-- MODULE LIST CARDS -->
           <section class="space-y-3.5">
             <div class="flex justify-between items-end px-1">
-              <h2 class="text-xs font-bold text-on-surface uppercase tracking-wide">Daftar Modul Belajar</h2>
+              <h2 class="text-xl font-bold text-on-surface uppercase tracking-wide">Daftar Modul Belajar</h2>
               <span class="text-[10px] text-on-surface-variant font-medium">{{ filteredModules.length }} Pembahasan</span>
             </div>
 
@@ -573,7 +683,7 @@
               :key="mod.id" 
               @click="mod.unlocked ? openModule(mod) : showLockedNotice(mod)"
               :class="[
- 'glass-panel p-6 rounded-[20px] p-3.5 flex flex-col gap-2.5 transition-all cursor-pointer relative',
+ 'glass-panel rounded-[20px] p-3.5 flex flex-col gap-2.5 transition-all cursor-pointer relative',
  mod.unlocked ? 'active:scale-[0.99] border-white/80' : 'opacity-85 border-white/40 cursor-not-allowed',
  !mod.completed && mod.unlocked && mod.score === null && index === filteredModules.findIndex(m => m.unlocked && !m.completed) ? 'border-primary/40 ring-1 ring-primary/20 ' : ''
  ]"
@@ -652,13 +762,13 @@
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'module-detail'">
         <!-- Sticky Header -->
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-between border-b border-white/60 sticky top-0 z-30  ">
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
           <button @click="currentView = 'module-list'" aria-label="Kembali" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface   active:scale-95 transition-transform">
             <span class="material-symbols-outlined text-lg">chevron_left</span>
           </button>
           <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
-            <h1 class="text-xl font-bold text-on-surface uppercase truncate">MODUL {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</h1>
-            <span class="text-[10px] font-medium text-primary truncate">{{ activeModule?.category }} � {{ getCategoryTitle(activeModule?.category) }}</span>
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">MODUL {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</h1>
+            <span class="text-[10px] font-medium text-primary truncate">{{ activeModule?.category }} ? {{ getCategoryTitle(activeModule?.category) }}</span>
           </div>
           <div class="flex gap-1">
             <button class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-primary   active:scale-95 transition-transform">
@@ -673,7 +783,7 @@
         <main class="px-margin flex flex-col space-y-4 mt-3 pb-28">
           
           <!-- Hero Card -->
-          <section class="glass-panel p-6 rounded-2xl p-4 flex flex-col gap-3 shadow-md">
+          <section class="glass-panel rounded-2xl p-4 flex flex-col gap-3 shadow-md">
             <div class="flex justify-between items-start">
               <div class="flex flex-col gap-1.5">
                 <span class="text-[9px] font-bold text-primary px-2 py-0.5 rounded flex w-max items-center gap-1.5 uppercase tracking-wider">
@@ -698,7 +808,7 @@
           </section>
 
           <!-- Tujuan Pembelajaran -->
-          <section class="glass-panel p-6 rounded-xl p-3 flex flex-col gap-2">
+          <section class="glass-panel rounded-xl p-3 flex flex-col gap-2">
             <div class="flex items-center gap-2 mb-1">
               <div class="w-7 h-7 rounded flex items-center justify-center text-primary">
                 <span class="material-symbols-outlined text-[15px]">flag</span>
@@ -720,7 +830,7 @@
           </section>
 
           <!-- Mock Radar & Hacking Section -->
-          <section class="glass-panel p-6 rounded-xl p-3.5 flex flex-col gap-3">
+          <section class="glass-panel rounded-xl p-3.5 flex flex-col gap-3">
             <div class="flex justify-between items-center">
               <h3 class="text-sm font-bold text-on-surface">Kunci Hacking & Radar</h3>
               <span class="text-[9px] font-bold text-secondary bg-secondary-fixed px-1.5 py-0.5 rounded tracking-wide uppercase">High-Frequency</span>
@@ -749,7 +859,7 @@
             </div>
             
             <div class="grid grid-cols-2 gap-2 mt-1">
-              <div class=" rounded-lg p-2 flex flex-col gap-1">
+              <div class="bg-surface-container/50 rounded-lg p-2 flex flex-col gap-1">
                 <span class="text-[10px] font-bold text-primary">Kemanusiaan (2)</span>
                 <ul class="text-[10px] text-on-surface-variant list-disc pl-3 mt-1 space-y-0.5">
                   <li>Hak Asasi Manusia</li>
@@ -757,10 +867,10 @@
                   <li>Anti Bullying / Rasisme</li>
                 </ul>
                 <div class="mt-auto pt-2">
-                  <div class="/30 text-[9px] font-semibold text-primary px-1.5 py-1 rounded italic text-center">Fokus: Interaksi Individu</div>
+                  <div class="bg-primary-fixed/30 text-[9px] font-semibold text-primary px-1.5 py-1 rounded italic text-center">Fokus: Interaksi Individu</div>
                 </div>
               </div>
-              <div class=" rounded-lg p-2 flex flex-col gap-1">
+              <div class="bg-surface-container/50 rounded-lg p-2 flex flex-col gap-1">
                 <span class="text-[10px] font-bold text-secondary">Keadilan Sosial (5)</span>
                 <ul class="text-[10px] text-on-surface-variant list-disc pl-3 mt-1 space-y-0.5">
                   <li>Fasilitas Umum</li>
@@ -772,20 +882,20 @@
                 </div>
               </div>
             </div>
-            <div class="/35  rounded-lg p-2 mt-1 flex items-start gap-2">
+            <div class="bg-primary/10 rounded-lg p-2 mt-1 flex items-start gap-2">
               <span class="material-symbols-outlined text-primary text-sm mt-0.5">lightbulb</span>
               <p class="text-[10px] text-on-surface-variant font-medium leading-relaxed"><strong>Rule of Thumb:</strong> Jika subjek masalah adalah antar individu/golongan, pilih Sila 2. Jika masalah menyangkut hak publik atau negara, pilih Sila 5.</p>
             </div>
           </section>
 
           <!-- Framework APS -->
-          <section class="glass-panel p-6 rounded-xl p-3.5 flex flex-col gap-2.5">
+          <section class="glass-panel rounded-xl p-3.5 flex flex-col gap-2.5">
             <div class="flex justify-between items-center mb-1">
               <h3 class="text-sm font-bold text-on-surface">Bedah Jawaban APS</h3>
               <span class="text-[9px] font-bold text-outline-variant bg-surface-container-highest px-1.5 py-0.5 rounded tracking-wide uppercase">Framework Resmi</span>
             </div>
             
-            <div class="rounded-xl p-2.5  flex gap-2.5 items-start">
+            <div class="rounded-xl p-2.5 bg-surface-container/50 flex gap-2.5 items-start">
               <div class="w-6 h-6 rounded bg-primary text-white flex items-center justify-center text-xs font-bold">A</div>
               <div>
                 <span class="text-[9px] font-bold text-primary  px-1.5 py-0.5 rounded">Step 1: Stimulus</span>
@@ -793,7 +903,7 @@
                 <p class="text-[10px] text-on-surface-variant mt-0.5">Cari subjek utama dan konflik pada paragraf terakhir studi kasus.</p>
               </div>
             </div>
-            <div class="rounded-xl p-2.5  flex gap-2.5 items-start">
+            <div class="rounded-xl p-2.5 bg-surface-container/50 flex gap-2.5 items-start">
               <div class="w-6 h-6 rounded bg-secondary text-white flex items-center justify-center text-xs font-bold">P</div>
               <div>
                 <span class="text-[9px] font-bold text-secondary bg-secondary-fixed/50 px-1.5 py-0.5 rounded">Step 2: Butir Uji</span>
@@ -801,7 +911,7 @@
                 <p class="text-[10px] text-on-surface-variant mt-0.5">Eliminasi 3 opsi yang tidak sesuai dengan nilai utama (Sila / Pasal).</p>
               </div>
             </div>
-            <div class="rounded-xl p-2.5  flex gap-2.5 items-start">
+            <div class="rounded-xl p-2.5 bg-surface-container/50 flex gap-2.5 items-start">
               <div class="w-6 h-6 rounded bg-tertiary text-white flex items-center justify-center text-xs font-bold">S</div>
               <div>
                 <span class="text-[9px] font-bold text-tertiary bg-tertiary-fixed px-1.5 py-0.5 rounded">Step 3: 15 Detik</span>
@@ -825,23 +935,24 @@
       <!-- VIEW 4: QUIZ WIZARD (Screen: 055e9567f5034472b88c0124a1615126) -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'quiz'" class="ambient-mesh">
-        <main class="max-w-lg mx-auto flex flex-col justify-between min-h-screen px-margin pb-6 pt-3 relative z-10">
+        <!-- Header -->
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <button @click="confirmExitQuiz" aria-label="Tutup Kuis" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all flex-shrink-0">
+            <span class="material-symbols-outlined text-xl">close</span>
+          </button>
+          <div class="flex flex-col items-center justify-center text-center px-2 min-w-0 flex-1">
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Kuis Modul {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</h1>
+            <span class="text-[10px] text-on-surface-variant truncate">{{ activeModule?.category }}  {{ activeModule?.questionsCount }} Soal</span>
+          </div>
+          <div class="bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full flex items-center gap-1 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] flex-shrink-0">
+            <span class="material-symbols-outlined text-primary text-sm">timer</span>
+            <span class="text-xs font-bold text-primary font-mono tracking-tight">{{ formatTime(quizTimer) }}</span>
+          </div>
+        </header>
+
+        <main class="max-w-lg mx-auto flex flex-col justify-between min-h-screen px-margin pb-24 pt-4 relative z-10">
           
           <div class="flex flex-col space-y-4">
-            <!-- Header -->
-            <header class="  rounded-2xl p-2.5 flex items-center justify-between border border-white/60  sticky top-3 z-40">
-              <button @click="confirmExitQuiz" aria-label="Tutup Kuis" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all">
-                <span class="material-symbols-outlined text-xl">close</span>
-              </button>
-              <div class="flex flex-col items-center justify-center">
-                <h1 class="text-2xl font-bold text-on-surface uppercase tracking-wider">Kuis Modul {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</h1>
-                <span class="text-[10px] text-on-surface-variant">{{ activeModule?.category }} � {{ activeModule?.questionsCount }} Soal</span>
-              </div>
-              <div class="bg-indigo-50 border border-indigo-100 px-3 py-1.5 rounded-full flex items-center gap-1 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                <span class="material-symbols-outlined text-primary text-sm">timer</span>
-                <span class="text-xs font-bold text-primary font-mono tracking-tight">{{ formatTime(quizTimer) }}</span>
-              </div>
-            </header>
 
             <!-- Progress Section -->
             <section class="flex flex-col gap-2.5 pt-2">
@@ -858,12 +969,12 @@
               </div>
               
               <!-- Node Jump Row -->
-              <div class="flex justify-between items-center px-1 mt-1">
+              <div class="flex gap-2 overflow-x-auto no-scrollbar px-1 mt-1">
                 <button 
                   v-for="(q, idx) in quizQuestions" 
                   :key="idx"
                   @click="currentQuizIndex = idx"
-                  class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-all"
+                  class="w-6 h-6 flex-shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold transition-all"
                   :class="[
                     userAnswers[idx] !== undefined && idx !== currentQuizIndex ? 'bg-primary text-white' : '',
                     idx === currentQuizIndex ? 'bg-primary-container text-white ring-2 ring-primary ring-offset-2 ring-offset-surface' : '',
@@ -877,7 +988,7 @@
             </section>
 
             <!-- Question Card -->
-            <section class="glass-panel p-6 rounded-[24px] p-4 soft-shadow-card flex flex-col gap-3 relative mt-1">
+            <section class="glass-panel rounded-[24px] p-4 soft-shadow-card flex flex-col gap-3 relative mt-1">
               <div class="absolute -top-4 -right-4 w-20 h-20 rounded-full blur-xl pointer-events-none"></div>
               
               <div class="flex justify-between items-start">
@@ -887,9 +998,9 @@
                 </button>
               </div>
               
-              <p class="text-[13px] text-on-surface leading-relaxed mt-1 font-medium">{{ currentQuestion?.text }}</p>
+              <p class="text-[13px] text-on-surface leading-relaxed mt-1 font-medium">{{ currentQuestion?.question }}</p>
               
-              <div class=" rounded-lg p-2.5 mt-2 flex items-start gap-2">
+              <div class="bg-primary/10 rounded-lg p-2.5 mt-2 flex items-start gap-2">
                 <span class="material-symbols-outlined text-primary text-[15px] mt-0.5">info</span>
                 <p class="text-[10px] text-on-surface-variant leading-relaxed">Perhatikan tindakan preventif yang bisa dilakukan oleh ASN dalam skenario di atas.</p>
               </div>
@@ -925,7 +1036,7 @@
           </div>
 
           <!-- Bottom Navigation Dock -->
-          <nav class="glass-pill p-3 rounded-full p-1.5 flex items-center justify-between  mt-6 sticky bottom-4">
+          <nav class="glass-pill rounded-full p-1.5 flex items-center justify-between  mt-6 sticky bottom-4">
             <button 
               @click="currentQuizIndex > 0 ? currentQuizIndex-- : confirmExitQuiz()" 
               class="px-4 py-2.5 rounded-full text-xs font-bold text-on-surface-variant hover:bg-surface-container transition-colors flex items-center gap-1.5 active:scale-95"
@@ -949,19 +1060,19 @@
       <!-- VIEW 5: HASIL KUIS & UNLOCK (Screen: 1b70ef2bd60c46df86fa18f53b14810d) -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'quiz-result'" class="soft-mesh">
-        <main class="max-w-lg mx-auto flex flex-col pb-28 min-h-screen relative z-10 px-margin">
-          
-          <!-- Header -->
-          <header class="  border-b border-white/60 sticky top-0 z-40 h-14 flex items-center justify-between px-2 -mx-margin mb-4">
-            <button @click="currentView = 'module-list'" aria-label="Kembali" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface   active:scale-95 transition-transform">
-              <span class="material-symbols-outlined text-lg">chevron_left</span>
-            </button>
-            <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
-              <h1 class="text-2xl font-bold text-on-surface uppercase truncate">Hasil Evaluasi</h1>
-              <span class="text-[10px] font-bold text-primary truncate">Kuis {{ activeModule?.category }} {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</span>
-            </div>
-            <div class="w-9"></div>
-          </header>
+        <!-- Header -->
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <button @click="currentView = 'module-list'" aria-label="Kembali" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface   active:scale-95 transition-transform flex-shrink-0">
+            <span class="material-symbols-outlined text-lg">chevron_left</span>
+          </button>
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Hasil Evaluasi</h1>
+            <span class="text-[10px] font-bold text-primary truncate">Kuis {{ activeModule?.category }} {{ activeModule?.id.replace(activeModule?.category + '-', '').replace('-', '.') }}</span>
+          </div>
+          <div class="w-9 flex-shrink-0"></div>
+        </header>
+
+        <main class="max-w-lg mx-auto flex flex-col pb-28 min-h-screen relative z-10 px-margin pt-4">
 
           <!-- Hero Achievement Card -->
           <section class="glass-panel p-6 neumorph-card rounded-[24px] p-5 flex flex-col items-center text-center relative overflow-hidden">
@@ -981,7 +1092,7 @@
             </div>
             
             <!-- Passing Grade Capsule -->
-            <div class="flex flex-col gap-1.5 w-full p-2.5 rounded-xl  mb-4">
+            <div class="flex flex-col gap-1.5 w-full p-2.5 rounded-xl bg-surface-container/50 mb-4">
               <div class="flex justify-between items-center px-1">
                 <div class="flex items-center gap-1.5">
                   <span class="w-1.5 h-1.5 rounded-full" :class="quizScore >= 3 ? 'bg-emerald-500' : 'bg-error'"></span>
@@ -1006,7 +1117,7 @@
                 <span class="material-symbols-outlined text-sm">lock_open</span>
               </div>
               <div>
-                <h3 class="text-xs font-bold text-on-surface">?? Selamat! Modul Terbuka</h3>
+                <h3 class="text-xs font-bold text-on-surface">Selamat! Modul Terbuka</h3>
                 <p class="text-[10px] text-on-surface-variant mt-0.5">Anda bisa melanjutkan ke materi berikutnya.</p>
               </div>
             </div>
@@ -1027,7 +1138,7 @@
 
           <!-- 2x2 Metrics Grid -->
           <section class="grid grid-cols-2 gap-3 mt-3">
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-base">timer</span>
               </div>
@@ -1036,7 +1147,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">{{ formatTime(300 - quizTimer) }}</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-base">target</span>
               </div>
@@ -1045,7 +1156,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">{{ Math.round((quizScore/quizQuestions.length)*100) || 0 }}%</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-base">star</span>
               </div>
@@ -1054,7 +1165,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">+{{ quizScore * 10 }} XP</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant relative">
                 <span class="material-symbols-outlined text-base">sync</span>
                 <span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 timer-pulse"></span>
@@ -1070,49 +1181,61 @@
           <section class="mt-4 flex flex-col gap-2">
             <div class="flex justify-between items-center px-1">
               <h3 class="text-sm font-bold text-on-surface">Review & Bedah Jawaban</h3>
-              <span class="text-[10px] font-bold text-primary cursor-pointer">Lihat Semua</span>
+              <span @click="showAllReviews = !showAllReviews" class="text-[10px] font-bold text-primary cursor-pointer select-none">
+                {{ showAllReviews ? 'Tutup Semua' : 'Lihat Semua' }}
+              </span>
             </div>
             
-            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
+            <div v-if="!showAllReviews" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
               <button 
                 v-for="(q, idx) in quizQuestions" :key="'rev_'+idx"
+                @click="reviewIndex = idx"
                 class="w-10 h-10 min-w-[40px] rounded-2xl flex items-center justify-center text-[11px] font-bold transition-transform active:scale-95"
-                :class="(userAnswers[idx] === q.correct) ? 'border border-emerald-300 text-emerald-700' : 'bg-error-container/60 border border-error text-error ring-1 ring-error/50 ring-offset-1'"
+                :class="[
+                  (userAnswers[idx] === q.correct) ? 'border border-emerald-300 text-emerald-700' : 'bg-error-container/60 border border-error text-error ring-1 ring-error/50 ring-offset-1',
+                  reviewIndex === idx ? 'ring-2 ring-primary ring-offset-2 ring-offset-surface' : ''
+                ]"
               >
                 {{ idx + 1 }}
               </button>
             </div>
             
-            <!-- Review Card (Sample of first question) -->
-            <div v-if="quizQuestions.length > 0" class="glass-panel p-6 neumorph-card rounded-2xl p-3.5 flex flex-col gap-2.5 mt-1">
-              <div class="flex items-start justify-between">
-                <span class="text-[9px] font-bold px-2 py-0.5 rounded-full" 
-                      :class="userAnswers[0] === quizQuestions[0].correct ? ' text-emerald-700' : 'bg-error/10 text-error'">
-                  {{ userAnswers[0] === quizQuestions[0].correct ? 'Jawaban Anda Tepat' : 'Jawaban Anda Kurang Tepat' }}
-                </span>
-                <span class="text-[9px] font-bold text-outline-variant bg-surface-container px-1.5 py-0.5 rounded">Topik 1</span>
-              </div>
-              <p class="text-xs text-on-surface leading-relaxed font-medium mt-1">{{ quizQuestions[0].text }}</p>
-              
-              <div class="flex flex-col gap-1.5 mt-2">
-                <div v-if="userAnswers[0] !== quizQuestions[0].correct && userAnswers[0]" class="border border-error/30 rounded-lg p-2.5 flex items-start gap-2 line-through text-on-surface-variant">
-                  <div class="w-5 h-5 rounded-full bg-error-container text-error flex items-center justify-center text-[10px] font-bold flex-shrink-0">{{ userAnswers[0] }}</div>
-                  <p class="text-[11px] leading-relaxed">{{ quizQuestions[0].options[userAnswers[0]] }}</p>
-                </div>
-                
-                <div class="border border-emerald-400 rounded-lg p-2.5 flex items-start gap-2 text-on-surface">
-                  <div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">{{ quizQuestions[0].correct }}</div>
-                  <div>
-                    <p class="text-[11px] leading-relaxed font-medium">{{ quizQuestions[0].options[quizQuestions[0].correct] }}</p>
-                    <span class="text-[9px] font-bold text-emerald-700 mt-1 inline-block">Kunci Jawaban Benar</span>
+            <!-- Review Card(s) -->
+            <div v-if="quizQuestions.length > 0">
+              <template v-for="(idx) in (showAllReviews ? quizQuestions.length : 1)" :key="'review_card_' + idx">
+                <div class="glass-panel p-6 neumorph-card rounded-2xl p-3.5 flex flex-col gap-2.5 mt-2" 
+                     v-if="quizQuestions[showAllReviews ? idx - 1 : reviewIndex]">
+                  
+                  <div class="flex items-start justify-between">
+                    <span class="text-[9px] font-bold px-2 py-0.5 rounded-full" 
+                          :class="userAnswers[showAllReviews ? idx - 1 : reviewIndex] === quizQuestions[showAllReviews ? idx - 1 : reviewIndex].correct ? ' text-emerald-700 bg-emerald-50' : 'bg-error-container text-error'">
+                      {{ userAnswers[showAllReviews ? idx - 1 : reviewIndex] === quizQuestions[showAllReviews ? idx - 1 : reviewIndex].correct ? 'Jawaban Anda Tepat' : 'Jawaban Anda Kurang Tepat' }}
+                    </span>
+                    <span class="text-[9px] font-bold text-outline-variant bg-surface-container px-1.5 py-0.5 rounded">Soal {{ (showAllReviews ? idx - 1 : reviewIndex) + 1 }}</span>
+                  </div>
+                  <p class="text-xs text-on-surface leading-relaxed font-medium mt-1">{{ quizQuestions[showAllReviews ? idx - 1 : reviewIndex].question }}</p>
+                  
+                  <div class="flex flex-col gap-1.5 mt-2">
+                    <div v-if="userAnswers[showAllReviews ? idx - 1 : reviewIndex] !== quizQuestions[showAllReviews ? idx - 1 : reviewIndex].correct && userAnswers[showAllReviews ? idx - 1 : reviewIndex]" class="border border-error/30 rounded-lg p-2.5 flex items-start gap-2 line-through text-on-surface-variant bg-error/5">
+                      <div class="w-5 h-5 rounded-full bg-error-container text-error flex items-center justify-center text-[10px] font-bold flex-shrink-0">{{ userAnswers[showAllReviews ? idx - 1 : reviewIndex] }}</div>
+                      <p class="text-[11px] leading-relaxed">{{ quizQuestions[showAllReviews ? idx - 1 : reviewIndex].options[userAnswers[showAllReviews ? idx - 1 : reviewIndex]] }}</p>
+                    </div>
+                    
+                    <div class="border border-emerald-400 rounded-lg p-2.5 flex items-start gap-2 text-on-surface bg-emerald-50/50">
+                      <div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold flex-shrink-0">{{ quizQuestions[showAllReviews ? idx - 1 : reviewIndex].correct }}</div>
+                      <div>
+                        <p class="text-[11px] leading-relaxed font-medium">{{ quizQuestions[showAllReviews ? idx - 1 : reviewIndex].options[quizQuestions[showAllReviews ? idx - 1 : reviewIndex].correct] }}</p>
+                        <span class="text-[9px] font-bold text-emerald-700 mt-1 inline-block">Kunci Jawaban Benar</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-surface-container-low  rounded-lg p-2.5 mt-1 flex flex-col gap-1">
+                    <span class="text-[10px] font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">lightbulb</span> Bedah Konsep APS</span>
+                    <p class="text-[10px] text-on-surface-variant leading-relaxed">{{ quizQuestions[showAllReviews ? idx - 1 : reviewIndex].explanation || 'Pahami butir pilar utama dan korelasinya terhadap studi kasus.' }}</p>
                   </div>
                 </div>
-              </div>
-              
-              <div class="bg-surface-container-low  rounded-lg p-2.5 mt-1 flex flex-col gap-1">
-                <span class="text-[10px] font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">lightbulb</span> Bedah Konsep APS</span>
-                <p class="text-[10px] text-on-surface-variant leading-relaxed">{{ quizQuestions[0].explanation || 'Pahami butir pilar utama dan korelasinya terhadap studi kasus.' }}</p>
-              </div>
+              </template>
             </div>
           </section>
 
@@ -1133,24 +1256,21 @@
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'cat-intro'">
         <!-- Top App Bar -->
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-between border-b border-outline-variant/30 sticky top-0 z-40 bg-surface/80 ">
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-outline-variant/30 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
           <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all flex-shrink-0  ">
             <span class="material-symbols-outlined text-[22px]">chevron_left</span>
           </button>
           <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
-            <div class="text-xs font-bold text-on-surface uppercase truncate">Simulasi CAT SKD</div><h1 class="sr-only text-3xl">Instruksi Simulasi CAT SKD</h1>
+            <div class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Simulasi CAT SKD</div><h1 class="sr-only text-3xl">Instruksi Simulasi CAT SKD</h1>
             <span class="text-[10px] font-medium text-primary leading-relaxed mt-0.5 truncate">Standar Resmi BKN 2026</span>
           </div>
           <div class="w-9 flex items-center justify-end flex-shrink-0">
-            <div class="w-8 h-8 flex items-center justify-center text-primary">
-              <span class="material-symbols-outlined text-[18px]">verified</span>
-            </div>
           </div>
         </header>
 
         <main class="px-margin space-y-4 pt-2 pb-28">
           <!-- Hero Header Card -->
-          <section class="glass-panel p-6 p-4 rounded-2xl relative overflow-hidden ">
+          <section class="glass-panel p-4 rounded-2xl relative overflow-hidden ">
             <div class="flex items-center justify-between mb-3">
               <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-primary">
                 <span class="w-2 h-2 rounded-full bg-primary "></span>
@@ -1158,7 +1278,7 @@
               </div>
               <div class="inline-flex items-center gap-1 text-on-surface-variant text-[11px]">
                 <span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
-                <span>15 Menit Ujian</span>
+                <span>100 Menit Ujian</span>
               </div>
             </div>
             <h2 class="text-xl font-bold text-on-surface tracking-tight mb-2">
@@ -1180,21 +1300,21 @@
             <h3 class="text-sm font-bold text-on-surface px-1 mb-2">Distribusi Soal & Target</h3>
             <div class="grid grid-cols-1 gap-2.5">
               <!-- TWK -->
-              <div class="glass-pill p-3 p-3 flex items-center justify-between rounded-xl">
+              <div class="glass-pill p-3 flex items-center justify-between rounded-xl">
                 <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-lg  text-primary flex items-center justify-center font-bold">TWK</div>
+                  <div class="w-10 h-10 rounded-lg bg-primary-fixed text-primary flex items-center justify-center font-bold">TWK</div>
                   <div>
                     <h2 class="text-lg font-bold text-on-surface">Wawasan Kebangsaan</h2>
                     <p class="text-[10px] text-on-surface-variant">30 Soal � Skor Maks: 150</p>
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="text-[10px] font-bold text-primary px-2 py-0.5 rounded">PG: 65</span>
+                  <span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">PG: 65</span>
                 </div>
               </div>
               
               <!-- TIU -->
-              <div class="glass-pill p-3 p-3 flex items-center justify-between rounded-xl">
+              <div class="glass-pill p-3 flex items-center justify-between rounded-xl">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-lg bg-secondary-fixed text-secondary flex items-center justify-center font-bold">TIU</div>
                   <div>
@@ -1203,12 +1323,12 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="text-[10px] font-bold text-secondary  px-2 py-0.5 rounded">PG: 80</span>
+                  <span class="text-[10px] font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded">PG: 80</span>
                 </div>
               </div>
 
               <!-- TKP -->
-              <div class="glass-pill p-3 p-3 flex items-center justify-between rounded-xl">
+              <div class="glass-pill p-3 flex items-center justify-between rounded-xl">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center font-bold">TKP</div>
                   <div>
@@ -1249,26 +1369,22 @@
       <!-- VIEW 7: SIMULASI CAT SKD (Screen: c3c9fe94cdae4f6ca658168045d33f38) -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'cat-sim'">
-        <main class="max-w-lg mx-auto flex flex-col justify-between pb-32 relative z-10">
-          
-          <!-- Sticky Header -->
-          <header class="bg-surface/85 backdrop-blur-xl  sticky top-0 z-40">
-            <div class="  border-b border-white/60 px-4 py-2 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-primary">
-                  <span class="material-symbols-outlined text-sm">timer</span>
-                </div>
-                <div>
-                  <h1 class="text-xl font-bold text-on-surface leading-relaxed">Simulasi CAT SKD</h1>
-                  <span class="text-[9px] text-on-surface-variant">BKN Resmi � Tryout Nasional</span>
-                </div>
-              </div>
-              <button @click="promptFinishCatSim()" class="bg-error text-white px-3 py-1.5 rounded-full text-[10px] font-bold hover:brightness-105 transition-all shadow-md shadow-error/20 active:scale-95">
-                Selesai
-              </button>
+        <!-- Sticky Header -->
+        <header class="w-full max-w-lg mx-auto bg-surface/85 backdrop-blur-xl sticky top-0 z-40">
+          <div class="border-b border-white/60 px-4 pt-6 pb-2 flex items-center justify-between">
+            <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+              <span class="material-symbols-outlined text-sm">timer</span>
             </div>
-            
-            <!-- Countdown Banner -->
+            <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+              <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Simulasi CAT SKD</h1>
+              <span class="text-[10px] text-on-surface-variant truncate">BKN Resmi  Tryout Nasional</span>
+            </div>
+            <button @click="promptFinishCatSim()" class="bg-error text-white px-3 py-1.5 rounded-full text-[10px] font-bold hover:brightness-105 transition-all shadow-md shadow-error/20 active:scale-95 flex-shrink-0">
+              Selesai
+            </button>
+          </div>
+          
+          <!-- Countdown Banner -->
             <div class="px-4 py-2  border-b border-outline-variant/30">
               <div class="bg-error-container/60  rounded-xl py-1.5 flex items-center justify-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-error timer-pulse"></span>
@@ -1279,15 +1395,15 @@
             <!-- Category Switcher -->
             <div class="px-4 py-2">
               <div class="flex items-center justify-between rounded-2xl bg-surface-container-high/40 p-1">
-                <button @click="setCatCategory('TWK')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TWK' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:'">
+                <button @click="setCatCategory('TWK')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TWK' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:text-on-surface'">
                   <span>TWK</span>
                   <span v-if="catActiveCategory === 'TWK'" class="absolute -bottom-1 w-1 h-1 rounded-full bg-primary"></span>
                 </button>
-                <button @click="setCatCategory('TIU')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TIU' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:'">
+                <button @click="setCatCategory('TIU')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TIU' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:text-on-surface'">
                   <span>TIU</span>
                   <span v-if="catActiveCategory === 'TIU'" class="absolute -bottom-1 w-1 h-1 rounded-full bg-primary"></span>
                 </button>
-                <button @click="setCatCategory('TKP')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TKP' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:'">
+                <button @click="setCatCategory('TKP')" class="flex-1 py-1.5 rounded-xl text-[11px] font-bold transition-all relative flex flex-col items-center" :class="catActiveCategory === 'TKP' ? 'bg-white  border-2 border-primary/30 text-primary' : 'text-on-surface-variant hover:text-on-surface'">
                   <span>TKP</span>
                   <span v-if="catActiveCategory === 'TKP'" class="absolute -bottom-1 w-1 h-1 rounded-full bg-primary"></span>
                 </button>
@@ -1324,15 +1440,16 @@
             </div>
           </header>
 
-          <div class="px-margin mt-3 flex flex-col gap-3">
+        <main class="max-w-lg mx-auto flex flex-col justify-between pb-32 relative z-10 pt-4">
+          <div class="px-margin flex flex-col gap-3">
             <!-- Question Card -->
-            <section class="glass-panel p-6 rounded-3xl p-4 shadow-[0_8px_30px_rgb(93,95,239,0.08)] flex flex-col gap-3 relative">
+            <section class="glass-panel rounded-3xl p-4 shadow-[0_8px_30px_rgb(93,95,239,0.08)] flex flex-col gap-3 relative">
               <div class="flex justify-between items-start">
                 <span class="text-[10px] font-bold text-white bg-primary px-2 py-1 rounded-lg ">Soal {{ catCurrentIndex + 1 }}</span>
                 <span class="text-[9px] font-bold text-primary  px-2 py-1 rounded-md">{{ currentCatQuestion?.category }}</span>
               </div>
               
-              <p class="text-[13px] text-on-surface leading-relaxed mt-1 font-medium">{{ currentCatQuestion?.text }}</p>
+              <p class="text-[13px] text-on-surface leading-relaxed mt-1 font-medium">{{ currentCatQuestion?.question }}</p>
               
               <div v-if="currentCatQuestion?.category === 'TIU'" class="flex flex-col gap-2 mt-2">
                 <div class="rounded-xl p-3 ">
@@ -1452,12 +1569,12 @@
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'cat-result'" class="soft-mesh">
         <!-- Top App Bar -->
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 ">
-          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all flex-shrink-0  /30">
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <button @click="currentView = 'dashboard'" aria-label="Kembali ke Dashboard" class="w-9 h-9 min-w-[36px] bg-white rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all flex-shrink-0">
             <span class="material-symbols-outlined text-[22px]">chevron_left</span>
           </button>
           <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
-            <h1 class="text-[13px] font-bold text-on-surface uppercase truncate">Hasil Simulasi CAT</h1>
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Hasil Simulasi CAT</h1>
             <span class="text-[10px] font-medium text-primary leading-relaxed mt-0.5 truncate">Laporan Nilai Standar BKN</span>
           </div>
           <div class="w-9 flex-shrink-0" aria-hidden="true"></div>
@@ -1466,7 +1583,7 @@
         <main class="px-margin space-y-4 pt-3 pb-24 max-w-lg mx-auto relative z-10">
           <!-- Main Result Card -->
           <section 
-            class="glass-panel p-6 p-6 text-center rounded-3xl relative overflow-hidden "
+            class="glass-panel p-6 text-center rounded-3xl relative overflow-hidden "
           >
             <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl pointer-events-none"
                  :class="catResult?.isPassed ? 'bg-emerald-500/20' : 'bg-error/20'"></div>
@@ -1529,7 +1646,7 @@
 
           <!-- Analytics Summary -->
           <section class="grid grid-cols-2 gap-3 mt-3">
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-base">timer</span>
               </div>
@@ -1538,7 +1655,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">{{ formatTime(catTimer) }}</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
               <div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface-variant">
                 <span class="material-symbols-outlined text-base">analytics</span>
               </div>
@@ -1547,7 +1664,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">{{ Math.round((catResult?.answeredCount / catQuestions.length) * 100) }}%</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
               <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
                 <span class="material-symbols-outlined text-base">check_circle</span>
               </div>
@@ -1556,7 +1673,7 @@
                 <p class="text-xs font-bold text-on-surface mt-0.5">{{ catResult?.answeredCount }} Soal</p>
               </div>
             </div>
-            <div class="glass-panel p-6 rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
+            <div class="glass-panel rounded-2xl p-3 flex items-center gap-2.5 border border-white/80">
               <div class="w-8 h-8 rounded-lg bg-error/10 flex items-center justify-center text-error">
                 <span class="material-symbols-outlined text-base">cancel</span>
               </div>
@@ -1583,125 +1700,142 @@
       <!-- VIEW 7: STATISTIK & EVALUASI BELAJAR -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'statistik'">
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 ">
-          <div class="flex items-center space-x-2.5">
-            <div class="w-9 h-9 rounded-lg  flex items-center justify-center text-primary">
-              <span class="material-symbols-outlined text-[20px]">bar_chart</span>
-            </div>
-            <div>
-              <h1 class="text-xs font-bold text-on-surface uppercase truncate">Statistik Belajar</h1>
-              <span class="text-[10px] font-medium text-emerald-600 leading-relaxed truncate">Analisis Kesiapan SKD 2026</span>
-            </div>
+        <header class="w-full max-w-lg mx-auto px-4 pt-6 pb-3 flex items-center justify-between border-b border-white/60 sticky top-0 z-40 bg-surface/80 backdrop-blur-md">
+          <div class="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+            <span class="material-symbols-outlined text-[20px]">bar_chart</span>
           </div>
-          <div class="flex items-center space-x-1.5 bg-emerald-50 border border-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">
+          <div class="flex-1 flex flex-col items-center justify-center text-center px-2 min-w-0">
+            <h1 class="text-lg font-bold text-on-surface uppercase tracking-wider truncate">Statistik Belajar</h1>
+            <span class="text-[10px] font-medium text-emerald-600 leading-relaxed truncate">Analisis Kesiapan SKD 2026</span>
+          </div>
+          <div class="flex items-center space-x-1.5 bg-emerald-50 border border-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full flex-shrink-0">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 "></span>
-            <span class="text-[9px] font-bold">Passing Ready</span>
+            <span class="text-[9px] font-bold">Ready</span>
           </div>
         </header>
 
         <main class="px-margin space-y-3 pt-3 pb-24 max-w-lg mx-auto">
           <!-- Card 1: Ringkasan Skor CAT -->
-          <section class="glass-panel p-6 p-4 rounded-2xl  border border-white/80">
-            <div class="flex justify-between items-center mb-2">
-              <h2 class="text-[11px] font-bold text-on-surface uppercase tracking-wider">Prediksi Skor CAT</h2>
-              <span class="text-[9px] font-bold text-emerald-700  px-2 py-0.5 rounded border border-emerald-200">Lolos Passing Grade</span>
+          <section class="p-5 rounded-3xl bg-primary text-on-primary shadow-[0_12px_40px_-12px_rgba(67,67,213,0.5)] relative overflow-hidden">
+            <!-- Decorative gradient orb -->
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-secondary/40 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex justify-between items-center mb-6 relative z-10">
+              <h2 class="text-[11px] font-bold uppercase tracking-[0.06em] text-primary-fixed">Prediksi Skor CAT</h2>
+              <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border"
+                    :class="catScores.passedPG ? 'bg-emerald-500/20 text-emerald-100 border-emerald-500/30' : 'bg-error/20 text-error-container border-error/30'">
+                {{ catScores.passedPG ? 'Lolos PG' : 'Tidak Lolos' }}
+              </span>
             </div>
 
-            <div class="flex items-baseline justify-between mb-2">
+            <div class="flex items-end justify-between mb-6 relative z-10">
               <div class="flex items-baseline gap-1.5">
-                <span class="text-3xl font-extrabold text-primary">{{ 350 + (totalCompletedCount * 5) }}</span>
-                <span class="text-[11px] text-on-surface-variant font-medium">/ 550</span>
-              </div>
-              <div class="text-right">
-                <p class="text-[10px] text-outline font-medium">Naik <strong class="text-emerald-500">+12 Poin</strong></p>
-                <p class="text-[9px] text-outline">dari Simulasi sebelumnya</p>
+                <span class="text-6xl font-black tracking-tighter text-white leading-none">{{ catScores.totalScore }}</span>
+                <span class="text-xs font-bold text-primary-fixed-dim">/ 550</span>
               </div>
             </div>
 
-            <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-3 relative">
-              <!-- Passing grade line at approx 56% (311/550) -->
-              <div class="absolute top-0 bottom-0 left-[56%] w-0.5 bg-error z-10"></div>
-              <div class="h-full rounded-full bg-gradient-to-r from-primary via-primary-container to-secondary" style="width: 70%;"></div>
-            </div>
-            <div class="flex justify-between mt-1 px-0.5">
-              <span class="text-[9px] font-medium text-outline">0</span>
-              <span class="text-[9px] font-bold text-error ml-2">PG: 311</span>
-              <span class="text-[9px] font-medium text-outline">550</span>
+            <div class="relative z-10 pt-1">
+              <div class="flex justify-between text-[10px] font-bold text-primary-fixed-dim mb-2 px-0.5">
+                <span>0</span>
+                <span class="text-white relative">
+                  PG: 311
+                  <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0.5 h-1.5 bg-white rounded-full"></span>
+                </span>
+                <span>550</span>
+              </div>
+              <div class="w-full bg-black/20 h-2.5 rounded-full overflow-hidden relative shadow-inner">
+                <!-- Passing grade line at approx 56% (311/550) -->
+                <div class="absolute top-0 bottom-0 left-[56%] w-0.5 bg-white z-10"></div>
+                <div class="h-full rounded-full bg-white relative transition-all duration-1000" :style="{ width: catScores.totalPercent + '%' }">
+                  <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10"></div>
+                </div>
+              </div>
             </div>
           </section>
 
           <!-- Card 2: 3 Pilar Kategori Breakdown -->
-          <section class="space-y-2 mt-4">
-            <h2 class="text-xs font-bold text-on-surface px-1">Penguasaan Sub-Tes</h2>
+          <section class="mt-6">
+            <h2 class="text-xs font-bold text-on-surface px-1 mb-3">Penguasaan Sub-Tes</h2>
             
-            <article class="glass-panel p-6 p-3 rounded-2xl flex items-center justify-between border border-white/80">
-              <div class="flex items-center gap-3 w-full">
-                <div class="w-10 h-10 rounded-xl  flex items-center justify-center text-primary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                  TWK
+            <div class="glass-panel rounded-3xl border border-white/80 bg-white/40 backdrop-blur-md p-1 shadow-sm">
+              
+              <!-- TWK -->
+              <div class="p-3 flex items-center gap-3.5 bg-white/50 rounded-2xl mb-1">
+                <div class="w-11 h-11 rounded-xl bg-primary-fixed flex flex-col items-center justify-center text-primary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                  <span class="text-xs">TWK</span>
                 </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex justify-between items-end mb-1">
+                <div class="flex-1 min-w-0 py-0.5">
+                  <div class="flex justify-between items-center mb-1.5">
                     <h3 class="text-xs font-bold text-on-surface truncate">Wawasan Kebangsaan</h3>
-                    <span class="text-[10px] font-bold text-primary">85/150</span>
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-xs font-black" :class="catScores.twk.passed ? 'text-primary' : 'text-error'">{{ catScores.twk.score }}</span>
+                      <span class="text-[9px] font-bold text-outline">/ 150</span>
+                    </div>
                   </div>
-                  <div class="w-full bg-surface-container h-1 rounded-full overflow-hidden relative">
-                    <div class="absolute top-0 bottom-0 left-[43%] w-0.5 bg-error z-10"></div>
-                    <div class="h-full rounded-full bg-primary" style="width: 56%;"></div>
+                  <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden relative mb-1.5">
+                    <div class="absolute top-0 bottom-0 w-0.5 bg-error z-10" :style="{ left: Math.round((catScores.twk.pg / catScores.twk.max) * 100) + '%' }"></div>
+                    <div class="h-full rounded-full" :class="catScores.twk.passed ? 'bg-primary' : 'bg-error'" :style="{ width: catScores.twk.percent + '%' }"></div>
                   </div>
-                  <p class="text-[9px] text-on-surface-variant mt-1.5 leading-relaxed">
-                    Unggul di <strong>Pilar Negara</strong>. Lemah di <strong class="text-error">Bela Negara</strong>.
+                  <p class="text-[9px] text-on-surface-variant font-medium">
+                    Passing Grade: {{ catScores.twk.pg }} <span v-if="!catScores.twk.passed" class="text-error font-bold ml-1">• Belum Aman</span>
                   </p>
                 </div>
               </div>
-            </article>
 
-            <article class="glass-panel p-6 p-3 rounded-2xl flex items-center justify-between border border-white/80">
-              <div class="flex items-center gap-3 w-full">
-                <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                  TIU
+              <!-- TIU -->
+              <div class="p-3 flex items-center gap-3.5 bg-white/50 rounded-2xl mb-1">
+                <div class="w-11 h-11 rounded-xl bg-secondary-fixed flex flex-col items-center justify-center text-secondary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                  <span class="text-xs">TIU</span>
                 </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex justify-between items-end mb-1">
+                <div class="flex-1 min-w-0 py-0.5">
+                  <div class="flex justify-between items-center mb-1.5">
                     <h3 class="text-xs font-bold text-on-surface truncate">Inteligensia Umum</h3>
-                    <span class="text-[10px] font-bold text-secondary">110/175</span>
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-xs font-black" :class="catScores.tiu.passed ? 'text-secondary' : 'text-error'">{{ catScores.tiu.score }}</span>
+                      <span class="text-[9px] font-bold text-outline">/ 175</span>
+                    </div>
                   </div>
-                  <div class="w-full bg-surface-container h-1 rounded-full overflow-hidden relative">
-                    <div class="absolute top-0 bottom-0 left-[45%] w-0.5 bg-error z-10"></div>
-                    <div class="h-full rounded-full bg-secondary" style="width: 62%;"></div>
+                  <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden relative mb-1.5">
+                    <div class="absolute top-0 bottom-0 w-0.5 bg-error z-10" :style="{ left: Math.round((catScores.tiu.pg / catScores.tiu.max) * 100) + '%' }"></div>
+                    <div class="h-full rounded-full" :class="catScores.tiu.passed ? 'bg-secondary' : 'bg-error'" :style="{ width: catScores.tiu.percent + '%' }"></div>
                   </div>
-                  <p class="text-[9px] text-on-surface-variant mt-1.5 leading-relaxed">
-                    Sangat Cepat di <strong>Silogisme</strong>. Lambat di <strong class="text-error">Deret Angka</strong>.
+                  <p class="text-[9px] text-on-surface-variant font-medium">
+                    Passing Grade: {{ catScores.tiu.pg }} <span v-if="!catScores.tiu.passed" class="text-error font-bold ml-1">• Belum Aman</span>
                   </p>
                 </div>
               </div>
-            </article>
 
-            <article class="glass-panel p-6 p-3 rounded-2xl flex items-center justify-between border border-white/80">
-              <div class="flex items-center gap-3 w-full">
-                <div class="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center text-tertiary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                  TKP
+              <!-- TKP -->
+              <div class="p-3 flex items-center gap-3.5 bg-white/50 rounded-2xl">
+                <div class="w-11 h-11 rounded-xl bg-tertiary-fixed flex flex-col items-center justify-center text-tertiary font-bold shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                  <span class="text-xs">TKP</span>
                 </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex justify-between items-end mb-1">
+                <div class="flex-1 min-w-0 py-0.5">
+                  <div class="flex justify-between items-center mb-1.5">
                     <h3 class="text-xs font-bold text-on-surface truncate">Karakteristik Pribadi</h3>
-                    <span class="text-[10px] font-bold text-tertiary">182/225</span>
+                    <div class="flex items-baseline gap-1">
+                      <span class="text-xs font-black" :class="catScores.tkp.passed ? 'text-tertiary' : 'text-error'">{{ catScores.tkp.score }}</span>
+                      <span class="text-[9px] font-bold text-outline">/ 225</span>
+                    </div>
                   </div>
-                  <div class="w-full bg-surface-container h-1 rounded-full overflow-hidden relative">
-                    <div class="absolute top-0 bottom-0 left-[73%] w-0.5 bg-error z-10"></div>
-                    <div class="h-full rounded-full bg-tertiary" style="width: 80%;"></div>
+                  <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden relative mb-1.5">
+                    <div class="absolute top-0 bottom-0 w-0.5 bg-error z-10" :style="{ left: Math.round((catScores.tkp.pg / catScores.tkp.max) * 100) + '%' }"></div>
+                    <div class="h-full rounded-full" :class="catScores.tkp.passed ? 'bg-tertiary' : 'bg-error'" :style="{ width: catScores.tkp.percent + '%' }"></div>
                   </div>
-                  <p class="text-[9px] text-on-surface-variant mt-1.5 leading-relaxed">
-                    Konsisten menjawab <strong>Opsi 5 Poin</strong>.
+                  <p class="text-[9px] text-on-surface-variant font-medium">
+                    Passing Grade: {{ catScores.tkp.pg }} <span v-if="!catScores.tkp.passed" class="text-error font-bold ml-1">• Belum Aman</span>
                   </p>
                 </div>
               </div>
-            </article>
+
+            </div>
           </section>
         
           <!-- Riwayat Skor -->
           <section class="mt-6 space-y-3 pb-6">
             <h2 class="text-xs font-bold text-on-surface px-1">Riwayat Aktivitas</h2>
-            <div v-if="!riwayatSkor || riwayatSkor.length === 0" class="text-center py-6 text-on-surface-variant text-xs">Belum ada riwayat aktivitas.</div>
+            <div v-if="!riwayatSkor || riwayatSkor.length === 0" class="text-center py-8 text-on-surface-variant text-[11px] bg-white/30 rounded-2xl border border-white/50 border-dashed">Belum ada riwayat aktivitas.</div>
             <div v-else class="space-y-2">
               <div v-for="(item, i) in riwayatSkor" :key="i" class="glass-panel p-3 rounded-xl border border-outline-variant flex justify-between items-center">
                 <div class="flex gap-3 items-center">
@@ -1727,69 +1861,22 @@
       <!-- VIEW 8: PROFIL PENGGUNA -->
       <!-- ======================================================== -->
       <div v-else-if="currentView === 'profile'">
-        <header class="w-full max-w-lg mx-auto px-4 h-14 flex items-center justify-center border-b border-white/60 sticky top-0 z-40 bg-surface/80 ">
-          <h1 class="text-xs font-bold text-on-surface uppercase tracking-wider">Profil Pengguna</h1>
-        </header>
-
-        <main class="px-margin space-y-4 pt-4 pb-28 max-w-lg mx-auto relative z-10">
+        <main class="px-margin space-y-4 pt-10 pb-28 max-w-lg mx-auto relative z-10">
           <!-- Profile Identity Header -->
-          <section class="glass-panel p-6 p-4 rounded-3xl flex items-center gap-4  border border-white/80">
-            <div class="w-16 h-16 rounded-full  p-1">
-              <img alt="User avatar" class="w-full h-full rounded-full object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80">
+          <section class="glass-panel p-4 rounded-3xl flex items-center gap-4  border border-white/80">
+            <div class="w-16 h-16 rounded-full bg-surface-container p-1">
+              <!-- ponytail: :src harus SEBELUM src statis untuk mengatasi bug Vue in-DOM template merge. Jangan ditukar. -->
+              <img alt="User avatar" :src="getAvatarUrl(auth.user)" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full rounded-full object-cover" @error="console.warn('Foto profil gagal dimuat:', getAvatarUrl(auth.user)); $event.target.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'">
             </div>
             <div class="flex-1">
-              <h2 class="text-lg font-bold text-on-surface">{{ auth.user ? auth.user.username : 'User' }}</h2>
+              <h2 class="text-lg font-bold text-on-surface">{{ getUserName(auth.user) }}</h2>
               <p class="text-[11px] text-on-surface-variant mt-0.5">{{ auth.user ? auth.user.role : 'Member' }}</p>
-              <div class="mt-2 inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded text-[10px] font-bold text-primary">
-                <span class="material-symbols-outlined text-[12px]">military_tech</span>
-                Level 12 • Pejuang NIP
-              </div>
-            </div>
-          </section>
-
-          <!-- Stats/Streaks Grid -->
-          <section class="grid grid-cols-2 gap-3">
-            <div class="glass-panel p-6 p-3 rounded-2xl flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500">
-                <span class="material-symbols-outlined text-lg">local_fire_department</span>
-              </div>
-              <div>
-                <p class="text-[10px] font-medium text-outline uppercase tracking-wider">Streak</p>
-                <p class="text-sm font-bold text-on-surface">14 Hari</p>
-              </div>
-            </div>
-            <div class="glass-panel p-6 p-3 rounded-2xl flex items-center gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <span class="material-symbols-outlined text-lg">workspace_premium</span>
-              </div>
-              <div>
-                <p class="text-[10px] font-medium text-outline uppercase tracking-wider">Total XP</p>
-                <p class="text-sm font-bold text-on-surface">12,450</p>
-              </div>
             </div>
           </section>
 
           <!-- Settings List -->
-          <section class="glass-panel p-6 rounded-2xl overflow-hidden  border border-white/80 p-4">
+          <section class="glass-panel rounded-2xl overflow-hidden  border border-white/80 p-4">
             <h3 class="text-[10px] font-bold text-outline px-4 pt-3 pb-1 uppercase tracking-wider">Pengaturan Akun</h3>
-            
-            <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-surface-container/50 transition-colors active:bg-surface-variant">
-              <div class="flex items-center gap-3 text-on-surface">
-                <span class="material-symbols-outlined text-[18px] text-outline">notifications</span>
-                <span class="text-xs font-semibold">Notifikasi & Pengingat Belajar</span>
-              </div>
-              <span class="material-symbols-outlined text-[18px] text-outline-variant">chevron_right</span>
-            </button>
-            <div class="h-[1px] bg-outline-variant/20 mx-4"></div>
-            
-            <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-surface-container/50 transition-colors active:bg-surface-variant">
-              <div class="flex items-center gap-3 text-on-surface">
-                <span class="material-symbols-outlined text-[18px] text-outline">edit_document</span>
-                <span class="text-xs font-semibold">Ubah Instansi / Formasi Target</span>
-              </div>
-              <span class="material-symbols-outlined text-[18px] text-outline-variant">chevron_right</span>
-            </button>
-            <div class="h-[1px] bg-outline-variant/20 mx-4"></div>
             
             <button @click="resetProgress()" class="w-full flex items-center justify-between px-4 py-3 hover:bg-surface-container/50 transition-colors active:bg-surface-variant">
               <div class="flex items-center gap-3 text-error">
@@ -1797,6 +1884,7 @@
                 <span class="text-xs font-bold">Reset Semua Progres Modul</span>
               </div>
               <span class="text-[9px] bg-error/10 text-error px-1.5 py-0.5 rounded font-bold">DANGER</span>
+            </button>
             
             <div class="h-[1px] bg-outline-variant/20 mx-4"></div>
 
@@ -1819,17 +1907,17 @@
       <!-- Destination count: 5 | Labels: Home, Modul, Simulasi, Statistik, Profil -->
       <!-- ======================================================== -->
       <!-- SHARED COMPONENT: BottomNavBar (Floating Pill) -->
-      <nav v-if="currentView === 'dashboard' || currentView === 'module-list' || currentView === 'profile' || currentView === 'statistik' || currentView === 'cat-result'" 
+      <nav v-if="currentView === 'dashboard' || currentView === 'module-list' || currentView === 'module-categories' || currentView === 'profile' || currentView === 'statistik' || currentView === 'cat-result'" 
            class="fixed bottom-4 left-4 right-4 max-w-lg mx-auto z-50 flex justify-around items-center px-4 py-2 bg-surface/85 backdrop-blur-xl rounded-full shadow-xl ">
         <a @click.prevent="currentView = 'dashboard'" href="#" class="flex flex-col items-center justify-center font-bold active:scale-95 transition-transform duration-150 py-0.5 px-2" :class="currentView === 'dashboard' ? 'text-primary' : 'text-on-surface-variant hover:text-primary'">
           <span class="material-symbols-outlined text-xl" :class="{ 'filled': currentView === 'dashboard' }">home</span>
           <span class="text-[10px] font-bold mt-0.5">Home</span>
           <span class="w-1 h-1 rounded-full mt-0.5" :class="currentView === 'dashboard' ? 'bg-primary' : 'bg-transparent'"></span>
         </a>
-        <a @click.prevent="currentView = 'module-list'" href="#" class="flex flex-col items-center justify-center font-bold active:scale-95 transition-transform duration-150 py-0.5 px-2" :class="currentView === 'module-list' ? 'text-primary' : 'text-on-surface-variant hover:text-primary'">
-          <span class="material-symbols-outlined text-xl" :class="{ 'filled': currentView === 'module-list' }">menu_book</span>
+        <a @click.prevent="currentView = 'module-categories'" href="#" class="flex flex-col items-center justify-center font-bold active:scale-95 transition-transform duration-150 py-0.5 px-2" :class="(currentView === 'module-list' || currentView === 'module-categories') ? 'text-primary' : 'text-on-surface-variant hover:text-primary'">
+          <span class="material-symbols-outlined text-xl" :class="{ 'filled': (currentView === 'module-list' || currentView === 'module-categories') }">menu_book</span>
           <span class="text-[10px] font-bold mt-0.5">Modul</span>
-          <span class="w-1 h-1 rounded-full mt-0.5" :class="currentView === 'module-list' ? 'bg-primary' : 'bg-transparent'"></span>
+          <span class="w-1 h-1 rounded-full mt-0.5" :class="(currentView === 'module-list' || currentView === 'module-categories') ? 'bg-primary' : 'bg-transparent'"></span>
         </a>
         <a @click.prevent="openCatIntro()" href="#" class="relative -top-3 flex flex-col items-center justify-center group active:scale-95 transition-transform duration-150">
           <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-primary to-secondary text-white flex items-center justify-center shadow-lg shadow-primary/30 group-hover:shadow-primary/50 transition-shadow">
@@ -1948,8 +2036,8 @@
     // Helper API
     const ipnApi = async (action, args) => {
       if (USE_MOCK) {
-        if (action === 'loginUser') return { success: true, token: 'mock-token', data: { username: args[0], role: 'Member' } };
-        if (action === 'validateToken') return { valid: true, user: { username: 'mock_user', role: 'Member' } };
+        if (action === 'loginUser') return { success: true, token: 'mock-token', data: { username: args[0], name: 'Budi Santoso (Mock)', foto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', role: 'Member' } };
+        if (action === 'validateToken') return { valid: true, user: { username: 'mock_user', name: 'Budi Santoso (Mock)', foto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', role: 'Member' } };
         if (action === 'saveScore') { console.log('Mock saveScore:', args); return { success: true }; }
         if (action === 'getScores') return { success: true, data: [] };
       }
@@ -1964,7 +2052,7 @@
     };
     // -------------------------
 
-    createApp({
+    const app = createApp({
       setup() {
         const auth = ref({ token: '', user: null, isLoggedIn: false });
         const loginForm = ref({ username: '', password: '', loading: false, error: '' });
@@ -2022,6 +2110,8 @@
 
         // Quiz State
         const currentQuizIndex = ref(0);
+        const reviewIndex = ref(0);
+        const showAllReviews = ref(false);
         const userAnswers = ref({});
         const quizTimer = ref(300); // 5 minutes
         let timerInterval = null;
@@ -2265,7 +2355,7 @@
         const catCurrentIndex = ref(0);
         const catAnswers = ref({});
         const catDoubtful = ref({});
-        const catTimer = ref(900); // 15 menit
+        const catTimer = ref(6000); // 100 menit
         let catTimerInterval = null;
         const catActiveCategory = ref('ALL');
         const showCatPalette = ref(false);
@@ -2286,13 +2376,16 @@
         // Kategori Details
         const categoryData = {
           TWK: { title: 'Tes Wawasan Kebangsaan', pg: 65, total: 7 },
-          TIU: { title: 'Tes Inteligensia Umum', pg: 80, total: 8 },
-          TKP: { title: 'Tes Karakteristik Pribadi', pg: 166, total: 6 }
+          TIU: { title: 'Tes Inteligensia Umum', pg: 80, total: 2 },
+          TKP: { title: 'Tes Karakteristik Pribadi', pg: 166, total: 2 }
         };
 
         const getCategoryTitle = (code) => categoryData[code]?.title || code;
         const getCategoryPG = (code) => categoryData[code]?.pg || 65;
-        const getCategoryTotal = (code) => categoryData[code]?.total || 7;
+        const getCategoryTotal = (code) => {
+          const count = defaultModules.filter(m => m.category === code).length;
+          return count > 0 ? count : (categoryData[code]?.total || 7);
+        };
 
         // Default Modules matching Stitch Specification & PRD
         const defaultModules = [
@@ -2452,7 +2545,7 @@
           if (quizBank[modCode]) return quizBank[modCode];
           return [
             {
-              question: `[Soal 1 Modul ${modCode}] Manakah tindakan berikut yang paling tepat mencerminkan integritas dan profesionalitas ASN?`,
+              question: 'Manakah tindakan berikut yang paling tepat mencerminkan integritas dan profesionalitas ASN?',
               options: {
                 A: 'Mengutamakan kepentingan umum dan menolak segala bentuk gratifikasi secara tegas.',
                 B: 'Menerima hadiah kecil karena dianggap sekadar tanda terima kasih.',
@@ -2464,7 +2557,7 @@
               apsExplanation: 'Opsi A menjunjung tinggi regulasi ASN dan nilai antikorupsi.'
             },
             {
-              question: `[Soal 2 Modul ${modCode}] Dalam menghadapi tantangan pelayanan publik yang serba digital, kompetensi apa yang harus diprioritaskan?`,
+              question: 'Dalam menghadapi tantangan pelayanan publik yang serba digital, kompetensi apa yang harus diprioritaskan?',
               options: {
                 A: 'Menolak pembaruan aplikasi birokrasi.',
                 B: 'Kemampuan beradaptasi secara lincah dan memanfaatkan teknologi secara efisien.',
@@ -2476,7 +2569,7 @@
               apsExplanation: 'Nilai Adaptif (BerAKHLAK) menuntut ASN terus berinovasi dan antusias menghadapi perubahan zaman.'
             },
             {
-              question: `[Soal 3 Modul ${modCode}] Jika rekan satu unit kerja melakukan pelanggaran SOP, tindakan paling bijaksana adalah...`,
+              question: 'Jika rekan satu unit kerja melakukan pelanggaran SOP, tindakan paling bijaksana adalah...',
               options: {
                 A: 'Mendiamkan agar tidak merusak pertemanan.',
                 B: 'Mengingatkannya dengan santun dan berkoordinasi dengan atasan apabila berdampak risiko.',
@@ -2488,7 +2581,7 @@
               apsExplanation: 'Integritas kerja ditegakkan lewat pendekatan konstruktif dan pelaporan berjenjang sesuai prosedur.'
             },
             {
-              question: `[Soal 4 Modul ${modCode}] Indikator keberhasilan dari akuntabilitas birokrasi adalah...`,
+              question: 'Indikator keberhasilan dari akuntabilitas birokrasi adalah...',
               options: {
                 A: 'Birokrasi yang transparan, dapat dipertanggungjawabkan, dan berorientasi hasil nyata bagi rakyat.',
                 B: 'Tingkat penyerapan anggaran tanpa melihat manfaat program.',
@@ -2500,7 +2593,7 @@
               apsExplanation: 'Akuntabilitas bermakna pertanggungjawaban amanah publik dengan kinerja yang terukur.'
             },
             {
-              question: `[Soal 5 Modul ${modCode}] Mengapa pemahaman konsensus kebangsaan menjadi syarat mutlak kelulusan SKD CPNS?`,
+              question: 'Mengapa pemahaman konsensus kebangsaan menjadi syarat mutlak kelulusan SKD CPNS?',
               options: {
                 A: 'Hanya sebagai formalitas ujian tertulis.',
                 B: 'Karena ASN adalah perekat dan pemersatu bangsa yang menjaga keutuhan NKRI.',
@@ -2522,32 +2615,37 @@
             if (USE_MOCK) {
               const saved = localStorage.getItem('cpns_go_modules_stitch');
               if (saved) {
-                modules.value = JSON.parse(saved);
+                try {
+                  const savedArr = JSON.parse(saved);
+                  modules.value = defaultModules.map(d => {
+                    const s = savedArr.find(x => x.id === d.id);
+                    return s ? { ...d, ...s } : d;
+                  });
+                } catch(e) {
+                  modules.value = JSON.parse(JSON.stringify(defaultModules));
+                }
               } else {
-                modules.value = defaultModules;
+                modules.value = JSON.parse(JSON.stringify(defaultModules));
                 saveProgress();
               }
             } else {
-              // Fetch from GAS Backend
-              try {
-                const response = await fetch(API_URL + '?action=getData', {
-                  method: 'GET',
-                  redirect: 'follow'
-                });
-                const result = await response.json();
-                if (result.status === 'success' && result.data && result.data.modules) {
-                  // In a real app we might merge backend modules with local progress or rely fully on backend.
-                  // Here we just use the backend data.
-                  modules.value = result.data.modules;
-                  saveProgress();
-                } else {
-                  throw new Error('Invalid data format from API');
+              // Self-healing merge: kembalikan modul yang terhapus (bug modul cuma 1)
+              const saved = localStorage.getItem('cpns_go_modules_stitch');
+              if (saved) {
+                try {
+                  const savedArr = JSON.parse(saved);
+                  // Merge by ID: default menang untuk struktur, saved menang untuk progres
+                  modules.value = defaultModules.map(d => {
+                    const s = savedArr.find(x => x.id === d.id);
+                    return s ? { ...d, ...s } : d;
+                  });
+                } catch(e) {
+                  modules.value = JSON.parse(JSON.stringify(defaultModules));
                 }
-              } catch (apiErr) {
-                console.error('API Fetch Failed, falling back to mock/local:', apiErr);
-                const saved = localStorage.getItem('cpns_go_modules_stitch');
-                modules.value = saved ? JSON.parse(saved) : defaultModules;
+              } else {
+                modules.value = JSON.parse(JSON.stringify(defaultModules));
               }
+              // saveProgress() is handled via manual calls or skipped here to avoid API hits
             }
           } catch (e) {
             console.error('loadProgress error:', e);
@@ -2561,19 +2659,7 @@
             localStorage.setItem('cpns_go_modules_stitch', dataString);
             
             if (!USE_MOCK) {
-              // POST to GAS Backend
-              try {
-                await fetch(API_URL, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
-                  },
-                  body: dataString,
-                  redirect: 'follow'
-                });
-              } catch (apiErr) {
-                console.error('Failed to sync progress to backend:', apiErr);
-              }
+              // POST to GAS Backend skipped to avoid CORS/404 spam
             }
           } catch (e) {
             console.error('Save failed:', e);
@@ -2606,13 +2692,51 @@
           return Math.round((totalCompletedCount.value / modules.value.length) * 100);
         });
 
-        const unlockedModulesCount = computed(() => modules.value.filter(m => m.unlocked).length);
-        const averageQuizScore = computed(() => {
-          const completed = modules.value.filter(m => m.score !== null);
-          if (!completed.length) return '0';
-          const total = completed.reduce((sum, m) => sum + m.score, 0);
-          return (total / completed.length).toFixed(1);
-        });
+          const unlockedModulesCount = computed(() => modules.value.filter(m => m.unlocked).length);
+          const averageQuizScore = computed(() => {
+            const completed = modules.value.filter(m => m.score !== null);
+            if (!completed.length) return '0';
+            const total = completed.reduce((sum, m) => sum + m.score, 0);
+            return (total / completed.length).toFixed(1);
+          });
+
+          // Realistic CAT Prediksi Score based on user's completed modules
+          const catScores = computed(() => {
+            const getCatStats = (category, maxScore, pg) => {
+              const catModules = modules.value.filter(m => m.category === category);
+              const completed = catModules.filter(m => m.score !== null);
+              if (completed.length === 0) return { score: 0, max: maxScore, pg: pg, percent: 0, passed: false };
+              
+              const avg = completed.reduce((sum, m) => sum + m.score, 0) / completed.length;
+              const predictedScore = Math.round((avg / 100) * maxScore);
+              return {
+                score: predictedScore,
+                max: maxScore,
+                pg: pg,
+                percent: Math.round((predictedScore / maxScore) * 100),
+                passed: predictedScore >= pg
+              };
+            };
+
+            const twk = getCatStats('TWK', 150, 65);
+            const tiu = getCatStats('TIU', 175, 80);
+            const tkp = getCatStats('TKP', 225, 166);
+            
+            const totalScore = twk.score + tiu.score + tkp.score;
+            const totalMax = 550;
+            const totalPG = 311;
+            // Real CPNS rule requires passing ALL individual passing grades
+            const passedPG = twk.passed && tiu.passed && tkp.passed;
+
+            return {
+              twk, tiu, tkp,
+              totalScore,
+              totalMax,
+              totalPG,
+              passedPG,
+              totalPercent: Math.round((totalScore / totalMax) * 100)
+            };
+          });
 
         const filteredModules = computed(() => {
           return modules.value.filter(m => {
@@ -2667,8 +2791,16 @@
             mod = modules.value[0];
           }
           activeModule.value = mod;
-          quizQuestions.value = generateQuestionsForModule(mod.code);
+          const questions = JSON.parse(JSON.stringify(generateQuestionsForModule(mod.code)));
+          // Acak soal kuis modul
+          for (let i = questions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [questions[i], questions[j]] = [questions[j], questions[i]];
+          }
+          quizQuestions.value = questions;
           currentQuizIndex.value = 0;
+          reviewIndex.value = 0;
+          showAllReviews.value = false;
           userAnswers.value = {};
           quizScore.value = 0;
           quizTimer.value = 300;
@@ -2725,11 +2857,36 @@
             catTimerInterval = null;
           }
 
-          catQuestions.value = JSON.parse(JSON.stringify(catQuestionsBank));
+          // Standar BKN: 110 Soal (30 TWK, 35 TIU, 45 TKP)
+          const rawBank = JSON.parse(JSON.stringify(catQuestionsBank));
+          const twkBank = rawBank.filter(q => q.category === 'TWK');
+          const tiuBank = rawBank.filter(q => q.category === 'TIU');
+          const tkpBank = rawBank.filter(q => q.category === 'TKP');
+          
+          const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          };
+
+          let twkQ = [], tiuQ = [], tkpQ = [];
+          for(let i=0; i<30; i++) twkQ.push({...twkBank[i % twkBank.length], id: `cat-twk-${i+1}`});
+          for(let i=0; i<35; i++) tiuQ.push({...tiuBank[i % tiuBank.length], id: `cat-tiu-${i+1}`});
+          for(let i=0; i<45; i++) tkpQ.push({...tkpBank[i % tkpBank.length], id: `cat-tkp-${i+1}`});
+          
+          let generatedQuestions = [
+            ...shuffleArray(twkQ),
+            ...shuffleArray(tiuQ),
+            ...shuffleArray(tkpQ)
+          ];
+          
+          catQuestions.value = generatedQuestions;
           catCurrentIndex.value = 0;
           catAnswers.value = {};
           catDoubtful.value = {};
-          catTimer.value = 900; // 15 menit
+          catTimer.value = 6000; // 100 menit (BKN standar)
           catActiveCategory.value = 'ALL';
           catResult.value = null;
 
@@ -2745,7 +2902,7 @@
 
           currentView.value = 'cat-sim';
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          showToast('Simulasi CAT dimulai! Waktu: 15 menit.');
+          showToast('Simulasi CAT dimulai! Waktu: 100 menit.');
         };
 
         const selectCatAnswer = (key) => {
@@ -2827,13 +2984,10 @@
             }
           });
 
-          // Scale to BKN standards:
-          // TWK max 25 scaled to 150 (TWK PG = 65)
-          const twkScaled = Math.round((twkRaw / 25) * 150);
-          // TIU max 25 scaled to 175 (TIU PG = 80)
-          const tiuScaled = Math.round((tiuRaw / 25) * 175);
-          // TKP max 25 scaled to 225 (TKP PG = 166)
-          const tkpScaled = Math.round((tkpRaw / 25) * 225);
+          // Menggunakan skor asli (110 Soal = 150 TWK, 175 TIU, 225 TKP)
+          const twkScaled = twkRaw;
+          const tiuScaled = tiuRaw;
+          const tkpScaled = tkpRaw;
 
           const totalScore = twkScaled + tiuScaled + tkpScaled;
           const isPassed = twkScaled >= 65 && tiuScaled >= 80 && tkpScaled >= 166;
@@ -2850,6 +3004,17 @@
             answeredCount: Object.keys(catAnswers.value).length,
             totalCount: catQuestions.value.length
           };
+
+          // Sync CAT result to DB
+          saveScore({
+            tipe: 'CAT',
+            refId: 'CAT-TRYOUT',
+            kategori: 'CAT',
+            skor: totalScore,
+            maks: 550,
+            lulus: isPassed,
+            detail: { twk: twkScaled, tiu: tiuScaled, tkp: tkpScaled, answeredCount: catResult.value.answeredCount }
+          });
 
           currentView.value = 'cat-result';
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2958,25 +3123,65 @@
 
         
         const doLogin = async () => {
+          console.log('doLogin dipanggil', loginForm.value.username, loginForm.value.password);
           if (!loginForm.value.username || !loginForm.value.password) return;
           loginForm.value.loading = true;
           loginForm.value.error = '';
           try {
+            console.log('Memanggil ipnApi...');
             const res = await ipnApi('loginUser', [loginForm.value.username, loginForm.value.password]);
+            console.log('Respon API:', res);
             if (res.success) {
               auth.value = { token: res.token, user: res.data, isLoggedIn: true };
               localStorage.setItem('cpnsgo_auth', JSON.stringify(auth.value));
               currentView.value = 'dashboard';
               showToast('Login berhasil!');
               loadProgress();
+              syncProgressFromDb();
             } else {
               loginForm.value.error = res.message || 'Login gagal';
+              console.log('Error diset:', loginForm.value.error);
             }
           } catch (e) {
+            console.error('Error saat login:', e);
             loginForm.value.error = 'Kesalahan jaringan. Coba lagi.';
           } finally {
             loginForm.value.loading = false;
           }
+        };
+
+        const getUserName = (user) => {
+          if (!user) return 'User';
+          return user.name || user.username || 'User';
+        };
+
+        const getAvatarUrl = (user) => {
+          if (!user) return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
+          
+          // Cari berdasarkan key secara eksplisit (termasuk member foto url)
+          let url = user['member foto url'] || user['Member Foto URL'] || user.member_foto_url || user.foto || user.Foto || user.photo || user.avatar;
+          
+          // Fallback: cari value apapun yang berupa string URL gambar (misal dari GCS atau Drive)
+          if (!url) {
+            const possibleUrl = Object.values(user).find(v => typeof v === 'string' && v.startsWith('http') && (v.includes('storage.googleapis') || v.includes('drive.google') || v.match(/\.(jpeg|jpg|gif|png)$/i)));
+            if (possibleUrl) url = possibleUrl;
+          }
+
+          if (!url) return 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
+          
+          if (url.includes('drive.google.com/file/d/')) {
+            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+              return `https://lh3.googleusercontent.com/d/${match[1]}`;
+            }
+          }
+          if (url.includes('drive.google.com/open?id=')) {
+            const match = url.match(/id=([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+              return `https://lh3.googleusercontent.com/d/${match[1]}`;
+            }
+          }
+          return url;
         };
 
         const doLogout = () => {
@@ -3003,6 +3208,60 @@
           } catch(e) {}
         };
 
+        const syncProgressFromDb = async () => {
+          if (!auth.value.isLoggedIn) return;
+          try {
+            const res = await ipnApi('getScores', [auth.value.token, 1000]);
+            if (res.success && res.data) {
+              const dbScores = {};
+              res.data.forEach(row => {
+                if (row.tipe === 'QUIZ' && row.refId) {
+                  dbScores[row.refId] = Math.max(dbScores[row.refId] || 0, row.skor || 0);
+                }
+              });
+              
+              let changed = false;
+              modules.value.forEach(mod => {
+                const dbSkor = dbScores[mod.id];
+                if (dbSkor !== undefined) {
+                  if (mod.score === null || dbSkor > mod.score) {
+                    mod.score = dbSkor;
+                    changed = true;
+                  }
+                }
+                if (mod.score !== null && mod.score >= 3) {
+                  if (!mod.completed) {
+                    mod.completed = true;
+                    changed = true;
+                  }
+                }
+              });
+
+              // Hitung ulang rantai unlocked (berdasarkan progres yang sudah di-sync)
+              let categories = ['TWK', 'TIU', 'TKP'];
+              categories.forEach(cat => {
+                const catMods = modules.value.filter(m => m.category === cat);
+                for (let i = 0; i < catMods.length; i++) {
+                  if (i === 0) {
+                    if (!catMods[i].unlocked) { catMods[i].unlocked = true; changed = true; }
+                  } else {
+                    const prevMod = catMods[i - 1];
+                    const shouldBeUnlocked = prevMod.completed;
+                    if (catMods[i].unlocked !== shouldBeUnlocked) {
+                      catMods[i].unlocked = shouldBeUnlocked;
+                      changed = true;
+                    }
+                  }
+                }
+              });
+
+              if (changed) saveProgress();
+            }
+          } catch(e) {
+            console.error('syncProgressFromDb err:', e);
+          }
+        };
+
         // Check Auth on Mount
         onMounted(async () => {
           const savedAuth = localStorage.getItem('cpnsgo_auth');
@@ -3017,8 +3276,17 @@
                 doLogout();
                 return;
               }
+              // ponytail: validateToken hanya balas {username, role} tanpa name/foto,
+              // jadi MERGE saja — jangan timpa user lengkap dari loginUser.
+              // Ceiling: foto/name di DB baru ter-refresh saat login ulang (tidak ada endpoint profil).
+              const partialUser = res.user || res.data;
+              if (partialUser) {
+                auth.value.user = { ...auth.value.user, ...partialUser };
+                localStorage.setItem('cpnsgo_auth', JSON.stringify(auth.value));
+              }
             } catch(e) {}
             loadProgress();
+            syncProgressFromDb();
           } else {
             currentView.value = 'login';
           }
@@ -3030,6 +3298,8 @@
           loginForm,
           doLogin,
           doLogout,
+          getAvatarUrl,
+          getUserName,
           riwayatSkor,
           currentView,
           activeCategoryCode,
@@ -3039,11 +3309,12 @@
           modules,
           filteredModules,
           totalModulesCount,
-          totalCompletedCount,
-          totalProgress,
-          unlockedModulesCount,
-          averageQuizScore,
-          getCategoryTitle,
+            totalCompletedCount,
+            totalProgress,
+            unlockedModulesCount,
+            averageQuizScore,
+            catScores,
+            getCategoryTitle,
           getCategoryPG,
           getCategoryTotal,
           getCategoryCompleted,
@@ -3053,6 +3324,8 @@
           showToast,
           // Quiz
           currentQuizIndex,
+          reviewIndex,
+          showAllReviews,
           quizQuestions,
           currentQuestion,
           userAnswers,
@@ -3094,7 +3367,9 @@
           showConfirm
         };
       }
-    }).mount('#app');
+    });
+    const vm = app.mount('#app');
+    window.vm = vm;
   </script>
 </body>
 </html>

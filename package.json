@@ -11,10 +11,9 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@playwright/test": "^1.63.0"
+    "@playwright/test": "^1.64.0"
   },
   "dependencies": {
-    "playwright": "^1.63.0",
-    "playwright-core": "^1.63.0"
+    "node-fetch": "^2.7.0"
   }
 }
