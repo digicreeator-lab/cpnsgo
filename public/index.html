@@ -156,6 +156,54 @@
       font-variation-settings: 'FILL' 1;
     }
     
+    [v-cloak] { display: none !important; }
+    
+    /* Splash Screen CSS Statis */
+    #static-splash {
+      position: fixed;
+      inset: 0;
+      background-color: #f8f9ff;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease-out;
+    }
+    .splash-icon {
+      width: 64px;
+      height: 64px;
+      background-color: #5d5fef; /* primary-container */
+      color: #4343d5; /* primary */
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .splash-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .splash-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0b1c30; /* on-surface */
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .splash-subtitle {
+      font-size: 12px;
+      color: #383745; /* on-surface-variant */
+      margin-top: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
     /* Stitch Soft Glassmorphism Tokens */
     .glass-panel {
       padding: 1rem;
@@ -230,7 +278,20 @@
 </head>
 <body class="bg-surface min-h-screen text-on-surface antialiased relative overflow-x-hidden selection:bg-primary selection:text-on-primary">
 
-  <div id="app">
+  <!-- STATIC SPLASH SCREEN -->
+  <div id="static-splash">
+    <div class="splash-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+        <path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path>
+      </svg>
+    </div>
+    <h1 class="splash-title">CPNS GO</h1>
+    <p class="splash-subtitle">Aspirant Learning System</p>
+  </div>
+
+  <div id="app" v-cloak>
     <!-- Soft Ambient Pastel Mesh Gradient Backdrop -->
     <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
       <div class="absolute -top-24 -left-20 w-96 h-96 rounded-full bg-secondary-fixed opacity-40 blur-3xl"></div>
@@ -2059,7 +2120,7 @@
         const riwayatSkor = ref([]);
         const lastCatHash = ref('');
 
-        const currentView = ref('dashboard');
+        const currentView = ref('login');
         const activeCategoryCode = ref('TWK');
         const activeModule = ref(null);
         const searchQuery = ref('');
@@ -3277,14 +3338,17 @@
                 return;
               }
               // ponytail: validateToken hanya balas {username, role} tanpa name/foto,
-              // jadi MERGE saja — jangan timpa user lengkap dari loginUser.
+              // jadi MERGE saja ?" jangan timpa user lengkap dari loginUser.
               // Ceiling: foto/name di DB baru ter-refresh saat login ulang (tidak ada endpoint profil).
               const partialUser = res.user || res.data;
               if (partialUser) {
                 auth.value.user = { ...auth.value.user, ...partialUser };
                 localStorage.setItem('cpnsgo_auth', JSON.stringify(auth.value));
               }
-            } catch(e) {}
+              currentView.value = 'dashboard';
+            } catch(e) {
+              currentView.value = 'dashboard'; // fallback
+            }
             loadProgress();
             syncProgressFromDb();
           } else {
@@ -3370,6 +3434,15 @@
     });
     const vm = app.mount('#app');
     window.vm = vm;
+    
+    // Hide static splash after mount and brief layout delay
+    setTimeout(() => {
+      const splash = document.getElementById('static-splash');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => splash.remove(), 300);
+      }
+    }, 150);
   </script>
 </body>
 </html>
