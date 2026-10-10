@@ -2101,6 +2101,7 @@
         if (action === 'validateToken') return { valid: true, user: { username: 'mock_user', name: 'Budi Santoso (Mock)', foto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', role: 'Member' } };
         if (action === 'saveScore') { console.log('Mock saveScore:', args); return { success: true }; }
         if (action === 'getScores') return { success: true, data: [] };
+        if (action === 'resetUserProgress') return { success: true };
       }
       const response = await fetch(IPN_API_URL, {
         method: 'POST',
@@ -2727,7 +2728,7 @@
           }
         };
 
-        const resetProgress = () => {
+        const resetProgress = async () => {
           showConfirm({
             title: 'Reset Seluruh Progres?',
             message: 'Semua progres modul, riwayat skor kuis, dan data belajar Anda akan dihapus dan dikembalikan ke awal. Tindakan ini tidak dapat dibatalkan.',
@@ -2735,12 +2736,36 @@
             cancelText: 'Batal',
             type: 'danger',
             icon: 'delete_forever',
-            onConfirm: () => {
+            onConfirm: async () => {
+              // 1. Hapus cache lokal
               localStorage.removeItem('cpns_go_modules_stitch');
+              
+              // 2. Reset tampilan data langsung di UI
               modules.value = JSON.parse(JSON.stringify(defaultModules));
+              
+              // 3. Reset CAT History lokal
+              localStorage.removeItem('cpns_go_cat_history');
+              
+              // 4. Update data baru ke cache
               saveProgress();
-              showToast('Progres belajar telah direset!');
-              currentView.value = 'dashboard';
+              
+              // 5. Kirim perintah reset ke Server / Mock Backend agar syncProgressFromDb tidak memulihkan data lama
+              try {
+                if (USE_MOCK) {
+                  // Cukup lokal karena data sudah di-reset di cache
+                } else {
+                  // Bypass ke endpoint reset
+                  await ipnApi('resetUserProgress', [auth.value.token]);
+                }
+              } catch(e) {
+                console.error('Gagal hapus data dari server:', e);
+              }
+              
+              // Paksa reload halaman agar state (cache Vue) benar-benar bersih layaknya instal ulang
+              showToast('Progres belajar berhasil direset!');
+              setTimeout(() => {
+                window.location.reload(true);
+              }, 1000);
             }
           });
         };
