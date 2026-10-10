@@ -1,109 +1,174 @@
 // GAS Backend for CPNS GO
-const SPREADSHEET_ID = ''; // placeholder if needed later, or we just mock via script properties/cache
+const SPREADSHEET_ID = ''; // Kosongkan jika script ini terikat langsung ke Spreadsheet (Container-bound)
+
+function getDb() {
+  return SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+}
+
+function getSheet(sheetName) {
+  const db = getDb();
+  let sheet = db.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = db.insertSheet(sheetName);
+    if (sheetName === 'Users') {
+      sheet.appendRow(['username', 'password', 'name', 'foto', 'role', 'token']);
+    } else if (sheetName === 'Scores') {
+      sheet.appendRow(['username', 'refId', 'tipe', 'skor', 'timestamp']);
+    }
+  }
+  return sheet;
+}
+
+function generateToken() {
+  return Utilities.getUuid();
+}
 
 function doGet(e) {
-  const action = e.parameter.action;
-  
-  if (action === 'getData') {
-    // Return all initial mockup data
-    const responsePayload = {
-      status: 'success',
-      data: {
-        // We will just return an empty array for now and let the frontend use defaultModules if empty, 
-        // OR we can return the defaultModules directly.
-        // Let's provide a basic module structure to prove it works.
-        modules: [
-          {
-            id: 'twk-1',
-            category: 'TWK',
-            code: '1.1',
-            order: 1,
-            title: 'Pengamalan Butir Pancasila & Sila Radar',
-            subtitle: 'Trik eliminasi cepat batas abu-abu Sila 2 vs Sila 5',
-            unlocked: true,
-            completed: false,
-            score: null,
-            objectives: [
-              'Mengenali 45 butir pengamalan TAP MPR secara kontekstual berbasis studi kasus.',
-              'Membedakan tindakan kemanusiaan personal vs keadilan struktural publik.',
-              'Mengeliminasi 3 pilihan pengecoh dalam tempo kurang dari 20 detik.'
-            ],
-            tips: 'Gunakan The Sila Radar: Jika fokus tindakan adalah empati individu -> Sila 2. Jika fokusnya pemerataan fasilitas publik -> Sila 5.',
-            sampleQuestion: {
-              question: 'Ketika seorang pengusaha dermawan membangun jembatan gantung di pedalaman...',
-              correctKey: 'C',
-              apsExplanation: 'A (Action): Menganalisis konteks pembangunan (fasilitas umum untuk publik).\nP (Point): Pembangunan jembatan gantung untuk mobilitas anak sekolah adalah wujud keadilan sosial bagi seluruh rakyat (Sila 5), bukan sekadar kemanusiaan (Sila 2).\nS (Solution): Pilih opsi yang berkaitan dengan Sila 5.'
-            }
-          },
-          {
-            id: 'tiu-1',
-            category: 'TIU',
-            code: '2.1',
-            order: 1,
-            title: 'Silogisme & Penarikan Kesimpulan',
-            subtitle: 'Hacking logika deduktif tanpa rumus',
-            unlocked: false,
-            completed: false,
-            score: null,
-            objectives: [
-              'Mengidentifikasi premis mayor dan minor.',
-              'Menerapkan modus ponens dan tollens.'
-            ],
-            tips: 'Abaikan konteks kalimat, fokus pada operator logika (Semua, Ada, Jika-Maka).',
-            sampleQuestion: {
-              question: 'Semua CPNS rajin belajar. Sebagian orang yang rajin belajar lulus ujian. Kesimpulan?',
-              correctKey: 'D',
-              apsExplanation: 'A (Action): Identifikasi tipe silogisme.\nP (Point): Sebagian orang rajin belajar lulus ujian (sebagian CPNS belum tentu lulus).\nS (Solution): Sebagian CPNS lulus ujian.'
-            }
-          },
-          {
-            id: 'tkp-1',
-            category: 'TKP',
-            code: '3.1',
-            order: 1,
-            title: 'Pelayanan Publik Prima',
-            subtitle: 'Membaca ekspektasi instansi terhadap ASN',
-            unlocked: false,
-            completed: false,
-            score: null,
-            objectives: [
-              'Memilih prioritas tindakan ketika ada konflik kepentingan.',
-              'Menjaga profesionalisme di bawah tekanan.'
-            ],
-            tips: 'Selalu posisikan diri sebagai abdi negara yang mengutamakan SOP namun tetap humanis.',
-            sampleQuestion: {
-              question: 'Ada warga yang marah karena antrean panjang. Apa yang Anda lakukan?',
-              correctKey: 'E',
-              apsExplanation: 'A (Action): Tenangkan warga.\nP (Point): Berikan penjelasan sesuai aturan.\nS (Solution): Panggil sekuriti hanya jika tidak terkendali.'
-            }
-          }
-        ]
-      }
-    };
-    return ContentService.createTextOutput(JSON.stringify(responsePayload)).setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  return ContentService.createTextOutput(JSON.stringify({status: 'error', message: 'Unknown action'})).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify({ status: 'active', message: 'CPNS GO API is running.' })).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   try {
     const postData = JSON.parse(e.postData.contents);
+    const action = postData.action;
+    const args = postData.args || [];
     
-    // In a real app, we would write postData to Google Sheets here.
-    // For now, return success.
+    let result = { success: false, message: 'Unknown action' };
     
-    const responsePayload = {
-      status: 'success',
-      message: 'Data saved successfully',
-      savedData: postData
-    };
+    if (action === 'loginUser') {
+      result = apiLoginUser(args[0], args[1]);
+    } else if (action === 'validateToken') {
+      result = apiValidateToken(args[0]);
+    } else if (action === 'saveScore') {
+      result = apiSaveScore(args[0], args[1], args[2], args[3]);
+    } else if (action === 'getScores') {
+      result = apiGetScores(args[0], args[1]);
+    } else if (action === 'resetUserProgress') {
+      result = apiResetUserProgress(args[0]);
+    }
     
-    return ContentService.createTextOutput(JSON.stringify(responsePayload)).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({
-      status: 'error',
+      success: false,
       message: error.toString()
     })).setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// ==========================================
+// API IMPLEMENTATIONS
+// ==========================================
+
+function apiLoginUser(username, password) {
+  const sheet = getSheet('Users');
+  const data = sheet.getDataRange().getValues();
+  
+  // Baris 0 adalah Header
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    if (row[0] == username && row[1] == password) {
+      const token = generateToken();
+      // Update token di DB
+      sheet.getRange(i + 1, 6).setValue(token);
+      
+      return { 
+        success: true, 
+        token: token, 
+        data: { 
+          username: row[0], 
+          name: row[2] || 'User CPNS', 
+          foto: row[3] || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', 
+          role: row[4] || 'Member' 
+        } 
+      };
+    }
+  }
+  
+  // AUTO-REGISTER JIKA BELUM ADA (Karena ini aplikasi mockup/tes)
+  // Untuk production, matikan ini dan kembalikan error "User tidak ditemukan"
+  const token = generateToken();
+  sheet.appendRow([username, password, username, '', 'Member', token]);
+  
+  return { 
+    success: true, 
+    token: token, 
+    data: { 
+      username: username, 
+      name: username, 
+      foto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80', 
+      role: 'Member' 
+    } 
+  };
+}
+
+function getUserFromToken(token) {
+  if (!token) return null;
+  const sheet = getSheet('Users');
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][5] === token) {
+      return data[i][0]; // return username
+    }
+  }
+  return null;
+}
+
+function apiValidateToken(token) {
+  const username = getUserFromToken(token);
+  if (username) {
+    return { valid: true, user: { username: username, role: 'Member' } };
+  }
+  return { valid: false, message: 'Sesi berakhir, silakan login ulang' };
+}
+
+function apiSaveScore(token, refId, tipe, skor) {
+  const username = getUserFromToken(token);
+  if (!username) return { success: false, message: 'Unauthorized' };
+  
+  const sheet = getSheet('Scores');
+  sheet.appendRow([username, refId, tipe, skor, new Date().toISOString()]);
+  
+  return { success: true };
+}
+
+function apiGetScores(token, limit) {
+  const username = getUserFromToken(token);
+  if (!username) return { success: false, message: 'Unauthorized' };
+  
+  const sheet = getSheet('Scores');
+  const data = sheet.getDataRange().getValues();
+  
+  let scores = [];
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][0] == username) {
+      scores.push({
+        refId: data[i][1],
+        tipe: data[i][2],
+        skor: data[i][3],
+        timestamp: data[i][4]
+      });
+    }
+  }
+  
+  return { success: true, data: scores };
+}
+
+function apiResetUserProgress(token) {
+  const username = getUserFromToken(token);
+  if (!username) return { success: false, message: 'Unauthorized' };
+  
+  const sheet = getSheet('Scores');
+  const data = sheet.getDataRange().getValues();
+  
+  // Hapus dari bawah ke atas untuk menghindari index bergeser
+  let deletedCount = 0;
+  for (let i = data.length - 1; i >= 1; i--) {
+    if (data[i][0] == username) {
+      sheet.deleteRow(i + 1);
+      deletedCount++;
+    }
+  }
+  
+  return { success: true, message: `Berhasil menghapus ${deletedCount} baris data.` };
 }
