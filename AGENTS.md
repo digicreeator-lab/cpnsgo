@@ -135,6 +135,11 @@ Setiap kali Anda selesai menulis, merangkai, atau memperbarui kode Frontend SPA 
 5. **Evaluasi, Cleanup, dan Pelaporan:**
    - **Jika LULUS (PASS):** Hapus file `qc-test.spec.js` dan folder artifact pengujian (`test-results/`) dari workspace untuk mempertahankan struktur statis proyek, lalu laporkan hasil pengujian dalam format tabel ringkas.
    - **Jika GAGAL (FAIL) / Ditemukan Bugs:** Analisis log terminal untuk mencari penyebab error. Selesaikan HANYA baris kode di `public/index.html` yang bermasalah tanpa merubah struktur kode yang sudah ada. Konfirmasi izin perbaikan kode kepada saya, lalu ulangi eksekusi pengujian.
+
+## 10. PROTOKOL SINKRONISASI KNOWLEDGE GRAPH (GRAPHIFY)
+- **Kapan Dijalankan:** Setiap kali selesai melakukan refactoring atau menambahkan modul/file baru.
+- **Perintah Terminal:** Jalankan `graphify . --code-only` (atau `graphify .` jika API key LLM seperti `GEMINI_API_KEY` telah disetel) untuk memperbarui knowledge graph repo.
+- **Referensi Wajib:** Gunakan perubahan node dan relasi pada `graphify-out/graph.json` sebagai dasar pemahaman arsitektur dan dependensi sebelum memulai task berikutnya.
 ---
 
 # Ponytail, lazy senior dev mode (Ruleset)
