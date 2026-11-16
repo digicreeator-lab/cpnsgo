@@ -1,0 +1,264 @@
+{
+  "communities": {
+    "0": [
+      "add_mock",
+      "add_mock_content",
+      "brute_fix",
+      "brute_fix_html",
+      "check_div",
+      "check_div_content",
+      "check_div_lines",
+      "check_div_match",
+      "check_modal",
+      "check_modal_content",
+      "check_modal_match",
+      "check_nesting",
+      "check_nesting2",
+      "check_nesting2_content",
+      "check_nesting_carddepths",
+      "check_nesting_content",
+      "check_nesting_lines",
+      "patch_index",
+      "patch_index_html",
+      "redesign",
+      "redesign_html",
+      "ref_fs",
+      "replace_css_content",
+      "replace_css_js_replace_css",
+      "update_load",
+      "update_load_content",
+      "update_save",
+      "update_save_content"
+    ],
+    "1": [
+      "e2e_reset_spec",
+      "e2e_spec",
+      "package",
+      "package_author",
+      "package_dependencies",
+      "package_dependencies_node_fetch",
+      "package_description",
+      "package_devdependencies",
+      "package_devdependencies_playwright_test",
+      "package_keywords",
+      "package_license",
+      "package_main",
+      "package_name",
+      "package_scripts",
+      "package_scripts_test",
+      "package_type",
+      "package_version",
+      "ref_node_fetch",
+      "ref_playwright_test",
+      "test_login",
+      "test_login_test"
+    ],
+    "2": [
+      "github_workflows_deploy",
+      "github_workflows_deploy_build_and_deploy_name",
+      "github_workflows_deploy_build_and_deploy_needs",
+      "github_workflows_deploy_build_and_deploy_runs_on",
+      "github_workflows_deploy_jobs",
+      "github_workflows_deploy_jobs_build_and_deploy",
+      "github_workflows_deploy_jobs_qc_design",
+      "github_workflows_deploy_name",
+      "github_workflows_deploy_push_branches",
+      "github_workflows_deploy_qc_design_name",
+      "github_workflows_deploy_qc_design_runs_on",
+      "github_workflows_deploy_true",
+      "github_workflows_deploy_true_push"
+    ],
+    "3": [
+      "github_workflows_deploy_build_and_deploy_steps",
+      "github_workflows_deploy_qc_design_steps",
+      "github_workflows_deploy_steps_name",
+      "github_workflows_deploy_steps_run",
+      "github_workflows_deploy_steps_uses",
+      "github_workflows_deploy_steps_with",
+      "github_workflows_deploy_with_channelid",
+      "github_workflows_deploy_with_firebaseserviceaccount",
+      "github_workflows_deploy_with_node_version",
+      "github_workflows_deploy_with_projectid",
+      "github_workflows_deploy_with_repotoken"
+    ],
+    "4": [
+      "tools_generate_bank",
+      "tools_generate_bank_fssource",
+      "tools_generate_bank_getsample",
+      "tools_generate_bank_htmlpath",
+      "tools_generate_bank_jsarraystr",
+      "tools_generate_bank_match",
+      "tools_generate_bank_newbank",
+      "tools_generate_bank_tiupool",
+      "tools_generate_bank_tkppool",
+      "tools_generate_bank_twkpool"
+    ],
+    "5": [
+      "capture",
+      "dbg_modul_content",
+      "dbg_modul_test",
+      "debug",
+      "ref_path",
+      "ref_playwright"
+    ],
+    "6": [
+      "backend_appsscript",
+      "backend_appsscript_dependencies",
+      "backend_appsscript_exceptionlogging",
+      "backend_appsscript_runtimeversion",
+      "backend_appsscript_timezone"
+    ],
+    "7": [
+      "check_line",
+      "check_line_content",
+      "check_line_lines",
+      "check_line_match"
+    ],
+    "8": [
+      "check_lines",
+      "check_lines_content",
+      "check_lines_lines",
+      "check_lines_match"
+    ],
+    "9": [
+      "check_lines2",
+      "check_lines2_content",
+      "check_lines2_lines",
+      "check_lines2_match"
+    ],
+    "10": [
+      "check_lines3",
+      "check_lines3_content",
+      "check_lines3_lines",
+      "check_lines3_match"
+    ],
+    "11": [
+      "check_module",
+      "check_module_content",
+      "check_module_lines",
+      "check_module_match"
+    ],
+    "12": [
+      "check_module2",
+      "check_module2_content",
+      "check_module2_lines",
+      "check_module2_match"
+    ],
+    "13": [
+      "check_module3",
+      "check_module3_content",
+      "check_module3_lines",
+      "check_module3_match"
+    ],
+    "14": [
+      "check_module4",
+      "check_module4_content",
+      "check_module4_lines",
+      "check_module4_match"
+    ],
+    "15": [
+      "check_quiz_result",
+      "check_quiz_result_content",
+      "check_quiz_result_lines",
+      "check_quiz_result_match"
+    ],
+    "16": [
+      "check_chain",
+      "check_chain_content",
+      "check_chain_matches"
+    ],
+    "17": [
+      "check_glass",
+      "check_glass_content",
+      "check_glass_lines"
+    ],
+    "18": [
+      "replace_bank",
+      "replace_bank_html",
+      "replace_bank_match"
+    ],
+    "19": [
+      "re",
+      "replace_css_py_replace_css"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07142857142857142,
+    "1": 0.10476190476190476,
+    "2": 0.15384615384615385,
+    "3": 0.21818181818181817,
+    "4": 0.2,
+    "5": 0.5333333333333333,
+    "6": 0.4,
+    "7": 0.5,
+    "8": 0.5,
+    "9": 0.5,
+    "10": 0.5,
+    "11": 0.5,
+    "12": 0.5,
+    "13": 0.5,
+    "14": 0.5,
+    "15": 0.5,
+    "16": 0.6666666666666666,
+    "17": 0.6666666666666666,
+    "18": 0.6666666666666666,
+    "19": 1.0
+  },
+  "gods": [
+    {
+      "id": "github_workflows_deploy_steps_with",
+      "label": "with",
+      "degree": 7
+    },
+    {
+      "id": "github_workflows_deploy_jobs_build_and_deploy",
+      "label": "build_and_deploy",
+      "degree": 5
+    },
+    {
+      "id": "github_workflows_deploy_qc_design_steps",
+      "label": "steps",
+      "degree": 5
+    },
+    {
+      "id": "ref_playwright_test",
+      "label": "@playwright/test",
+      "degree": 4
+    },
+    {
+      "id": "github_workflows_deploy_jobs_qc_design",
+      "label": "qc_design",
+      "degree": 4
+    },
+    {
+      "id": "github_workflows_deploy_build_and_deploy_steps",
+      "label": "steps",
+      "degree": 4
+    },
+    {
+      "id": "ref_node_fetch",
+      "label": "node-fetch",
+      "degree": 3
+    },
+    {
+      "id": "github_workflows_deploy_jobs",
+      "label": "jobs",
+      "degree": 3
+    },
+    {
+      "id": "package_dependencies_node_fetch",
+      "label": "node-fetch@^2.7.0",
+      "degree": 2
+    },
+    {
+      "id": "package_devdependencies_playwright_test",
+      "label": "@playwright/test@^1.64.0",
+      "degree": 2
+    }
+  ],
+  "surprises": [],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}
